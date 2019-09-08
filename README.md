@@ -16,3 +16,5 @@
 
 ## 小项
 [git总结 - 2019.09.07](git.md)
+
+[mysql install by zip - 2019.08.08](mysql_install.md)
