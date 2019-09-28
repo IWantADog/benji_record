@@ -27,3 +27,10 @@ __对记录权限__ ：通过xml定义，定义用户组用户对于数据库中
 
 对字段的权限：通过field中增加group定义用户对于字段、按钮的可视权限。
 
+## filed compute
+
+记录关于field的compute与store参数的用法。
+
+field上增加compute后，在数据库中不存储该列。只是在页面显示时会调用compute关联的方法计算值。因此，在前端页面上无法用该属性进行排序。
+
+compute和store=True同时使用时，若该字段在数据库中不存在，则会将由compute函数计算的值存储在数据库中；若该值已存在，则跳过compute方法，直接从数据库中取值。
