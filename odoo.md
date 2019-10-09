@@ -40,7 +40,8 @@ compute和store=True同时使用时，若该字段在数据库中不存在，则
 思路：通过ir.values创建一个动作，该动作指向一个action，通过该action完成一些数据操作。
 
 代码实现:
-
+[参考](https://www.cnblogs.com/joshuajan/p/6258028.html
+)
 ```xml
 # server action
 <record model="ir.actions.server" id="order_confirm_func">
