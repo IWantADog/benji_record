@@ -88,10 +88,11 @@ serial 和 bigserial 类型不是真正的类型，只是为在表中设置唯�
 
 ## postgrel char(n)、varchar(n)、text之间的比较
 
-> postgresql中char(n)、varchar(n)、text之间当字符串相等时，这三种类型可以直接相互比较。
+postgresql中char(n)、varchar(n)、text之间当字符串相等时，这三种类型可以直接相互比较。
 
+postgresql中显式类型转换 `cast (v as type)`
 
-## postgresql中查看所有的数据库、某一数据库中的数据表以及某张表的构成？
+## postgresql中查看所有的数据库、某一数据库中的数据表以及某张表的构成?
 
 - __\\?__: 查看所有的相关命令
 - __\l__: list all database
