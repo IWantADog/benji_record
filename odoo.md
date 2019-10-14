@@ -67,9 +67,35 @@ compute和store=True同时使用时，若该字段在数据库中不存在，则
 该方法在odoo10中可行，但在odoo12中是否可行还未研究。
 
 
-## 问题记录
+## odoo通过弹窗返回信息
 
 odoo中的视图都依赖于一个model，是否存在一冲视图不依赖于model，只是展示过程信息，这些信息都不需要存储在数据库汇总。
 > 简便的方法是通过 ```raise UserError(msg)```。应该还可以通过自定义一个form视图，实现这个功能。
 
-### 如何控制odoo的前端css布局？
+## 如何控制odoo的前端css布局？
+
+TODO
+
+## postgresql主键自增
+
+与mysql不同，postgresql通过serial和bigserial实现。
+
+serial 和 bigserial 类型不是真正的类型，只是为在表中设置唯一标识做的概念上的便利。不过是一种便捷的封装。
+
+通过serial和bigserial只是实现了字段的自增，还要添加primary key实现主键约束。
+
+----
+
+## postgrel char(n)、varchar(n)、text之间的比较
+
+> postgresql中char(n)、varchar(n)、text之间当字符串相等时，这三种类型可以直接相互比较。
+
+
+## postgresql中查看所有的数据库、某一数据库中的数据表以及某张表的构成？
+
+- __\\?__: 查看所有的相关命令
+- __\l__: list all database
+- __\dt__: list all table
+- __\d tableName__ : descrip a table
+
+---
