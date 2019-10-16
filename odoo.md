@@ -99,4 +99,18 @@ postgresql中显式类型转换 `cast (v as type)`
 - __\dt__: list all table
 - __\d tableName__ : descrip a table
 
----
+----
+
+## odoo12 client_action绑定自定义js文件？
+
+[产考链接](https://segmentfault.com/a/1190000017087118)
+
+不过在我实验的时候还是遇到了奇怪的问题。我打开页面js一直报错————无法找到我定义的client_action的tag，这个问题我找了很久，一直无法定位问题点。后来尝试性的将menuitem和client_action放在同一个xml文件下，问题就解决了。当时出问题的原因仍未确定。
+
+----
+
+odoo12中菜单不显示的问题？
+
+odoo12与odoo10创建新模块后的默认权限不同。odoo10中是默认有所有权限，而odoo12中需要在csv中定义权限。
+
+---- 
