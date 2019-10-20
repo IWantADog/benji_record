@@ -113,4 +113,9 @@ odoo12中菜单不显示的问题？
 
 odoo12与odoo10创建新模块后的默认权限不同。odoo10中是默认有所有权限，而odoo12中需要在csv中定义权限。
 
----- 
+----
+
+postgresql中对于now()设置时区
+```sql
+now() AT TIME ZONE 'utc'
+```
