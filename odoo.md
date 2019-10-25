@@ -119,3 +119,48 @@ postgresql中对于now()设置时区
 ```sql
 now() AT TIME ZONE 'utc'
 ```
+
+## 2019.10.22
+
+odoo中controller中设置auth=“public”时需要创建一个开放用户。[参考](https://www.odooyun.com/documentation/reference/http.html#routing)
+
+
+## 2019.10.23
+
+视图继承详解 odoo12/doc/reference/view.rst
+
+----
+
+从未见过的视图使用方式。
+
+```xml
+<field name="move_line_nosuggest_ids" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}" context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}"/>
+```
+
+## 2019.10.24
+
+### odoo.api.constrains使用，通过声明方法定义约束
+
+Decorates a constraint checker. Each argument must be a field name used in the check:
+
+@api.one
+@api.constrains('name', 'description')
+def _check_description(self):
+    if self.name == self.description:
+        raise ValidationError("Fields name and description must be different")
+Invoked on the records on which one of the named fields has been modified.
+
+Should raise ValidationError if the validation failed.
+
+__Warning__
+
+>@constrains only supports simple field names, dotted names (fields of relational fields e.g. partner_id.customer) are not supported and will be ignored
+
+>__@constrains will be triggered only if the declared fields in the decorated method are included in the create or write call. It implies that fields not present in a view will not trigger a call during a record creation. A override of create is necessary to make sure a constraint will always be triggered (e.g. to test the absence of value).__
+
+----
+
+### odoo中参数模块设置
+
+res.config.settings
+odoo/addons/base/models/res_config.py
