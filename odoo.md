@@ -164,3 +164,29 @@ __Warning__
 
 res.config.settings
 odoo/addons/base/models/res_config.py
+
+### odoo xmlrpc
+
+[链接](https://www.odooyun.com/documentation/webservices/odoo.html)
+
+### odoo image store by base64 string
+
+image binary to base64 string
+
+```python
+import base64
+from cStringIO import StringIO
+
+# pip2 install pillow
+from PIL import Image
+
+
+def image_to_base64(image_path):
+    img = Image.open(image_path)
+    output_buffer = StringIO()
+    img.save(output_buffer, format='JPEG')
+    binary_data = output_buffer.getvalue()
+    base64_data = base64.b64encode(binary_data)
+    return base64_data
+```
+
