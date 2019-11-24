@@ -33,4 +33,6 @@ firewall-cmd --zone=public --add-port=80/tcp --permanent
 firewall-cmd --zone=public --remove-port=80/tcp --permanent
 
 firewall-cmd --zone=public --list-ports
+
+ssh user@host 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub
 ```
