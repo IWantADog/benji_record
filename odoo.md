@@ -8,7 +8,7 @@ odoo中的权限控制分为三种：对模型的权限、对记录的权限、�
 
 对模型权限：定义在ir.model.acess.csv文件中，主要控制用户组对于模型的读、写、创建、删除。
 
-__对记录权限__ ：通过xml定义，定义用户组用户对于数据库中记录的读、写、创建、删除。
+__对记录权限__ ：通过xml定义，定义用户组用户对于那些记录具有读、写、创建、删除权限。
 
 对于记录的权限常见用法：限制用户只可访问与自己有关的记录。
 
@@ -190,3 +190,18 @@ def image_to_base64(image_path):
     return base64_data
 ```
 
+## 2019.11.04
+
+### only debug can see it
+
+```
+groups="base.group_no_one"
+```
+
+### sql constraints 数据库约束
+
+```python
+_sql_constraints = [
+    ('ownercode', 'unique (ownercode)', '所有者编号重复，请更换编号!')
+]
+```

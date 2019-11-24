@@ -21,3 +21,16 @@ cat /etc/shadowsocks/config.json
     "timeout":600
 }
 ```
+
+
+centos firewall
+
+```shell
+systemctl status firewalld
+
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+firewall-cmd --zone=public --remove-port=80/tcp --permanent
+
+firewall-cmd --zone=public --list-ports
+```
