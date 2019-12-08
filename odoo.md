@@ -205,3 +205,14 @@ _sql_constraints = [
     ('ownercode', 'unique (ownercode)', '所有者编号重复，请更换编号!')
 ]
 ```
+
+
+## 2019.12.03
+
+### qweb渲染模版
+
+```js
+var self = this;
+var html = $(QWeb.render('equipment_ratio_detail_template', { data:data }));
+$('.bp-ratio-detail').html(html);
+```
