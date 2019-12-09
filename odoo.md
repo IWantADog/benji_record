@@ -216,3 +216,14 @@ var self = this;
 var html = $(QWeb.render('equipment_ratio_detail_template', { data:data }));
 $('.bp-ratio-detail').html(html);
 ```
+
+
+## 2019.12.04
+
+### update join [参考](https://www.postgresql.org/message-id/6ca02fc80806231243y6e4ea774x6ae4967fb8824447@mail.gmail.com)
+
+```
+update eam_equipment_running_record as a set running_hours_plan=86399
+from eam_equipment b
+where a.equipment_id=b.id and b.running_id=3 and date between '2019-11-18' and current_date;
+```
