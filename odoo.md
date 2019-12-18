@@ -227,3 +227,28 @@ update eam_equipment_running_record as a set running_hours_plan=86399
 from eam_equipment b
 where a.equipment_id=b.id and b.running_id=3 and date between '2019-11-18' and current_date;
 ```
+
+## 2019.12.14
+
+### Widgets 
+[详解](https://www.odooyun.com/documentation/reference/javascript_reference.html#widgets)
+
+widget默认会渲染绑定的模版。
+
+通过widget.variable在xml模版中获取js中的变量。
+
+### tag
+<field name="tag">ghcc_work.work_application_menu_tag</field>
+
+
+### action.client
+
+1. action.client定义tag。tag必须包含模块名
+
+2. 声明template。关键点t-name
+
+3. js文件，将widget通过tag注册到action上
+
+4. 将js文件通过xpath插入assets_backend
+
+5. 将xml加入__manifest__中的data，template加入qweb中。
