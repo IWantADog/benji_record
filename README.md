@@ -16,6 +16,8 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 
 [js问题记录 - 2019.09.01](JavaScript_Learing.md)
 
+[JQuery学习记录 - 2019.12.18](JQuery_learning.md)
+
 ## database
 
 [数据库概论](DatabaseSystemConcepts.md)
