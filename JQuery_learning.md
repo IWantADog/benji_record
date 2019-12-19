@@ -43,6 +43,14 @@ var myTag = $('#my-div').get(0).tagName
 var myTag = $('#my-div')[0].tagName
 ```
 
+## 2019.12.18
 
+### window.onload与$(document).ready()的细微差别
+
+### JQuery隐式迭代机制
+
+toggleClass()
+
+### event详细信息[链接](http://api.jquery.com/category/events/event-object)
 
 
