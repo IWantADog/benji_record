@@ -136,7 +136,50 @@ JQuery.outerWidth(): 获取容器的宽度。
 
 > 反向插入方法可以接收一个函数作为参数，传入的参数会对每个目标调用，返回被插入的HTML字符串。
 
-包装元素：.wrapAll()、.wrap()
+包装元素：.wrapAll()、.wrap()、.wrapInner()
 
 > 使用说明：被包装元素.wrap(容器元素)
+
+复制元素.clone()
+> 默认情况下不会复制匹配元素或其后代元素中绑定的事件。不过可以通过clone(true)，连同事件一同复制。
+
+#### 替换元素
+
+.html()获取和设置元素的html
+
+.text()获取纯文本文件，忽略所有的html标签。尔当通过text()设置文件是，html标签又会被正确转换。
+
+.replaceAll() .replaceWith()
+
+#### 清空元素
+
+.empty():移除每个匹配的元素中的元素。
+
+.remove() && .detach() : 从文档中移除每个匹配的元素及其后代元素，但不实际删除它们。
+
+
+### ajax
+
+.load()
+
+$.getJSON()
+
+$.each()
+
+$.getScript():向页面注入脚本。
+
+$(form).submit()
+
+.serialize():作用与一个JQuery对象，将匹配的DOM元素转化为能够随Ajax请求传递的查询字符串。
+
+#### 为ajax事件注册回调函数
+
+$(document).ajaxStart(); $(document).ajaxStop()
+
+### 事件委托
+
+.on()
+
+[同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
+
 
