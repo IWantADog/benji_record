@@ -182,4 +182,40 @@ $(document).ajaxStart(); $(document).ajaxStop()
 
 [同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
 
+### 2019.12.25
+
+[Cross-Origin Resource Sharing]()
+
+[JSONP技术](https://zh.wikipedia.org/wiki/JSONP)：让用户通过script元素注入的方式绕开同源策略
+
+$.ajaxSetup(): 修改调用ajax方法时每个选项的默认值，除非明确覆盖。
+
+
+#### 部分加载HTML页面
+
+- .load()
+
+
+#### jquery plugin 
+
+[The JQuery Pligin Registry](http://plugins.jquery.com)
+
+[JQuery plugin help](http://forum.jquery.com/using-jquery-plugins)
+
+缓动函数
+
+[JQuery UI 演示](https://jqueryui.com/effect/)
+
+交互组件：resizable、Draggable、Droppable、Sortable
+
+部件：Datepicker、Dialog、Tabs、Accordion
+
+JQuery UI 主题卷轴：ThemeRoller
+
+
+
+
+
+
+
 
