@@ -2,40 +2,43 @@
 
 [官方参考文档](http://api.jquery.com)
 
-## 2019.12.17
+## JQuery选择与筛选
 
-### css选择器、css伪类?
+[css选择器-阮一峰](http://www.ruanyifeng.com/blog/2009/03/css_selectors.html) [css选择器-MDN](https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started/Selectors)
+
+#### css伪类
+
+实用的JQuery自定义选择器。:odd代表奇数行、:even代表偶数行、:eq(n)选择第n行。
+>ps:选择符从0开始计数，第一个为0为偶数
+
+:nth-child()根据元素的父元素而非当前选择元素的所有元素来计算位置，它可接收数值、odd、even。
 
 ```javascript
 $('tr:even').addClass('alt');
 $('tr:nth-child(odd)').addClass('alt');
 ```
 
-:contains()选择器
+一些伪类选择器
+选择符            | 匹配
+-----------------| --------------------
+:contains(heart) | 选择存在heart文本的元素
+:input           | 输入字段、文本区、选择列表和按钮元素
+:button          | 按钮元素或type属性值为button的输入元素
+:enabled         | 启用的表单元素
+:disabled        | 禁用的表单元素
+:checked         | 勾选的单选按钮或复选框
+:selected        | 选择的选项元素
 
-:input 输入字段、文本区、选择列表和按钮元素
+### bom遍历方法
 
-:button 按钮元素或type属性值为button的输入元素
-
-:enabled 启用的表单元素
-
-:disabled 禁用的表单元素
-
-:checked 勾选的单选按钮或复选框
-
-:selected 选择的选项元素
-
-## bom遍历方法
-
-.filter(): bom元素过，既可以通过选择符表达式，也可通过函数过滤。
-
-.next(): 选择下一个最接近的同辈元素。.nextAll() 
-
-.prev()  .prevAll()则相反。
-
-.siblings(): 选取相同bom层级的所有其他元素，不包括本身。
-
-.addBack(): 添加当前的元素。
+获取元素的父、子、兄弟节点
+方法名            | 功能
+-----------------|----------------------
+JQuery.filter()  | bom元素过滤，既可以通过选择符表达式，也可通过函数过滤。
+JQuery.next()、.nextAll() | 选择下一个最接近的同辈元素。
+JQuery.prev()、.prevAll() | 选择上一个最接近的同辈元素。
+JQuery.siblings()| 选取相同bom层级的所有其他元素，不包括本身。
+JQuery.addBack() | 添加当前的元素。
 
 ## 访问DOM元素
 
@@ -47,21 +50,13 @@ var myTag = $('#my-div').get(0).tagName
 var myTag = $('#my-div')[0].tagName
 ```
 
-## 2019.12.18
+## JQuery隐式迭代机制、JQuery行为队列机制
 
-### window.onload与$(document).ready()的细微差别
+JQuery的行为队列机制：JQuery按照事件的注册顺序触发事件。
 
-### JQuery隐式迭代机制
+## event详细信息 [链接](http://api.jquery.com/category/events/event-object)
 
-toggleClass()
-
-### event详细信息[链接](http://api.jquery.com/category/events/event-object)
-
-
-.hover()
-
-
-### 事件的旅程
+## 事件的旅程
 
 事件捕获：允许多个元素响应单击事件。在事件捕获的过程中，事件首先会交给最外层的元素，接着再交给更具体的元素。
 
@@ -75,8 +70,7 @@ event.stopPropagation()阻止事件继续冒泡。
 
 evnet.preventDefault()在触发默认操作之前终止事件。
 
-
-## 2019.12.21
+## JQuery事件
 
 .off(): 移除事件绑定。
 
@@ -88,9 +82,22 @@ evnet.preventDefault()在触发默认操作之前终止事件。
 
 parseFloat(): 在字符串中从左至右地查找一个浮点（十进制）数。
 
-.hide() & .show() & .fadeIn() & .fadeOut() & .slideDown() & .slideUp()
+## JQuery样式及动画
 
-.is(): 接收一个选择器表达式，然后用选择器来测试当前的JQuery对象。如果集合中至少有一个元素与选择符匹配，则返回true
+### 获取css
+
+参数                | 功能
+------------------ | ----------
+.css('porperty')   | 获取单一属性组
+.css(['porperty1', 'porperty2']) | 获取多个属性组
+.css('porperty', value) | 设置单一属性值
+.css({p1: v1, p2: v2'}) | 设置多个属性值
+
+### .hide() & .show() & .fadeIn() & .fadeOut() & .slideDown() & .slideUp()
+
+隐藏、显示、淡入、淡出、滑下、滑上。
+
+以上所有的方法都可指定时长，效果会在指定的时间段中发生。系统预设两种速度参数：short、fast
 
 ### 强大的.animate()
 
@@ -108,19 +115,9 @@ parseFloat(): 在字符串中从左至右地查找一个浮点（十进制）数
 - 默认情况时同时发生的。
 - 当在另一个效果方法或者在.queue()方法的回调函数中应用时，是按顺序发生的（排队效果）
 
-[css absolute & relative](http://www.wpdfd.com/issues/78/absolutely_relative)
+### [css absolute & relative](http://www.wpdfd.com/issues/78/absolutely_relative)
 
-JQuery.outerWidth(): 获取容器的宽度。
-
-由于DOM元素与html元素部分接口不同，所以attr和prop同时存在。
-
-- 获取html属性: .attr(); removeAttr()
-- 获取DOM属性: .prop()
-- 对于操作表单控件(输入框、单选框、多选框)的值时，建议使用val()方法。
-
-值回调
-
-### DOM树操作
+## DOM树操作
 
 插入新元素
 
@@ -147,7 +144,7 @@ JQuery.outerWidth(): 获取容器的宽度。
 
 .html()获取和设置元素的html
 
-.text()获取纯文本文件，忽略所有的html标签。尔当通过text()设置文件是，html标签又会被正确转换。
+.text()获取纯文本文件，忽略所有的html标签。而当通过text()设置文件是，html标签又会被正确转换。
 
 .replaceAll() .replaceWith()
 
@@ -157,8 +154,9 @@ JQuery.outerWidth(): 获取容器的宽度。
 
 .remove() && .detach() : 从文档中移除每个匹配的元素及其后代元素，但不实际删除它们。
 
+## ajax
 
-### ajax
+ajax不仅可以用来接送json，还可以获取html和xml
 
 .load()
 
@@ -172,17 +170,13 @@ $(form).submit()
 
 .serialize():作用与一个JQuery对象，将匹配的DOM元素转化为能够随Ajax请求传递的查询字符串。
 
-#### 为ajax事件注册回调函数
+### 为ajax事件注册回调函数
 
 $(document).ajaxStart(); $(document).ajaxStop()
 
-### 事件委托
-
-.on()
+### 事件委托 .on()
 
 [同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
-
-### 2019.12.25
 
 [Cross-Origin Resource Sharing]()
 
@@ -191,12 +185,12 @@ $(document).ajaxStart(); $(document).ajaxStop()
 $.ajaxSetup(): 修改调用ajax方法时每个选项的默认值，除非明确覆盖。
 
 
-#### 部分加载HTML页面
+### 部分加载HTML页面
 
 - .load()
 
 
-#### jquery plugin 
+## jquery plugin 
 
 [The JQuery Pligin Registry](http://plugins.jquery.com)
 
