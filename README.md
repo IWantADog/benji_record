@@ -18,6 +18,8 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 
 [JQuery学习记录 - 2019.12.18](JQuery_learning.md)
 
+[JQuery Tips](JQuery_Tips.md)
+
 ## database
 
 [数据库概论](DatabaseSystemConcepts.md)
