@@ -12,6 +12,7 @@
 >ps:选择符从0开始计数，第一个为0为偶数
 
 :nth-child()根据元素的父元素而非当前选择元素的所有元素来计算位置，它可接收数值、odd、even。
+>ps:`:nth-child()`是JQuery中唯一从1开始计数的选择器。
 
 ```javascript
 $('tr:even').addClass('alt');
@@ -205,6 +206,18 @@ $.ajaxSetup(): 修改调用ajax方法时每个选项的默认值，除非明确
 部件：Datepicker、Dialog、Tabs、Accordion
 
 JQuery UI 主题卷轴：ThemeRoller
+
+## 高级选择符和遍历
+
+[所有选择器符介绍](http://api.jquery.com/category/selectors)
+[遍历方法介绍](http://api.jquery.com/category/traversing)
+
+### :visible与:hidden
+
+visible: 筛选所有未被隐藏的元素。hidden: 筛选所有被隐藏的元素。
+
+
+
 
 
 
