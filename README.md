@@ -32,6 +32,8 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 
 [ladder](shadowsocks-go.md)
 
+[mac](mac_shell_keymap.md)
+
 ## 杂项
 [useful questions](usefulquestions.md)
 
