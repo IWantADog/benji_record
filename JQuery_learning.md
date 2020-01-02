@@ -216,9 +216,33 @@ JQuery UI 主题卷轴：ThemeRoller
 
 visible: 筛选所有未被隐藏的元素。hidden: 筛选所有被隐藏的元素。
 
+### 2019.12.30
+
+.on: [委托方法](https://api.jquery.com/on/)
+
+.closet: 该方法沿DOM树向上一层层移动，直至找到与给定的选择符表达式相匹配的元素。如果没有找到这个元素，那它就会返回一个”空的“JQuery对象。
+
+IIFE Immediately Invoked Function Expression
+
+```javascript
+(function($){
+    // code
+})(JQuery);
+```
+
+document元素是随着页面加载几乎立刻就可以调用的，所以把处理程序绑定到document上不需要等到完整的DOM构建完成。
+
+### 2019.12.31
+
+element.scrollTop():[link](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollTop)
 
 
+offset
 
+节流事件：
+setInterval(): javascript方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
+
+setTimeout(): javascript方法用于在指定的毫秒数后调用函数或计算表达式。
 
 
 
