@@ -294,3 +294,46 @@ $.Deferred()、.resolve()、.reject()
 $.extend():????，混合属性？
 
 
+### 2020.01.06
+
+#### 精细地控制动画
+
+step、progress？？？？？
+
+step函数大约每13毫秒会针对每个动画属性被调用一次。
+
+progress函数在动画的生命周期中会被多次调用。它与step()的区别在于，它只会在动画的每一步针对每个元素被调用一次，与多少属性产生动画效果无关。它提供了动画其他方面的调整选项，包括动画的承诺对象、进度（0到1之间的一个值）和动画剩余的毫秒数。
+
+JQuery动画系统最底层的方法是$.Animation()和$.Tween（）
+
+JQuery.slice(): 类似于python中的切片
+
+### 2020.01.07
+
+array.sort(function(){}): jquery的排序函数，可以接收一个函数。
+
+.get(index)与.get():当输入index时返回指定索引位置的element；当不提供index时返回一个包含所有element的列表。
+
+$.trim(string):移除字符串头部和尾部的空格。
+
+.append():不会复制节点，移动它们不会产生多余的副本。
+
+### 2019.01.08
+
+Date.parse() 方法解析一个表示某个日期的字符串，并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数，如果该字符串无法识别，或者一些情况下，包含了不合法的日期数值（如：2015-02-31），则返回值为NaN。
+
+[html data-*](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/data-*)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
