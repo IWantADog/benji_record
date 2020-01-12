@@ -181,6 +181,8 @@ $(document).ajaxStart(); $(document).ajaxStop()
 
 [Cross-Origin Resource Sharing]()
 
+[同源策略-阮一峰](https://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html)
+
 [JSONP技术](https://zh.wikipedia.org/wiki/JSONP)：让用户通过script元素注入的方式绕开同源策略
 
 $.ajaxSetup(): 修改调用ajax方法时每个选项的默认值，除非明确覆盖。
@@ -324,16 +326,46 @@ Date.parse() 方法解析一个表示某个日期的字符串，并返回从1970
 
 [html data-*](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/data-*)
 
+### 2019.01.09
+
+[Mustache](github.com/janl/mustache.js)  [Handlebars](handlebarsjs.com/)
+
+css hook
 
 
+### 2019.01.12
 
+#### 处理ajax错误
 
+通过jqXHR.status属性获取服务器返回错误的类型
 
+设置timeout设置请求的超时。
 
+jqXHR对象：JQuery中所有的ajax都会返回jqXHR对象。
 
+方法 | 功能
+--- | ----
+responseText or responseXMl | 返回包含的数据
+status and statusText       | 返回状态码和状态描述
+setRequestHeader            | 返回请求的header
+abort                      | 提前中止通讯
 
+ajax.always:方法
 
+clearTimeout: 取消由setTimeout设置的timeout
 
+#### ajax扩展功能--数据类型转换器
 
+要定义一种新的ajax数据类型，需要给$.ajaxSetup()传递三个参数，acceptes、contents和converters。
 
+其中，accpets属性会添加发送到服务器的头部信息，声明脚本可以理解的特定MIME类型；contents属性处理数据交换的另一方，它提供一个与响应的MIME类型进行匹配的正则表达式，以尝试自动检测这个元数据当中的数据类型。
 
+#### ajax预过滤器
+
+预过滤器会在发送请求之前对请求进行过滤。
+
+预过滤器会在$.ajax()修改或使用它的任何选项之前调用，因此通过预过滤器可以修改这些选项或基于新的、自定义选项发送请求。
+
+#### 替代传输方式
+
+TODO 待重新整理。
