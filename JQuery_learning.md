@@ -218,13 +218,11 @@ JQuery UI 主题卷轴：ThemeRoller
 
 visible: 筛选所有未被隐藏的元素。hidden: 筛选所有被隐藏的元素。
 
-### 2019.12.30
+.on(): [委托方法](https://api.jquery.com/on/)
 
-.on: [委托方法](https://api.jquery.com/on/)
+.closest(): 该方法沿DOM树向上一层层移动，直至找到与给定的选择符表达式相匹配的元素。如果没有找到这个元素，那它就会返回一个”空的“JQuery对象。
 
-.closet: 该方法沿DOM树向上一层层移动，直至找到与给定的选择符表达式相匹配的元素。如果没有找到这个元素，那它就会返回一个”空的“JQuery对象。
-
-IIFE Immediately Invoked Function Expression
+### IIFE Immediately Invoked Function Expression
 
 ```javascript
 (function($){
@@ -234,21 +232,15 @@ IIFE Immediately Invoked Function Expression
 
 document元素是随着页面加载几乎立刻就可以调用的，所以把处理程序绑定到document上不需要等到完整的DOM构建完成。
 
-### 2019.12.31
-
 element.scrollTop():[link](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollTop)
 
+## 节流事件:
 
-offset
-
-节流事件：
 setInterval(): javascript方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。
 
 setTimeout(): javascript方法用于在指定的毫秒数后调用函数或计算表达式。
 
-### 2020.01.04
-
-#### 扩展事件
+## 扩展事件
 
 诸如mouseenter和ready这样的事件，都是JQuery中的特殊事件。
 
@@ -260,14 +252,15 @@ setTimeout(): javascript方法用于在指定的毫秒数后调用函数或计�
 4. teardown是setup的反操作，会在某个元素删除这个事件的最后一个处理程序时调用。
 5. _default是当前事件的默认行为，在没有被事件处理程序阻止的情况下会执行。
 
+## 高级效果
 
-#### 观察及终止动画
+### 观察及终止动画
 
 1. :animated：JQuery自定义选择符，用于检测元素是否处于动画的过程中。
 2. stop(): 中止当前正在执行的过程，立即完成当前的动画。[link](https://api.jquery.com/stop/)
 3. finish(): 与stop(true, true)类似，不过它也会使所有排队的动画都跳到各自完成的最终值。
 
-#### 动画全局效果属性
+### 动画全局效果属性
 
 1. $.fn。关闭所有的动画效果`$.fn.off=true`
 2. 定义效果时长。`$.fn.speed`。speed为jquery默认的速度，可以任意扩展。
@@ -278,29 +271,27 @@ setTimeout(): javascript方法用于在指定的毫秒数后调用函数或计�
         _default: 400
     }
     ```
-3. 缓动函数？swing与linear？？？？？
 
-#### 使用延迟对象
+3. 缓动函数：用于控制jquery中动画效果在执行时的速度。[link](https://api.jquery.com/animate/)
+    > The remaining parameter of .animate() is a string naming an easing function to use. An easing function specifies the speed at which the animation progresses at different points within the animation.__The only easing implementations in the jQuery library are the default, called swing, and one that progresses at a constant pace, called linear.__ More easing functions are available with the use of plug-ins, most notably the jQuery UI suite.
+
+### 使用延迟对象
 
 $.Deferred()、.resolve()、.reject()
 
 每个延迟对象都会向其他代码承诺(promise)提供数据。这个承诺以另一个对象的形式来兑现，这个对象也有自己的一套方法。对于任何延迟对象，调用它的.promise()方法就可以取得其承诺对象。然后，通过调用这个承诺对象的各种方法，就可以添加在各种承诺兑现时调用的处理程序。
 
-.done(): 通过done添加的处理程序会在延迟对象被成功解决之后调用。
+承诺对象相关的方法:
 
-.fail():处理程序会在延迟对象被拒绝之后调用。
+- .done(): 通过done添加的处理程序会在延迟对象被成功解决之后调用。
 
-.always(): 处理程序在延迟对象完成其任务(无论解决或拒绝)时调用。
+- .fail():处理程序会在延迟对象被拒绝之后调用。
 
+- .always(): 处理程序在延迟对象完成其任务(无论解决或拒绝)时调用。
 
-$.extend():????，混合属性？
+$.extend(): 融合多个对象到第一个对象，可以设置递归。[link](https://api.jquery.com/jquery.extend/)
 
-
-### 2020.01.06
-
-#### 精细地控制动画
-
-step、progress？？？？？
+### 精细地控制动画 step && progress
 
 step函数大约每13毫秒会针对每个动画属性被调用一次。
 
@@ -308,64 +299,43 @@ progress函数在动画的生命周期中会被多次调用。它与step()的区
 
 JQuery动画系统最底层的方法是$.Animation()和$.Tween（）
 
-JQuery.slice(): 类似于python中的切片
-
-### 2020.01.07
-
-array.sort(function(){}): jquery的排序函数，可以接收一个函数。
-
-.get(index)与.get():当输入index时返回指定索引位置的element；当不提供index时返回一个包含所有element的列表。
-
-$.trim(string):移除字符串头部和尾部的空格。
-
-.append():不会复制节点，移动它们不会产生多余的副本。
-
-### 2019.01.08
-
-Date.parse() 方法解析一个表示某个日期的字符串，并返回从1970-1-1 00:00:00 UTC 到该日期对象（该日期对象的UTC时间）的毫秒数，如果该字符串无法识别，或者一些情况下，包含了不合法的日期数值（如：2015-02-31），则返回值为NaN。
-
 [html data-*](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/data-*)
 
-### 2019.01.09
+### jquery模版系统
 
 [Mustache](github.com/janl/mustache.js)  [Handlebars](handlebarsjs.com/)
 
-css hook
+## 高级ajax
 
-
-### 2019.01.12
-
-#### 处理ajax错误
-
-通过jqXHR.status属性获取服务器返回错误的类型
-
-设置timeout设置请求的超时。
+### 处理ajax错误
 
 jqXHR对象：JQuery中所有的ajax都会返回jqXHR对象。
+
+通过jqXHR.status属性获取服务器返回错误的类型。
+
+发送ajax请求时通过timeout设置请求的超时时间。
+
+jqXHR对象
 
 方法 | 功能
 --- | ----
 responseText or responseXMl | 返回包含的数据
 status and statusText       | 返回状态码和状态描述
 setRequestHeader            | 返回请求的header
-abort                      | 提前中止通讯
+abort                       | 提前中止通讯
 
-ajax.always:方法
+ajax.always:在请求期间添加一个加载指示器，而在请求完成时或在其他情况下隐藏它。
 
 clearTimeout: 取消由setTimeout设置的timeout
 
-#### ajax扩展功能--数据类型转换器
+### ajax扩展功能--数据类型转换器
 
 要定义一种新的ajax数据类型，需要给$.ajaxSetup()传递三个参数，acceptes、contents和converters。
 
 其中，accpets属性会添加发送到服务器的头部信息，声明脚本可以理解的特定MIME类型；contents属性处理数据交换的另一方，它提供一个与响应的MIME类型进行匹配的正则表达式，以尝试自动检测这个元数据当中的数据类型。
 
-#### ajax预过滤器
+### ajax预过滤器
 
 预过滤器会在发送请求之前对请求进行过滤。
 
 预过滤器会在$.ajax()修改或使用它的任何选项之前调用，因此通过预过滤器可以修改这些选项或基于新的、自定义选项发送请求。
-
-#### 替代传输方式
-
-TODO 待重新整理。
