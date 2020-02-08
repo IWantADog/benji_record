@@ -252,3 +252,15 @@ widget默认会渲染绑定的模版。
 4. 将js文件通过xpath插入assets_backend
 
 5. 将xml加入__manifest__中的data，template加入qweb中。
+
+## 2020.02.08
+
+### 当前登录用户的id
+
+xml中访问当前用户的id `user.id`
+
+在domain中获取当前登录用户的id `uid`
+
+domain中`active_id`当前record的id
+
+py中当前用户 `self.user.id or self._uid`
