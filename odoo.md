@@ -264,3 +264,7 @@ xml中访问当前用户的id `user.id`
 domain中`active_id`当前record的id
 
 py中当前用户 `self.user.id or self._uid`
+
+## 2020.02.09
+
+windows中将odoo作为服务启动 nssm

@@ -31,4 +31,14 @@
    3. 请求调度
    4. 响应
    5. Flaks扩展
-3. 
+
+# flask 源码阅读
+
+## tag 0.1 - 2020.02.08
+
+rom werkzeug import run_simple？？
+
+flask.py line 375 ?
+`return SecureCookie.load_cookie(request, self.session_cookie_name secret_key=key)`
+
+
