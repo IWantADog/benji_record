@@ -36,3 +36,5 @@ firewall-cmd --zone=public --list-ports
 
 ssh user@host 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub
 ```
+
+### iterm 使用代理的方法 [link](https://github.com/mrdulin/blog/issues/18)
