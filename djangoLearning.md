@@ -36,6 +36,12 @@ python manager.py runserver
 
 [Advanced tutorial: How to write reusable apps](https://docs.djangoproject.com/en/1.10/intro/reusable-apps/)
 
+[work with form](https://docs.djangoproject.com/en/1.10/topics/forms/)
+
+[form api](https://docs.djangoproject.com/en/1.10/ref/forms/)
+
+[custorm template tags](https://docs.djangoproject.com/en/1.10/howto/custom-template-tags/)
+
 [See the template loading documentation for more information about how Django finds its templates.](https://docs.djangoproject.com/en/1.10/topics/templates/#template-loading)
 
 For more information on model relations, [see Accessing related objects](https://docs.djangoproject.com/en/1.10/ref/models/relations/). For more on how to use double underscores to perform field lookups via the API, see [Field lookups](https://docs.djangoproject.com/en/1.10/topics/db/queries/#field-lookups-intro). For full details on the database API, see [our Database API reference](https://docs.djangoproject.com/en/1.10/topics/db/queries/).
@@ -160,6 +166,7 @@ By registering the Question model with admin.site.register(Question), Django was
 
 Let’s see how this works by reordering the fields on the edit form. Replace the admin.site.register(Question) line with:
 
+
 ```python
 polls/admin.py
 from django.contrib import admin
@@ -172,3 +179,29 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 ```
+
+## 2020.02.14
+
+### form
+
+```python
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'email', 'url', 'text']
+```
+
+### 模版的继承
+
+### app.py 的作用 && from django.apps import AppConfig的作用 [link](https://docs.djangoproject.com/en/1.10/ref/applications/)
+
+## 2020.02.15
+
+#### from django.contrib.syndication.views import Feed
+
+Django comes with a high-level syndication-feed-generating framework that makes creating RSS and Atom feeds easy.
+
+[The syndication feed framework](https://docs.djangoproject.com/en/1.10/ref/contrib/syndication/)
+
+
+### from django.db.models import Q
