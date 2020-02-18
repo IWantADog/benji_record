@@ -268,3 +268,11 @@ py中当前用户 `self.user.id or self._uid`
 ## 2020.02.09
 
 windows中将odoo作为服务启动 nssm
+
+共享资源中文件出现‘clound find commend lessc’，不是由于less的安装问题，好像是使用nssc启动服务时出现的问题，删除服务重新安装后解决。
+
+## 2020.02.18
+
+### odoo could find lessc
+
+卸载之前装的less，重新全局安装 `cnpm install -g less; cnpm install -g less-plugin-clean-css`
