@@ -300,9 +300,4 @@ class AutoOdooXml:
 if __name__ == '__main__':
     # auto = AutoOdooXml('/Users/benjilee/bplead/work/thingx-chengdu-erp/addons/ls_test_model')
     # auto.run()
-
-
-
-
-
-
+    pass
