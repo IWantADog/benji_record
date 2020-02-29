@@ -22,7 +22,8 @@ class AutoOdooXml:
 
     def check_path_exists(self):
         if not os.path.exists(self.module_name):
-            os.makedirs(self.module_name)
+            print("can't find modules path!")
+            return False
 
         if not os.path.exists(self.view_path):
             os.makedirs(self.view_path)
@@ -30,10 +31,13 @@ class AutoOdooXml:
         dir_authority_path = os.path.dirname(self.authority_path)
         if not os.path.exists(dir_authority_path):
             os.makedirs(dir_authority_path)
+        return True
 
     def run(self):
         print('运行检测....')
-        self.check_path_exists()
+        all_is_ok = self.check_path_exists()
+        if not all_is_ok:
+            return
         print('检查结束！')
 
         self.create_view_xml()
@@ -76,7 +80,7 @@ class AutoOdooXml:
 
             module_search_result = re.search(r"_name=[\'\"]([\w\.]*?)[\'\"]", line)
             if module_search_result:
-                if current_model:
+                if current_model and len(current_attr_list) != 0:
                     if not current_description:
                         current_description = current_model.replace('.', '_')
                     file_info_dict[current_model] = {
@@ -97,14 +101,15 @@ class AutoOdooXml:
             attr_search_result = re.search(r"([\w]*?)=fields", line)
             if attr_search_result and current_model:
                 current_attr_list.append(attr_search_result.group(1))
-
-        if not current_description:
-            current_description = current_model.replace('.', '_')
-        file_info_dict[current_model] = {
-            'attrs': current_attr_list,
-            'description': current_description
-        }
-        self.menuitems.append((current_model, current_description))
+        
+        if current_model and len(current_attr_list) != 0:
+            if not current_description:
+                current_description = current_model.replace('.', '_')
+            file_info_dict[current_model] = {
+                'attrs': current_attr_list,
+                'description': current_description
+            }
+            self.menuitems.append((current_model, current_description))
 
         return file_info_dict
 
@@ -248,8 +253,9 @@ class AutoOdooXml:
             id = 'access_' + model
             security_string += '{id},{id},{model},base.group_user,1,1,1,0\r'.format(id=id, model=model)
 
-        with open(self.authority_path, 'a') as file:
-            file.write(security_string)
+        if security_string:
+            with open(self.authority_path, 'a') as file:
+                file.write(security_string)
 
 
     def get_need_security_model(self):
