@@ -1,8 +1,9 @@
 # Django Learning
 
-## 2020.02.11
-
+## start 
 django-admin startproject projectName
+
+python manager.py startapp appName
 
 python manager.py runserver
 
@@ -205,3 +206,25 @@ Django comes with a high-level syndication-feed-generating framework that makes 
 
 
 ### from django.db.models import Q
+
+
+## 2020.02.21
+
+### django URLconfig
+
+```python
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('book/', include('book.urls')),
+]
+```
+
+## 2020.02.23
+
+### 用户认证 [link](https://docs.djangoproject.com/en/3.0/topics/auth/default/)
+
+### generic.ListView && generic.DetailView && LoginView 的调用方式？
+
+## 2020.02.25
+
+python3 setattr()
