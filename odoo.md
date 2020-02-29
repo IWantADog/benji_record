@@ -275,3 +275,6 @@ windows中将odoo作为服务启动 nssm
 ### odoo could find lessc
 
 卸载之前装的less，重新全局安装 `cnpm install -g less; cnpm install -g less-plugin-clean-css`
+
+
+### bin_path=/path/to/thirdpartypath/to/thirdparty
