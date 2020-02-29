@@ -190,8 +190,6 @@ def image_to_base64(image_path):
     return base64_data
 ```
 
-## 2019.11.04
-
 ### only debug can see it
 
 ```
@@ -206,8 +204,6 @@ _sql_constraints = [
 ]
 ```
 
-## 2019.12.03
-
 ### qweb渲染模版
 
 ```js
@@ -216,20 +212,16 @@ var html = $(QWeb.render('equipment_ratio_detail_template', { data:data }));
 $('.bp-ratio-detail').html(html);
 ```
 
-
-## 2019.12.04
-
 ### update join [参考](https://www.postgresql.org/message-id/6ca02fc80806231243y6e4ea774x6ae4967fb8824447@mail.gmail.com)
 
-```
+```sql
 update eam_equipment_running_record as a set running_hours_plan=86399
 from eam_equipment b
 where a.equipment_id=b.id and b.running_id=3 and date between '2019-11-18' and current_date;
 ```
 
-## 2019.12.14
+### Widgets
 
-### Widgets 
 [详解](https://www.odooyun.com/documentation/reference/javascript_reference.html#widgets)
 
 widget默认会渲染绑定的模版。
@@ -237,8 +229,10 @@ widget默认会渲染绑定的模版。
 通过widget.variable在xml模版中获取js中的变量。
 
 ### tag
-<field name="tag">ghcc_work.work_application_menu_tag</field>
 
+```xml
+<field name="tag">ghcc_work.work_application_menu_tag</field>
+```
 
 ### action.client
 
@@ -252,29 +246,22 @@ widget默认会渲染绑定的模版。
 
 5. 将xml加入__manifest__中的data，template加入qweb中。
 
-## 2020.02.08
-
 ### 当前登录用户的id
 
-xml中访问当前用户的id `user.id`
+- xml中访问当前用户的id `user.id`
 
-在domain中获取当前登录用户的id `uid`
+- 在domain中获取当前登录用户的id `uid`
 
-domain中`active_id`当前record的id
+- domain中`active_id`当前record的id
 
-py中当前用户 `self.user.id or self._uid`
+- py中当前用户 `self.user.id or self._uid`
 
-## 2020.02.09
+### windows server deploy
 
-windows中将odoo作为服务启动 nssm
+- windows中将odoo作为服务启动nssm
 
-共享资源中文件出现‘clound find commend lessc’，不是由于less的安装问题，好像是使用nssc启动服务时出现的问题，删除服务重新安装后解决。
+- 共享资源中文件出现‘clound find commend lessc’，不是由于less的安装问题，好像是使用nssc启动服务时出现的问题，删除服务重新安装后解决。
 
-## 2020.02.18
+- __odoo could find lessc__ 卸载之前装的less，重新全局安装 `cnpm install -g less; cnpm install -g less-plugin-clean-css`
 
-### odoo could find lessc
-
-卸载之前装的less，重新全局安装 `cnpm install -g less; cnpm install -g less-plugin-clean-css`
-
-
-### bin_path=/path/to/thirdpartypath/to/thirdparty
+- 切换网站主题时出现lessc could find 问题:在conf文件中增加 __bin_path=/path/to/thirdpartypath/to/thirdparty__
