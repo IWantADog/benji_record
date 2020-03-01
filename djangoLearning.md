@@ -269,3 +269,22 @@ python3 setattr()
     ```python
     form = UploadFileForm(request.POST, request.FILES)
     ```
+
+5. serve local image:
+
+    setting.py中MEDIA_URL和MEDIA_ROOT的关系
+    例子：
+    MEDIA_URL="/meida/"
+    MEDIA_ROOT="/path/to/images"
+
+    __http://1270.0.0.1/modeia/a.jpg__ 访问的是 __/path/to/images/a.jpg__
+
+    ```python
+    # must add in module urls. add in app url don't work
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    ```
+
+6. static file serve [link](https://docs.djangoproject.com/en/1.11/howto/static-files/)
+
+7. http://www.threemeal.com/blog/29/
