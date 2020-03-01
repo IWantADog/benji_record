@@ -228,3 +228,44 @@ urlpatterns = [
 ## 2020.02.25
 
 python3 setattr()
+
+## 2020.03.01
+
+### django file upload
+
+1. setting file: 设置图片的存放路径 [参考](https://docs.djangoproject.com/en/3.0/topics/files/)
+    `MEDIA_ROOT = os.path.join(BASE_DIR, 'images')`
+
+2. model && form [model参考](https://docs.djangoproject.com/en/3.0/ref/models/fields/#filefield)
+
+    ```python
+
+    # model
+    class AClass:
+        img = models.ImageField(upload_to=user_directory_path)
+
+    def user_directory_path(instance, filename):
+        return 'user_img/{}/{}'.format(instance.user.id, filename)
+
+    # form
+    class MyForm():
+            img = forms.ImageField(label='images')
+    ```
+
+3. html:[产考](https://docs.djangoproject.com/en/3.0/topics/http/file-uploads/)
+    - __{% csrg_token %}__
+    - form add attribute __enctype="multipart/form-data"__
+
+    ```html
+    <form action="{% url 'user_detail_edit' user.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        ....
+    </form>
+    ```
+
+4. view:[产考](https://docs.djangoproject.com/en/3.0/topics/http/file-uploads/)
+    - 将 __request.FILES__ 计入FORM初始化中
+
+    ```python
+    form = UploadFileForm(request.POST, request.FILES)
+    ```
