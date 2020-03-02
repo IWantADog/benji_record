@@ -21,7 +21,7 @@ class AutoOdooXml:
         self.menuitems = []
 
     def check_path_exists(self):
-        if not os.path.exists(self.module_name):
+        if not os.path.exists(self.root_path):
             print("can't find modules path!")
             return False
 
@@ -221,8 +221,7 @@ class AutoOdooXml:
                 file.write(menu_xml)
 
     def create_menu_string(self):
-        menu_template = '''
-<?xml version="1.0" encoding="UTF-8" ?>
+        menu_template = '''<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <menuitem name="{module_name}" id="{module_name}_menu_root"/>
 {menuitems}
@@ -255,7 +254,7 @@ class AutoOdooXml:
 
         if security_string:
             with open(self.authority_path, 'a') as file:
-                file.write(security_string)
+                file.write('\r' + security_string)
 
 
     def get_need_security_model(self):
