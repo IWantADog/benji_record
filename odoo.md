@@ -254,7 +254,9 @@ widget默认会渲染绑定的模版。
 
 - domain中`active_id`当前record的id
 
-- py中当前用户 `self.user.id or self._uid`
+- odoo10&&py中当前用户 `self.user.id or self._uid`
+
+- odoo12&&py中通过`self.env.user`获取当前登录用户。
 
 ### windows server deploy
 
@@ -265,3 +267,94 @@ widget默认会渲染绑定的模版。
 - __odoo could find lessc__ 卸载之前装的less，重新全局安装 `cnpm install -g less; cnpm install -g less-plugin-clean-css`
 
 - 切换网站主题时出现lessc could find 问题:在conf文件中增加 __bin_path=/path/to/thirdpartypath/to/thirdparty__
+
+- odoo.conf的参数事例[odoo.conf](https://github.com/odoo/odoo/issues/4141)
+
+- [how-to-create-executable-file-for-odoo-project](https://stackoverflow.com/questions/39566718/how-to-create-executable-file-for-odoo-project)
+
+### odoo视图的加载问题
+
+odoo中__mainfest__ 中data包含的模版加载是有先后顺序的，按照列表的先后次序加载。如果前面的视图文件引用了后面的视图数据，升级模块是会报错。
+
+### odoo12 client action [link](https://www.odooyun.com/documentation/reference/javascript_reference.html#client-actions)
+
+### odoo12与odoo10区别
+
+- `ir.needaction_mixin`在odoo10中使用，odoo12中使用`mail.activity.mixin`
+
+- Registry
+
+    ```python
+    # in odoo12
+    from odoo.modules.registry import Registry
+
+    # in odoo10
+    from odoo.modules.registry import RegistryManager
+    ```
+
+### base.user_has_groups 判断当前登录用户是否在指定的权限组中
+
+### odoo ajax post 请求
+
+客户端: data必须包含params
+服务器端: type='json'
+
+关于csrf(跨域请求伪造)没搞懂，暂时将csrf设置为False。
+
+ajax发送跨域请求时会首先发送一个option请求。
+
+### odoo批量图片导入
+
+odoo image store by base64 string
+
+image binary to base64 string
+
+```python
+import base64
+from cStringIO import StringIO
+
+# pip2 install pillow
+from PIL import Image
+
+
+def image_to_base64(image_path):
+    img = Image.open(image_path)
+    output_buffer = StringIO()
+    img.save(output_buffer, format='JPEG')
+    binary_data = output_buffer.getvalue()
+    base64_data = base64.b64encode(binary_data)
+    return base64_data
+```
+
+### odoo.api.constrains使用
+
+Decorates a constraint checker. Each argument must be a field name used in the check:
+
+@api.one
+@api.constrains('name', 'description')
+def _check_description(self):
+    if self.name == self.description:
+        raise ValidationError("Fields name and description must be different")
+Invoked on the records on which one of the named fields has been modified.
+
+Should raise ValidationError if the validation failed.
+
+__Warning__
+>@constrains only supports simple field names, dotted names (fields of relational fields e.g. partner_id.customer) are not supported and will be ignored
+
+>@constrains will be triggered only if the declared fields in the decorated method are included in the create or write call. It implies that fields not present in a view will not trigger a call during a record creation. A override of create is necessary to make sure a constraint will always be triggered (e.g. to test the absence of value).
+
+### odoo _sql_constraint使用
+
+_sql_constraint = [
+    ('constraint_name', 'unique(attrs)', 'message that user should know')
+]
+
+### postgresql常用命令
+
+- __\\?__: 查看所有的相关命令
+- __\l__: list all database
+- __\dt__: list all table
+- __\d tableName__ : descrip a table
+
+### postgresql主键自增。bigserial [链接](https://www.yiibai.com/manual/postgresql/datatype-numeric.html#DATATYPE-SERIAL)
