@@ -30,11 +30,14 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 
 [mysql install by zip - 2019.08.08](mysql_install.md)
 
-[ladder](shadowsocks-go.md)
+~~[ladder](shadowsocks-go.md)~~
 
 [mac](mac_shell_keymap.md)
 
 ## 杂项
+
 [useful questions](usefulquestions.md)
 
-[odoo](odoo.md)
+[odoo](odoo.md) 
+
+[odoo_problems](odoo_work_problem_list.md)

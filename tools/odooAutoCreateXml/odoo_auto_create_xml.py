@@ -152,9 +152,11 @@ class AutoOdooXml:
             <field name="model">{module_name}</field>
             <field name="arch" type="xml">
                 <form>
-                    <group>
+                    <sheet>
+                        <group>
 {form}
-                    </group>
+                        </group>
+                    <sheet>
                 </form>
             </field>
         </record>
@@ -162,7 +164,7 @@ class AutoOdooXml:
 
         form_content = ''
         for attr in self.current_view_attrs:
-            form_content += ' ' * 24 + '<field name="{}"/>\r'.format(attr)
+            form_content += ' ' * 28 + '<field name="{}"/>\r'.format(attr)
 
         return form_xml_template.format(id=id, name=id, module_name=self.current_view_model, form=form_content)
 
@@ -230,17 +232,14 @@ class AutoOdooXml:
         menuitems_string = ''
         menuitem_template = '''
         <menuitem name="{description}" id="{id}_menu" action="{id}_action"
-                      parent="{module_name}_menu_root" sequence="{index}"/>
+                      parent="{module_name}_menu_root"/>
         '''
-        index = 1
         for key, description in self.menuitems:
             menuitems_string += menuitem_template.format(
                 description=description,
                 id=key.replace('.', '_'),
                 module_name=self.module_name,
-                index=index
             )
-            index += 1
 
         return menu_template.format(module_name=self.module_name, menuitems=menuitems_string)
 
@@ -294,9 +293,3 @@ class AutoOdooXml:
             if name != 'menu.xml':
                 print("'views/{}',".format(name))
         print("'views/menu.xml',")
-
-
-if __name__ == '__main__':
-    # auto = AutoOdooXml('/Users/benjilee/bplead/work/thingx-chengdu-erp/addons/ls_test_model')
-    # auto.run()
-    pass
