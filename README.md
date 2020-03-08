@@ -24,6 +24,12 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 
 [数据库概论](DatabaseSystemConcepts.md)
 
+## linux
+
+[linux常用命令](linux.md)
+
+[vps warn fail login](vps_warn_fail_login.md)
+
 ## 小项
 
 [git总结 - 2019.09.07](git.md)
@@ -38,6 +44,6 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 
 [useful questions](usefulquestions.md)
 
-[odoo](odoo.md) 
+[odoo](odoo.md)
 
 [odoo_problems](odoo_work_problem_list.md)
