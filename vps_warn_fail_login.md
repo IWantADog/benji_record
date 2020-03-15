@@ -23,6 +23,10 @@ usermod -aG wheel userName
 /etc/ssh/sshd_config保存sshd服务配置信息。
 
 ```shell
+# 默认端口号, 是否重要
+
+Port 2345
+
 # 阻止 root 登录：
 
 PermitRootLogin no
@@ -76,7 +80,8 @@ SSH 亦对 TCP 包装函式有内置支持，因此 ssh 服务的访问权亦可
 创建一条每分钟只指纳 4 个连接并记录所有连接的规则。
 
 ```shell
-$ firewall-cmd --permanent --add-rich-rule='rule service name="ssh-custom" accept limit value="4/m" log' $ firewall-cmd --reload
+$ firewall-cmd --permanent --add-rich-rule='rule service name="ssh-custom" accept limit value="4/m" log' 
+$ firewall-cmd --reload
 ```
 
 5、使用ssh登录，放弃使用密码登录。
