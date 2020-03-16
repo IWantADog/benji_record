@@ -23,7 +23,7 @@ usermod -aG wheel userName
 /etc/ssh/sshd_config保存sshd服务配置信息。
 
 ```shell
-# 默认端口号, 是否重要
+# 默认端口号, 十分重要
 
 Port 2345
 
