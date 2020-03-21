@@ -14,6 +14,13 @@ class AutoOdooXml:
 
         self.module_name = module_name
 
+        # parse py
+        self.current_model = ''
+        self.current_attr_list = []
+        self.current_one2many_list = []
+        self.current_description = ''
+
+        # view
         self.current_view_model = None
         self.current_view_description = None
         self.current_view_attrs = []
@@ -65,16 +72,11 @@ class AutoOdooXml:
         info_dict = self.parse_py(py_path)
         self.write_view(info_dict)
 
-
     def parse_py(self, py_path):
         file_info_dict = {}
         with open(py_path, 'r') as file:
             lines = file.readlines()
 
-        current_model = ''
-        current_description = ''
-        current_attr_list = []
-        current_one2many_list = []
         for line in lines:
             line = line.replace(' ', '').replace('\r', '').replace('\n', '')
             if not line:
@@ -82,47 +84,44 @@ class AutoOdooXml:
 
             module_search_result = re.search(r"_name=[\'\"]([\w\.]*?)[\'\"]", line)
             if module_search_result:
-                if current_model and len(current_attr_list) != 0:
-                    if not current_description:
-                        current_description = current_model.replace('.', '_')
-                    file_info_dict[current_model] = {
-                        'attrs': current_attr_list,
-                        'one2many_attrs': current_one2many_list,
-                        'description': current_description
-                    }
-                    self.menuitems.append((current_model, current_description))
-                current_model = module_search_result.group(1)
-                current_attr_list = []
-                current_one2many_list = []
-                current_description = ''
+                file_info_dict = self.package_current_info(file_info_dict)
+                self.current_model = module_search_result.group(1)
                 continue
 
             description_search_result = re.search(r"_description=[\'\"](.*?)[\'\"]", line)
             if description_search_result:
-                current_description = description_search_result.group(1)
+                self.current_description = description_search_result.group(1)
                 continue
 
             one2many_attr_search_result = re.search(r"([\w]*?)=fields.One2many", line)
-            if one2many_attr_search_result and current_model:
-                current_one2many_list.append(one2many_attr_search_result.group(1))
+            if one2many_attr_search_result and self.current_model:
+                self.current_one2many_list.append(one2many_attr_search_result.group(1))
                 continue
 
             attr_search_result = re.search(r"([\w]*?)=fields", line)
-            if attr_search_result and current_model:
-                current_attr_list.append(attr_search_result.group(1))
+            if attr_search_result and self.current_model:
+                self.current_attr_list.append(attr_search_result.group(1))
         
-        if current_model and len(current_attr_list) != 0:
-            if not current_description:
-                current_description = current_model.replace('.', '_')
-            file_info_dict[current_model] = {
-                'attrs': current_attr_list,
-                'one2many_attrs': current_one2many_list,
-                'description': current_description
+        return self.package_current_info(file_info_dict)
+
+    def package_current_info(self, file_info_dict):
+        if self.check_is_time_package_info():
+            if not self.current_description:
+                self.current_description = self.current_model.replace('.', '_')
+            file_info_dict[self.current_model] = {
+                'attrs': self.current_attr_list,
+                'one2many_attrs': self.current_one2many_list,
+                'description': self.current_description
             }
-            self.menuitems.append((current_model, current_description))
-
+            self.menuitems.append((self.current_model, self.current_description))
+            self.current_model = ''
+            self.current_attr_list = []
+            self.current_one2many_list = []
+            self.current_description = ''
         return file_info_dict
-
+        
+    def check_is_time_package_info(self):
+        return self.current_model and (len(self.current_attr_list) != 0 or len(self.current_one2many_list) != 0)
 
     def write_view(self, file_info_dict):
         for model, value in file_info_dict.items():
