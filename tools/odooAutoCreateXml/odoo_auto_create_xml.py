@@ -17,6 +17,7 @@ class AutoOdooXml:
         self.current_view_model = None
         self.current_view_description = None
         self.current_view_attrs = []
+        self.current_view_one2many_attrs = []
 
         self.menuitems = []
 
@@ -73,6 +74,7 @@ class AutoOdooXml:
         current_model = ''
         current_description = ''
         current_attr_list = []
+        current_one2many_list = []
         for line in lines:
             line = line.replace(' ', '').replace('\r', '').replace('\n', '')
             if not line:
@@ -85,17 +87,24 @@ class AutoOdooXml:
                         current_description = current_model.replace('.', '_')
                     file_info_dict[current_model] = {
                         'attrs': current_attr_list,
+                        'one2many_attrs': current_one2many_list,
                         'description': current_description
                     }
                     self.menuitems.append((current_model, current_description))
                 current_model = module_search_result.group(1)
                 current_attr_list = []
+                current_one2many_list = []
                 current_description = ''
                 continue
 
             description_search_result = re.search(r"_description=[\'\"](.*?)[\'\"]", line)
             if description_search_result:
                 current_description = description_search_result.group(1)
+                continue
+
+            one2many_attr_search_result = re.search(r"([\w]*?)=fields.One2many", line)
+            if one2many_attr_search_result and current_model:
+                current_one2many_list.append(one2many_attr_search_result.group(1))
                 continue
 
             attr_search_result = re.search(r"([\w]*?)=fields", line)
@@ -107,6 +116,7 @@ class AutoOdooXml:
                 current_description = current_model.replace('.', '_')
             file_info_dict[current_model] = {
                 'attrs': current_attr_list,
+                'one2many_attrs': current_one2many_list,
                 'description': current_description
             }
             self.menuitems.append((current_model, current_description))
@@ -119,6 +129,7 @@ class AutoOdooXml:
             self.current_view_model = model
             self.current_view_description = value['description']
             self.current_view_attrs = value['attrs']
+            self.current_view_one2many_attrs = value['one2many_attrs']
 
 
             xml_file_name = model.replace('.', '_') + '_view.xml'
@@ -156,7 +167,8 @@ class AutoOdooXml:
                         <group>
 {form}
                         </group>
-                    <sheet>
+{page}
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -166,7 +178,18 @@ class AutoOdooXml:
         for attr in self.current_view_attrs:
             form_content += ' ' * 28 + '<field name="{}"/>\r'.format(attr)
 
-        return form_xml_template.format(id=id, name=id, module_name=self.current_view_model, form=form_content)
+        page_content = ''
+        if self.current_view_one2many_attrs:
+            page_formate = ' ' * 28 + '<page string="PageName">\r' + '{}' + ' ' * 28 + '</page>\r'
+            for attr in self.current_view_one2many_attrs:
+                emp_page_content = ' ' * 32 + '<field name="{}"/>\r'.format(attr)
+                page_content += page_formate.format(emp_page_content)
+            page_content = ' ' * 24 + '<notebook>\r' + page_content + ' ' * 24 + '</notebook>'
+
+        return form_xml_template.format(
+            id=id, name=id, module_name=self.current_view_model, form=form_content,
+            page=page_content
+        )
 
     def create_tree_view(self):
         id = self.current_view_model.replace('.', '_') + '_tree_view'
@@ -293,3 +316,9 @@ class AutoOdooXml:
             if name != 'menu.xml':
                 print("'views/{}',".format(name))
         print("'views/menu.xml',")
+
+
+if __name__ == "__main__":
+    path = '/Users/benjilee/bplead/work/thingx-chengdu-erp/addons/test_model'
+    test_obj = AutoOdooXml(path, '功能测试')
+    test_obj.run()

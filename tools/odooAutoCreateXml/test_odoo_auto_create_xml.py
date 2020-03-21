@@ -15,9 +15,11 @@ class OdooAutoCreateXmlTestCase(unittest.TestCase):
         self.assertEqual(len(result), 2)
         self.assertTrue('base.production.line' in result)
         self.assertTrue('base.production.line2' in result)
-        self.assertEqual(len(result['base.production.line']['attrs']), 6)
+        self.assertEqual(len(result['base.production.line']['attrs']), 5)
+        self.assertEqual(len(result['base.production.line']['one2many_attrs']), 1)
         self.assertEqual(result['base.production.line']['description'], '产线')
-        self.assertEqual(len(result['base.production.line2']['attrs']), 4)
+        self.assertEqual(len(result['base.production.line2']['attrs']), 3)
+        self.assertEqual(len(result['base.production.line2']['one2many_attrs']), 1)
         self.assertEqual(result['base.production.line2']['description'], '产线2')
 
     def test_parse_py_no_name(self):
@@ -38,6 +40,7 @@ class OdooAutoCreateXmlTestCase(unittest.TestCase):
         file_path = os.path.join(self.test_case_path, 'test_parse_py_no_attrs.py')
         result = self.oacx.parse_py(file_path)
         self.assertTrue(result == {})
+
 
 if __name__ == "__main__":
     unittest.main()

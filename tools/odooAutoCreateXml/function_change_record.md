@@ -7,5 +7,5 @@
 
 ## 2020.03.03
 
-1. 重构parse_py方法
+1. 重构parse_py方法 [python interface](http://masnun.rocks/2017/04/15/interfaces-in-python-protocols-and-abcs/)
 2. 命令行扩展
