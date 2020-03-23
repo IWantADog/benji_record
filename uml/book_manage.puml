@@ -1,0 +1,27 @@
+@startuml
+
+Book "1" *-- "many" comment
+
+User "1" *-- "many" comment
+
+comment "1" *-- "many" subcomment
+
+User "1" *-- "many" subcomment
+
+class comment {
+    {field} content
+    {field} publish_time
+    {field} like_count
+    {field} fk user
+    {field} fk book
+}
+
+class subcomment{
+    {field} content
+    {field} publish_time
+    {field} like_count
+    {field} fk user
+    {field} fk comment
+}
+
+@enduml
