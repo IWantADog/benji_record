@@ -288,3 +288,89 @@ python3 setattr()
 6. static file serve [link](https://docs.djangoproject.com/en/1.11/howto/static-files/)
 
 7. http://www.threemeal.com/blog/29/
+
+
+### 2020.02.03
+
+[How to use sessions](https://docs.djangoproject.com/en/3.0/topics/http/sessions/)
+
+[Using the Django authentication system](https://docs.djangoproject.com/en/2.0/topics/auth/default)
+
+https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#authentication-backends
+
+[class base view](https://docs.djangoproject.com/en/2.0/topics/class-based-views/)
+
+所有class base view的详细信息[class base view API](https://docs.djangoproject.com/en/2.0/ref/class-based-views/)
+
+[All authentication views](https://docs.djangoproject.com/en/2.0/topics/auth/default/#all-authentication-views)
+
+[site framework](https://docs.djangoproject.com/en/2.0/ref/contrib/sites/)
+
+## Tempalte
+[The Django template language: for Python programmers](https://docs.djangoproject.com/en/2.0/ref/templates/api/)
+
+[Built-in template tags and filters](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/) Django模版内置的tags和filters
+
+[Password management in Django](https://docs.djangoproject.com/en/2.0/topics/auth/passwords/)
+
+[Django’s cache framework](https://docs.djangoproject.com/en/3.0/topics/cache/)
+
+[QuerySet API reference](https://docs.djangoproject.com/en/3.0/ref/models/querysets/) 罗列所有的数据模型查找方法
+
+[Model field reference](https://docs.djangoproject.com/en/3.0/ref/models/fields/#model-field-types) 所有field列表以及field属性
+
+[Model instance reference](https://docs.djangoproject.com/en/3.0/ref/models/instances/) model的详细文档
+
+[Widgets](https://docs.djangoproject.com/en/3.0/ref/forms/widgets/)
+
+field 表单网页部件,用于渲染html标签，可通过增加属性自定义标签。
+
+[Form Assets (the Media class)](https://docs.djangoproject.com/en/3.0/topics/forms/media/) 通过类中类的方式为由widget渲染而来的input增加属性
+
+[Pagination](https://docs.djangoproject.com/en/3.0/topics/pagination/) 分页
+
+[manager](https://docs.djangoproject.com/en/3.0/topics/db/managers/)
+
+[Making queries](https://docs.djangoproject.com/en/3.0/topics/db/queries/)
+
+[Model API reference](https://docs.djangoproject.com/en/3.0/ref/models/)
+
+[search](https://docs.djangoproject.com/en/3.0/topics/db/search/)
+
+[The messages framework](https://docs.djangoproject.com/en/3.0/ref/contrib/messages/)
+
+[Gunicorn deploy](https://gunicorn.org/) 连接web server与django的一种方式
+
+## URL
+
+[URL dispatcher](https://docs.djangoproject.com/en/3.0/topics/http/urls/) url调度详解
+
+[ModelForm](https://docs.djangoproject.com/en/3.0/topics/forms/modelforms/)
+
+## user authentication in django
+
+[user authertication in django](https://docs.djangoproject.com/en/2.0/topics/auth/)
+
+## ModelForm
+
+[ModelFrom](https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/)
+
+## class base view function
+
+get_context_data()
+
+get_object()
+
+get_setquery()
+
+self.request: 存储cbv的request
+
+context_object_name
+
+## ModelForm
+
+[Creating forms from models](https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/#django.forms.ModelForm)
+
+
+https://docs.djangoproject.com/en/2.0/topics/class-based-views/generic-editing/#model-forms
+https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/#changing-the-queryset
