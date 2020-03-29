@@ -52,9 +52,14 @@ var myTag = $('#my-div').get(0).tagName
 var myTag = $('#my-div')[0].tagName
 ```
 
+## 高级选择符和遍历
+
+[所有选择器符介绍](http://api.jquery.com/category/selectors)
+[遍历方法介绍](http://api.jquery.com/category/traversing)
+
 ## JQuery隐式迭代机制、JQuery行为队列机制
 
-JQuery隐式迭代机制: TODO:
+JQuery隐式迭代机制: 遍历数组中的元素。通过筛选器中this绑定的是DOM对象
 
 JQuery的行为队列机制：JQuery按照事件的注册顺序触发事件。
 
@@ -190,12 +195,11 @@ $(document).ajaxStart(); $(document).ajaxStop()
 
 $.ajaxSetup(): 修改调用ajax方法时每个选项的默认值，除非明确覆盖。
 
-
 ### 部分加载HTML页面
 
 - .load()
 
-## jquery plugin 
+## jquery plugin
 
 [The JQuery Pligin Registry](http://plugins.jquery.com)
 
@@ -210,11 +214,6 @@ $.ajaxSetup(): 修改调用ajax方法时每个选项的默认值，除非明确
 部件：Datepicker、Dialog、Tabs、Accordion
 
 JQuery UI 主题卷轴：ThemeRoller
-
-## 高级选择符和遍历
-
-[所有选择器符介绍](http://api.jquery.com/category/selectors)
-[遍历方法介绍](http://api.jquery.com/category/traversing)
 
 ### :visible与:hidden
 
@@ -342,9 +341,3 @@ clearTimeout: 取消由setTimeout设置的timeout
 预过滤器会在发送请求之前对请求进行过滤。
 
 预过滤器会在$.ajax()修改或使用它的任何选项之前调用，因此通过预过滤器可以修改这些选项或基于新的、自定义选项发送请求。
-
-
-## this详解 TODO:
-
-
-## toggle TODO:
