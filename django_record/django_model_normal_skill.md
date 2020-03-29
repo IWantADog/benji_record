@@ -1,5 +1,7 @@
 # django 数据的基本、常用操作
 
+[Making queries](https://docs.djangoproject.com/en/3.0/topics/db/queries/)
+
 ## 增加修改数据
 
 save():创建、更新数据
@@ -150,7 +152,7 @@ update可以接受普通字段和外键字段
 
 update不会调用save()方法，需要手动调用
 
-update支持使用有限的F object TODO:
+update支持使用有限的F object
 
 ### One-to-Many relationship
 
@@ -187,41 +189,3 @@ Entry.objects.filter(blog=b) # Query using object instance
 Entry.objects.filter(blog=b.id) # Query using id from instance
 Entry.objects.filter(blog=5) # Query using id directly
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
