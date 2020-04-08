@@ -24,9 +24,9 @@ on只能向已经存在的元素绑定事件监听，对于绑定之后添加的
 
 - data: 事件绑定时传入的数据
 
-- target: 事件初始化的DOM元素。
+- target: 事件初始化的DOM元素（触发事件的元素）。
 
-- currentTarget: 事件冒泡阶段当前的对象。与this指向的东西相同
+- currentTarget: 事件冒泡阶段当前的对象，与this指向的东西相同。事件在冒泡过程中，当前的element对象
 
 - delegateTarget: 当时用事件委托时，指向委托对象。当没有事件委托时与currentTraget相同。
 
