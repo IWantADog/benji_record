@@ -159,9 +159,11 @@ parseFloat(): 在字符串中从左至右地查找一个浮点（十进制）数
 
 #### 清空元素
 
-.empty():移除每个匹配的元素中的元素。
+.empty(): 清除选中元素的内容，但保留该元素。
 
-.remove() && .detach() : 从文档中移除每个匹配的元素及其后代元素，但不实际删除它们。
+.remove() : 直接删除选中的元素。
+
+.detach() : 从文档中分离匹配的元素，并返回（selection），并且包含绑定的事件。
 
 ## ajax
 
@@ -263,8 +265,8 @@ setTimeout(): javascript方法用于在指定的毫秒数后调用函数或计�
 
 ### 动画全局效果属性
 
-1. $.fn。关闭所有的动画效果`$.fn.off=true`
-2. 定义效果时长。`$.fn.speed`。speed为jquery默认的速度，可以任意扩展。
+1. $.fn。关闭所有的动画效果`$.fx.off=true`
+2. 定义效果时长。`$.fx.speed`。speed为jquery默认的速度，可以任意扩展。
     ```javascript
     speend: {
         slow: 600,
