@@ -6,14 +6,13 @@
 
 `jQuery.noConflict()`返回一个新的JQuery别名。
 
-```js
+```html
 <script src="prototype.js"></script>
 <script src="jquery.js"></script>
 <script>
- 
+
 // Give $ back to prototype.js; create new alias to jQuery.
 var $jq = jQuery.noConflict();
- 
 </script>
 ```
 
@@ -21,36 +20,33 @@ var $jq = jQuery.noConflict();
 
 通过立即调用的方式避免冲突，这种方式JQuery插件作者常用
 
-```js
+```html
 <!-- Using the $ inside an immediately-invoked function expression. -->
 <script src="prototype.js"></script>
 <script src="jquery.js"></script>
 <script>
- 
 jQuery.noConflict();
- 
+
 (function( $ ) {
     // Your jQuery code here, using the $
 })( jQuery );
- 
+
 </script>
 ```
 
 ### Use the Argument That's Passed to the jQuery( document ).ready() Function
 
-将`$`作为产生传入，可以在函数中正常使用`$`。这种方式比较常用。
+将`$`作为参数传入，可以在函数中正常使用`$`。这种方式比较常用。
 
 当jquery.js在可能发生冲突的其他js包之前引用时，`$`的含义会发生变化导致无法使用了，所以必须使用JQuery()。
 
-```js
+```html
 <script src="jquery.js"></script>
 <script src="prototype.js"></script>
 <script>
- 
 jQuery(document).ready(function( $ ) {
     // Your jQuery code here, using $ to refer to jQuery.
 });
- 
 </script>
 ```
 
@@ -64,7 +60,7 @@ $.each(): 迭代。可以迭代数值、字典。
 $.each([ "foo", "bar", "baz" ], function( idx, val ) {
     console.log( "element " + idx + " is " + val );
 });
- 
+
 $.each({ foo: "bar", baz: "bim" }, function( k, v ) {
     console.log( k + " : " + v );
 });
@@ -74,7 +70,7 @@ $.inArray(): 返回指定元素的下标，如果不存在返回-1。
 
 ```js
 var myArray = [ 1, 2, 3, 5 ];
- 
+
 if ( $.inArray( 4, myArray ) !== -1 ) {
     console.log( "found it!" );
 }
@@ -96,7 +92,7 @@ $.map() && .map()
 
 ### .index() with No Arguments
 
-返回选中对象位于其副对象的index
+返回选中对象位于其父对象的index
 
 ### .index() with a String Argument
 
@@ -126,8 +122,5 @@ console.log( "Index: " + baz.index( "li" )); // 2
 ```js
 var foo = $( "li" );
 var baz = $( "#baz1" );
- 
 console.log( "Index: " + foo.index( baz ) );
 ```
-
-
