@@ -92,15 +92,6 @@ postgresql中char(n)、varchar(n)、text之间当字符串相等时，这三种�
 
 postgresql中显式类型转换 `cast (v as type)`
 
-## postgresql中查看所有的数据库、某一数据库中的数据表以及某张表的构成?
-
-- __\\?__: 查看所有的相关命令
-- __\l__: list all database
-- __\dt__: list all table
-- __\d tableName__ : descrip a table
-
-----
-
 ## odoo12 client_action绑定自定义js文件？
 
 [产考链接](https://segmentfault.com/a/1190000017087118)
@@ -137,29 +128,6 @@ odoo中controller中设置auth=“public”时需要创建一个开放用户。[
 <field name="move_line_nosuggest_ids" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}" context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}"/>
 ```
 
-## 2019.10.24
-
-### odoo.api.constrains使用，通过声明方法定义约束
-
-Decorates a constraint checker. Each argument must be a field name used in the check:
-
-@api.one
-@api.constrains('name', 'description')
-def _check_description(self):
-    if self.name == self.description:
-        raise ValidationError("Fields name and description must be different")
-Invoked on the records on which one of the named fields has been modified.
-
-Should raise ValidationError if the validation failed.
-
-__Warning__
-
->@constrains only supports simple field names, dotted names (fields of relational fields e.g. partner_id.customer) are not supported and will be ignored
-
->__@constrains will be triggered only if the declared fields in the decorated method are included in the create or write call. It implies that fields not present in a view will not trigger a call during a record creation. A override of create is necessary to make sure a constraint will always be triggered (e.g. to test the absence of value).__
-
-----
-
 ### odoo中参数模块设置
 
 res.config.settings
@@ -194,14 +162,6 @@ def image_to_base64(image_path):
 
 ```
 groups="base.group_no_one"
-```
-
-### sql constraints 数据库约束
-
-```python
-_sql_constraints = [
-    ('ownercode', 'unique (ownercode)', '所有者编号重复，请更换编号!')
-]
 ```
 
 ### qweb渲染模版
@@ -350,6 +310,14 @@ _sql_constraint = [
     ('constraint_name', 'unique(attrs)', 'message that user should know')
 ]
 
+注意事项
+
+1. 如果数据中存在与约束冲突的数据，约束无法创建
+
+2. 对于多属性组合唯一约束，_sql_constraint只会在数据创建是检查，无法监控存在的数据的修改
+
+3. 为了完善多属性组合唯一约束，将`_sql_constraint`与`@api.constrains`组合使用
+
 ### postgresql常用命令
 
 - __\\?__: 查看所有的相关命令
@@ -358,3 +326,11 @@ _sql_constraint = [
 - __\d tableName__ : descrip a table
 
 ### postgresql主键自增。bigserial [链接](https://www.yiibai.com/manual/postgresql/datatype-numeric.html#DATATYPE-SERIAL)
+
+### 隐藏菜单
+
+```xml
+<record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+</record>
+```
