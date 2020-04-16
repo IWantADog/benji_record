@@ -42,6 +42,7 @@ compute和store=True同时使用时，若该字段在数据库中不存在，则
 代码实现:
 [参考](https://www.cnblogs.com/joshuajan/p/6258028.html
 )
+
 ```xml
 # server action
 <record model="ir.actions.server" id="order_confirm_func">
@@ -64,8 +65,21 @@ compute和store=True同时使用时，若该字段在数据库中不存在，则
 </record>
 ```
 
-该方法在odoo10中可行，但在odoo12中是否可行还未研究。
+## odoo12中增加动作
 
+```xml
+<record model="ir.actions.server" id="create_table_report">
+    <field name="name">批量创建台位报告</field>
+    <field name="model_id" ref="model_base_table"/>
+    <field name="binding_model_id" ref="model_base_table"/>
+    <field name="state">code</field>
+    <field name="code">
+    <!-- records对应所有选中的records -->
+        if records:
+            records.create_table_report()
+    </field>
+</record>
+```
 
 ## odoo通过弹窗返回信息
 
@@ -107,6 +121,7 @@ odoo12与odoo10创建新模块后的默认权限不同。odoo10中是默认有�
 ----
 
 postgresql中对于now()设置时区
+
 ```sql
 now() AT TIME ZONE 'utc'
 ```
