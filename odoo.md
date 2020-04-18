@@ -349,3 +349,13 @@ _sql_constraint = [
         <field name="active" eval="False"/>
 </record>
 ```
+
+### odoo config
+
+server_wide_modules = web,web_kanban,bp_eam_interface
+
+### request odoo when exist multiple database
+
+[link](https://www.odoo.com/documentation/10.0/setup/deploy.html)
+
+dbfilter = ^eam$
