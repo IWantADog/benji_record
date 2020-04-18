@@ -35,7 +35,9 @@ parser是一个模版解析器。token包含从模版中读取的原始字符串
 
 使用token.split_contents()将token分解，获取模版中有用的字符串。
 
-最后将字符串传入`template.Node`的子类中，对其进行渲染。
+最后将字符串传入自己实现的`template.Node`子类中，对其进行渲染。
+
+关于实现`template.Node`的派生类。其中`render`方法决定渲染的内容。
 
 最后注册tag。tag包含两个参数，name为模版标签的名字，另一个为一个方法对象。如果都不设置，则直接使用方法名作为模版标签的名称。
 
@@ -49,6 +51,6 @@ def shout(parser, token):
     ...
 ```
 
-## 产考
+## 参考
 
 - https://docs.djangoproject.com/en/3.0/howto/custom-template-tags/#simple-tags
