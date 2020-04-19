@@ -50,17 +50,53 @@ The Consumer asked the Server to delete a Resource, and the Server deleted it
 
 客户端要求服务器删除一个资源，服务器删除成功
 
+#### 304 Not Modified (未修改)
+
+当使用HTTP缓存头信息时使用304
+
 #### 400 INVALID REQUEST – [POST/PUT/PATCH]
 
 The Consumer gave bad data to the Server, and the Server did nothing with it (Idempotent)
 
 客户端向服务器提供了不正确的数据，服务器什么也没做
 
+#### 401 Unauthorized
+
+No authentication credentials provided or authentication failed
+
+没有认证或认证失败
+
+#### 403 Forbidden
+
+Authenticated user does not have access
+
+对于访问的资源没有权限
+
 #### 404 NOT FOUND – [*]
 
 The Consumer referenced an inexistant Resource or Collection, and the Server did nothing (Idempotent)
 
 客户端引用了一个不存在的资源或集合，服务器什么也没做
+
+#### 405 Method Not Allowed (方法被禁止)
+
+当一个对认证用户禁止的HTTP方法被请求时
+
+#### 410 Gone (已删除)
+
+表示资源在终端不再可用。当访问老版本API时，作为一个通用响应很有用
+
+#### 415 Unsupported Media Type (不支持的媒体类型)
+
+如果请求中包含了不正确的内容类型
+
+#### 422 Unprocessable Entity (无法处理的实体)
+
+出现验证错误时使用
+
+#### 429 Too Many Requests (请求过多)
+
+当请求由于访问速率限制而被拒绝时
 
 #### 500 INTERNAL SERVER ERROR – [*]
 
