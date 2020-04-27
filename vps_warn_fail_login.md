@@ -42,7 +42,6 @@ AllowUsers alice bob
 
 /etc/ssh/sshd_config中Port的默认端口为22，修改默认端口可以有效地减少攻击。
 
-
 修改相关防火墙规则
 `$ cp /usr/lib/firewalld/services/ssh.xml /etc/firewalld/services/ssh-custom.xml`
 
@@ -59,6 +58,10 @@ $ firewall-cmd --reload
 
 还需要更新 selinux，并正确地标签所选用的端口，否则 sshd 便不能访问它。举个例说：
 `$ semanage port -a -t ssh_port_t -p tcp 2345 #请更改这处`
+
+## semanage command cant find
+
+yum provides /usr/sbin/semanage
 
 __最后重启sshd服务__
 
@@ -111,3 +114,9 @@ Host sshtest
 
 [Google BBR是什么？以及在 CentOS 7 上如何部署](https://tech.jandou.com/CentOS7-Google-BBR.html)
 [为VPS开启BBR拥塞控制算法](https://xiaozhou.net/enable-bbr-for-vps-2017-06-10.html)
+
+## 检测centos的版本及使用内核版本
+
+`cat /etc/centos-release`
+
+`uname -r`
