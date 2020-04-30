@@ -47,3 +47,13 @@ __人不用功，莫不自以为已知，为学只循而行之是矣。殊不知
 [odoo](odoo.md)
 
 [odoo_problems](odoo_work_problem_list.md)
+
+## TODO
+
+[redis](redis.md)
+
+[wsgi](wsgi.md)
+
+[hugo](hugo.md)
+
+[celery](celery_use_record.md)

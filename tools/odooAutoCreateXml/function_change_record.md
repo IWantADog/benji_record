@@ -7,4 +7,8 @@
 
 ## 2020.03.21
 
-1. 重构parse_py方法 [python interface](http://masnun.rocks/2017/04/15/interfaces-in-python-protocols-and-abcs/) ✅
+1. 重构parse_py方法 ✅
+
+## 2020.03.24
+
+1. 命令行模式支持 TODO

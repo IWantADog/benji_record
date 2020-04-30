@@ -378,10 +378,16 @@ https://docs.djangoproject.com/en/2.0/topics/forms/modelforms/#changing-the-quer
 属性查询详解
 https://docs.djangoproject.com/en/3.0/ref/models/querysets/#field-lookups
 
+## template
+
+[Built-in template tags and filters](https://docs.djangoproject.com/en/3.0/ref/templates/builtins/)
 
 ## django的模块分离问题？？？TODO:
-
 
 ## QuerySet && Manager TODO:
 
 > In SQL terms, a QuerySet equates to a SELECT statement, and a filter is a limiting clause such as WHERE or LIMIT.
+
+## django的缓存机制
+
+## django实现websocket使用channels

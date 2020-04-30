@@ -1,7 +1,5 @@
 # JavaScript
 
-​   最近在github还有阮一峰的blog上学到了很多知识。其中最让我吃惊的是JavaScript这个东西。
-
 ## 2019.03.02
 
 1. 第一章
@@ -97,6 +95,8 @@
 6. IIFE [link](https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/scope%20%26%20closures/ch3.md#立即调用函数表达式) ***
 
 7. 模块模式？ 没搞懂 [link](https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/scope%20%26%20closures/ch5.md#现代的模块)
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/template_strings
 
 ## 2019.03.05
 

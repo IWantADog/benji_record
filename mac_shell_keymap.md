@@ -1,4 +1,6 @@
-# mac 常用快捷键
+# Mac & Shell
+
+## mac 常用快捷键
 
 Ctrl + a 跳到行首
 

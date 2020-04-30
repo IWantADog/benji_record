@@ -271,7 +271,7 @@ class AutoOdooXml:
         security_string = ''
         for model in need_security_models:
             id = 'access_' + model
-            security_string += '{id},{id},{model},base.group_user,1,1,1,0\r'.format(id=id, model=model)
+            security_string += '{id},{id},{model},base.group_user,1,1,1,1\r'.format(id=id, model=model)
 
         if security_string:
             with open(self.authority_path, 'a') as file:
