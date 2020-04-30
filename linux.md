@@ -31,3 +31,43 @@ adduser username
 passwd username
 
 usermod -aG wheel username
+
+## iperf3
+
+一个网络性能测试工具。iperf可以测试TCP和UDP带宽质量、报告带宽、延迟抖动和数据包丢失。[detail](https://man.linuxde.net/iperf)
+
+```sh
+# 服务器启动服务端
+iperf3 -s
+
+# 本地启动服务端
+iperf3 -c host -p port
+```
+
+## netstat
+
+统计linux的网络状态。
+
+```sh
+# 统计所有端口
+netstat -a
+
+# 统计所有tcp端口
+netstat -at
+
+# 统计所有udp端口
+netstat -au
+
+# 统计所有监听中的端口
+netstat -l
+
+# 统计所有监听中的tcp端口
+netstat -lt
+
+# 统计所有监听中的udp端口
+netstat -lu
+```
+
+# rpm
+
+`rpm -qf package`
