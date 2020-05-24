@@ -6,9 +6,15 @@ h,j,k,l: 左，下，上，右
 
 w: 下一个词的词首
 
-e:下一个词的词尾
+e: 下一个词的词尾
 
-b:上一个词的词首
+b: 上一个词的词首
+
+W: move to beginning of next word after a whitespace
+
+B: move to beginning of previous word before a whitespace
+
+E: move to end of word before a whitespace
 
 <>: v 模式选中后进行缩进
 
@@ -66,9 +72,9 @@ ctry+e: 下滚一行
 
 ## 选择:
 
-1. V: 选择一行
+1. V: 行选择
 
-2. ^V: 矩形选择
+2. ^V: 块选择
 
 3. v3w: 选择三个字符
   
@@ -90,7 +96,7 @@ ctry+e: 下滚一行
 2. 修改 c(change) 为主:
     r: 替换光标所在处的字符
 
-    R:替换光标所到之处的字符
+    R: 替换光标所到之处的字符
 
     cw: 更改光标所在处的字到字尾处
 
@@ -155,8 +161,7 @@ ctry+e: 下滚一行
 
     #yy:表示复制从光标所在的该行往下数#行文字
 
-    p: 粘贴
-所有与y相关的操作必用p来结合粘贴
+    p: 粘贴 所有与y相关的操作必用p来结合粘贴
 
     n1,n2 co n3:复制第n1行到第n2行之间的内容到第n3行后面
 
@@ -195,12 +200,20 @@ ctry+e: 下滚一行
 
 ## 窗口操作
 
-1. ctrl+w p: 在两个分割窗口之间来回切换
+1. :vsp filename : 垂直分屏
 
-2. ctrl+w j: 跳到下面的分割窗
+2. :sp filename  : 左右分屏
 
-3. ctrl+w h: 跳到左边的分割窗
+3. ctrl+w p: 在两个分割窗口之间来回切换
 
-4. ctrl+w k: 跳到上面的分割窗
+4. ctrl+w j: 跳到下面的分割窗
 
-5. ctrl+w l: 跳到右边的分割窗
+5. ctrl+w h: 跳到左边的分割窗
+
+6. ctrl+w k: 跳到上面的分割窗
+
+7. ctrl+w l: 跳到右边的分割窗
+
+8. :only : 关闭其他分屏，只保留当前分屏
+
+9. ctrl+w c: 关闭分屏，当没有分屏是退出
