@@ -93,6 +93,8 @@ def get_variable_attrs(row, vtype):
             'related': emp_raw_string[0],
             'string': string_result.group(1)
         }
+    elif vtype == 'Many2many':
+        pass
     else:
         result = re.search(variable_string_pattern, row)
         assert result, row
