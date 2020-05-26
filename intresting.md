@@ -10,20 +10,20 @@ https://wiki.geekdream.com/Specification/json-rpc_2.0.html
 
 https://draveness.me/system-design-scheduler/
 
-### git tag
-
-https://git-scm.com/book/en/v2/Git-Basics-Tagging
-
 ### python setup.py
 
 ### apscheduler
 
 https://apscheduler.readthedocs.io/en/latest/modules/schedulers/base.html#apscheduler.schedulers.base.BaseScheduler.add_job
 
-
 ### vim
 
 https://learnvimscriptthehardway.stevelosh.com/
-(2 - (4-1)) % 2
 
-4/2
+## 定时任务
+
+for update nowait
+
+## python Thread
+
+## unittest
