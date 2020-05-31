@@ -27,3 +27,13 @@ for update nowait
 ## python Thread
 
 ## unittest
+https://docs.python.org/3/library/unittest.html#organizing-test-code
+
+
+## TDD
+http://agiledata.org/essays/tdd.html
+
+## python decorator
+
+
+## web server 多个用户多个进程（or 线程）？

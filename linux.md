@@ -68,6 +68,6 @@ netstat -lt
 netstat -lu
 ```
 
-# rpm
+## rpm
 
 `rpm -qf package`
