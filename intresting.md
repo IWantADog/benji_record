@@ -37,3 +37,34 @@ http://agiledata.org/essays/tdd.html
 
 
 ## web server 多个用户多个进程（or 线程）？
+
+## python socket
+
+[socket](https://docs.python.org/3.5/library/socket.html#module-socket)
+
+[HowTo socket](https://docs.python.org/3.5/howto/sockets.html#socket-howto)
+
+无法直接通过某个标识直接判断一个socket连接是否中断。
+
+socket提供了一个timeout参数。可以将其设置为非负数，当通过socket发送数据等待的时间超过了设置的时间，这表明这个连接可能中断了。
+
+## cgi
+
+[CGI](https://zh.wikipedia.org/wiki/%E9%80%9A%E7%94%A8%E7%BD%91%E5%85%B3%E6%8E%A5%E5%8F%A3)
+
+## jinjia2
+
+## 当代码报异常或运行结束后，之前声明的变量去哪里了。❓
+
+    似乎内存被系统回收了
+
+## python logging
+
+https://docs.python.org/3.5/library/logging.handlers.html#module-logging.handlers
+
+https://docs.python.org/3.5/howto/logging-cookbook.html
+
+https://docs.python.org/3.5/library/logging.html#module-logging
+
+
+## @property 相关
