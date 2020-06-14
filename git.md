@@ -1,12 +1,11 @@
 # git
 
-## 2019.09.07
-
 工作目录、索引、提交。三种状态互相转换。
 
 常用固定变量：HEAD、ORIG_HEAD、MERGE_HEAD、FETCH_HEAD
 
 常用信息获取命令
+
 - git log
 - git show-branch --more=5
 
@@ -39,6 +38,6 @@ git reset的常见用法：
 
 --hard覆盖错误的提交，相当与回滚。
 
+git show
 
-## 2019.11.14
-
+git checkout: 切换分支或恢复工作目录
