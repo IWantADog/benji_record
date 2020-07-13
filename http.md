@@ -103,3 +103,19 @@ The Consumer referenced an inexistant Resource or Collection, and the Server did
 The Server encountered an error, and the Consumer has no knowledge if the request was successful
 
 服务器发生内部错误，客户端无法得知结果，即便请求已经处理成功
+
+## caches
+
+https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ
+
+## CORS
+
+https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS#
+
+## negotiation
+
+https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Content_negotiation
+
+## xss
+
+https://stackoverflow.com/questions/239194/how-does-xss-work
