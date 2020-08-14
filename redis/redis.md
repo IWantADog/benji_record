@@ -61,16 +61,28 @@ field(将value划分为不同的部分，从使用的角度按属性理解比较
 
 对于一个给定的关键字，列表数据结构让你可以存储和处理一组值。你可以添加一个值到列表里、获取列表的第一个值或最后一个值以及用给定的索引来处理值
 
-- lpush
+- lpush、rpush、lpop、rpops
 - ltrim
+- lindex
+
+#### 阻塞弹出数据，并增加timeout
+
+命令         | 简要描述
+------------| -------
+blpop       | 从非空列表中弹出位于最左的元素或者在timeout秒内阻塞并等待可用的元素出现
+brpop       | 从非空列表中弹出位于最右的元素或者在timeout秒内阻塞并等待可用的元素出现
+rpoplpush   | 将一个列表中最右端的元素，推入另一个列表的最左端
+brpoplpush  | 将一个列表中最右端的元素，推入另一个列表的最左端或是在timeout秒内等待可用数据出现
 
 ### Sets
 
 集合。
 
 - sadd（向集合增加数据）
+- srem
+- smembers (获取所有元素)
 - sismember（检查某元素是否属于一个集合）
-- sinter（集合的交集？）
+- sinter、sunion、sdiff（集合的交集、并集、差集）
 
 ### Sorted Sets
 
@@ -79,6 +91,7 @@ field(将value划分为不同的部分，从使用的角度按属性理解比较
 - zadd
 - zcount
 - zrevrank
+- zrevranges
 
 ## 使用数据结构
 
@@ -161,3 +174,48 @@ info
 ## redis config path when install redis via brew
 
 /usr/local/etc/redis.conf
+
+## 使用redis构建锁
+
+setnx
+
+set key value NX
+
+[refer](https://redis.io/commands/set)
+
+```
+The SET command supports a set of options that modify its behavior:
+
+EX seconds -- Set the specified expire time, in seconds.
+
+PX milliseconds -- Set the specified expire time, in milliseconds.
+
+NX -- Only set the key if it does not already exist.
+
+XX -- Only set the key if it already exist.
+
+KEEPTTL -- Retain the time to live associated with the key.
+
+Note: Since the SET command options can replace SETNX, SETEX, PSETEX, it is possible that in future versions of Redis these three commands will be deprecated and finally removed.
+```
+
+## ZUNIONSTORE & ZINTERSTORE
+
+https://redis.io/commands/zunionstore
+
+## keys && smembers
+
+- keys : 获取所有匹配的键名
+- smembers: 获取 set 中的所有成员
+
+## scan & sscan & hscan & zscan
+
+returning only a small number of elements per call.
+
+### Match option
+
+It is important to note that the MATCH filter is applied after elements are retrieved from the collection, just before returning data to the client. This means that if the pattern matches very little elements inside the collection, SCAN will likely return no elements in most iterations. 
+
+### Type option
+
+It is important to note that the TYPE filter is also applied after elements are retrieved from the database, so the option does not reduce the amount of work the server has to do to complete a full iteration, and for rare types you may receive no elements in many iterations.
