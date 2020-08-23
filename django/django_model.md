@@ -36,13 +36,10 @@ save ManyToManyField use __add()__
 查找数据的关键是 QuerySet && Manager
 
 > a QuerySet equates to a __SELECT__ statement, and a __filter__ is a limiting clause such as __WHERE__ or __LIMIT__.
-
-> You get a QuerySet by using your model’s Manager. Each model has at least one Manager, and it’s called __objects by default.__
-
+> You get a QuerySet by using your model’s Manager. Each model has at least one Manager, and it’s called `objects` by default.
 
 ### all(): 返回一张表所有的数据
 >The all() method returns a QuerySet of all the objects in the database.
-
 
 ### 在QuerySet上检索数据
 
