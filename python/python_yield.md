@@ -82,7 +82,6 @@ helloworld
 Goodbye
 ```
 
-
 ## 示例二
 
 ```py
@@ -98,3 +97,9 @@ next(generator) # 1
 generator(4) # 5
 generator(5) # 10
 ```
+
+## yield from
+
+`yield from`更像是对使用 __嵌套生成器__ 时向内层生成器传输数据或异常逻辑的简化替代。通过`yield from`，不需要手动编写额外的处理逻辑，只需专注于核心生成器逻辑的编写。
+
+> The yield from transparently handles sending the values or throwing values into the sub-generator.
