@@ -217,6 +217,10 @@ class Point:
 >>> p.x = 2.3 # Calls Point.x.__set__(p, 2.3)
 ```
 
+#### references
+
+[Understanding __get__ and __set__ and Python descriptors](https://stackoverflow.com/questions/3798835/understanding-get-and-set-and-python-descriptors)
+
 ### 使用延迟计算属性
 
 [example](https://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p10_using_lazily_computed_properties.html#id1)
