@@ -209,6 +209,14 @@ class Point:
         self.y = y
 ```
 
+```sh
+>>> p = Point(2, 3)
+>>> p.x # Calls Point.x.__get__(p,Point)
+2
+>>> p.y = 5 # Calls Point.y.__set__(p, 5)
+>>> p.x = 2.3 # Calls Point.x.__set__(p, 2.3)
+```
+
 ### 使用延迟计算属性
 
 [example](https://python3-cookbook.readthedocs.io/zh_CN/latest/c08/p10_using_lazily_computed_properties.html#id1)
