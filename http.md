@@ -50,6 +50,14 @@ The Consumer asked the Server to delete a Resource, and the Server deleted it
 
 客户端要求服务器删除一个资源，服务器删除成功
 
+#### 301 Move Permanently
+
+The URL of the requested resource has been changed permanently. The new URL is given in the response.
+
+#### 302 Found
+
+This response code means that the URI of requested resource has been changed temporarily. Further changes in the URI might be made in the future. Therefore, this same URI should be used by the client in future requests.
+
 #### 304 Not Modified (未修改)
 
 当使用HTTP缓存头信息时使用304
