@@ -87,3 +87,50 @@ If you have retries enabled this will only happen after retries are exhausted, o
 ## Compression
 
 [origin link](https://docs.celeryproject.org/en/master/userguide/calling.html#compression)
+
+## Execution Options
+
+- link:
+
+  `add.apply_async((2, 2), link=add.s(16))`
+- link_error:
+
+  `add.apply_async((2, 2), link_error=error_handler.s())`
+- countdown:
+
+  `>>> result = add.apply_async((2, 2), countdown=3)`
+
+- eta:
+
+  ```py
+    >>> from datetime import datetime, timedelta
+    >>> tomorrow = datetime.utcnow() + timedelta(days=1)
+    >>> add.apply_async((2, 2), eta=tomorrow)
+  ```
+
+- expires:
+
+  `>>> add.apply_async((10, 10), expires=60)`
+
+- retry && retry_policy:
+
+  ```py
+  add.apply_async((2, 2), retry=True, retry_policy={
+    'max_retries': 3,
+    'interval_start': 0,
+    'interval_step': 0.2,
+    'interval_max': 0.2,
+  })
+  ```
+
+- serializer:
+
+  `>>> add.apply_async((10, 10), serializer='json')`
+
+- compression:
+
+  `>>> add.apply_async((2, 2), compression='zlib')`
+
+- queue:
+
+  `add.apply_async(queue='priority.high')`
