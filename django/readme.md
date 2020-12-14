@@ -1,0 +1,31 @@
+# django record index
+
+- [x] [Applications](./django_applications.md)
+- [x] [System check framework](./system_check_framework.md)
+- [x] [Built-in class-based views API](./build-in_class-based_views_API.md)
+- [x] [Clickjacking Protection](./clickjacking_protection.md)
+- [x] [contrib packages (partal)](./contribs/readme.md)
+- [ ] Cross Site Request Forgery protection
+- [ ] Databases
+- [ ] django-admin and manage.py
+- [ ] Running management commands from your code
+- [ ] Django Exceptions
+- [ ] File handling
+- [ ] Forms
+- [ ] Middleware
+- [ ] Migration Operations
+- [X] Models
+- [ ] Paginato
+- [ ] Request and response objects
+- [ ] SchemaEditor
+- [ ] Settings
+- [ ] Signals
+- [ ] Templates
+- [ ] TemplateResponse and SimpleTemplateResponse
+- [ ] Unicode data
+- [ ] django.urls utility functions
+- [ ] django.urls functions for use in URLconfs
+- [ ] django.conf.urls functions for use in URLconfs
+- [ ] Django Utils
+- [ ] Validators
+- [ ] Built-in Views
