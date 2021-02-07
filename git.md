@@ -41,3 +41,22 @@ git reset的常见用法：
 git show
 
 git checkout: 切换分支或恢复工作目录
+
+## how to use `git stash`
+
+git stash push: 创建 `stash object`，隐藏工作目录修改
+
+- `pathspec`: 指定需要隐藏的文件
+- `-m message`: 添加额外信息
+- `-k`: 不隐藏已被加入缓存区的文件
+- `-u`: 隐藏匹配的未跟踪的文件
+
+git stash show: 展示指定的隐藏文件，如果未指定则展示最近的隐藏
+
+git stash list: 展示所有的隐藏文件
+
+git stash pop: 弹出指定的隐藏文件，并从隐藏列表中删除该记录
+
+git stash clear: 删除所有的隐藏文件，__注意不可恢复__
+
+git stash drop: 删除指定的隐藏对象
