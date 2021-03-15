@@ -61,7 +61,7 @@ $ firewall-cmd --reload
 
 ## semanage command cant find
 
-yum provides /usr/sbin/semanage
+yum install policycoreutils-python
 
 __最后重启sshd服务__
 
