@@ -142,6 +142,12 @@ b'_5#y2L"F4Q8z\n\xec]/'
 
 ### 如何理解`cookies base session`
 
+https://stackoverflow.com/questions/32563236/relation-between-sessions-and-cookies
+
+https://www.hackingarticles.in/beginner-guide-understand-cookies-session-management/
+
+https://stackoverflow.com/questions/6339783/what-is-the-difference-between-sessions-and-cookies-in-php
+
 ### flask server-side session extension
 
 ## Message Flash
