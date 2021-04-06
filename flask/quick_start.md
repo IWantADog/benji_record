@@ -2,6 +2,24 @@
 
 ## 常用方法
 
+### routing
+
+variable rules
+
+- string  : 默认，任何文本除了斜杠
+- int     : 数字
+- float   : 浮点型
+- path    : 和`string`一样，不过也接受斜杠
+- uuid    : UUID字符串
+
+很怪的一点:
+
+对于结尾含有`/`的路由，当访问时如果url结尾不带`/`，`flask`会自动给路由增加。
+
+对于结尾不含`/`路由，当访问是如果url结尾带有`/`，flask报404。
+
+对于开发的过程中，所有的路由都要增加`/`。
+
 ### url_for(): 
 
 1. 通过方法名获取对应的url，接受多种参数。
@@ -23,6 +41,8 @@ with app.test_request_context('/hello', method='POST'):
 
 ## Flask.route() 支持多少种http方法？
 
+todo
+
 ## render template
 
 render_template():
@@ -41,11 +61,10 @@ Imagine the context being the handling thread. A request comes in and the web se
 
 1. `request`是一个全局对象。调用方式`from flask import request`
 2. request.method: 获取http方法的类型
-3. request.form: 
-    - 通过键值对的方式获取`post` & `puth`上传的数据
-    - 获取查询参数`request.args`
+3. request.form: 通过键值对的方式获取`post` & `puth`上传的数据
+4. request.args: 获取查询参数
 
-## Fiel Uploads
+### File Uploads
 
 1. `enctype="multipart/form-data"` attribute on your HTML form, 
 2. `request.files`: 获取用户上传的文件，通过键值对方式获取文件。获取的对象类似于`python file object`。同时支持`save`方法将文件存储到文件系统。
@@ -75,7 +94,7 @@ Imagine the context being the handling thread. A request comes in and the web se
 
 `abort`: 提早拒绝一个请求，并返回一个响应码。通过`abort`返回的响应，会将错误的信息通过html展示出来。
 
-如果需要自定义错误页面，可以使用`errorhandler()`
+如果需要自定义错误页面，可以使用`Flask.errorhandler()`
 
 ```py
 from flask import render_template
@@ -96,6 +115,8 @@ def page_not_found(error):
 ## API with JSON
 
 如果`view`返回的是个字典，flask会自动将起转换为`json`响应对象。
+
+通过`make_response`获取`response object`，之后修改并返回。
 
 对于较复杂的json接口，可以使用`jsonify`或者第三方的包。
 
@@ -125,23 +146,33 @@ b'_5#y2L"F4Q8z\n\xec]/'
 
 ## Message Flash
 
+flush(): push a message
+get_flashed_messages(): 获取所有的message
+
+## logging
+
+__The attached logger is a standard logging Logger.__
+
+```py
+app.logger.debug('A value for debugging')
+app.logger.warning('A warning occurred (%d apples)', 42)
+app.logger.error('An error occurred')
+```
+
+## hooking in WSGI middleware
+
+__To add WSGI middleware to your Flask application, wrap the application’s `wsgi_app` attribute.__ For example, to apply Werkzeug’s ProxyFix middleware for running behind Nginx:
+
+```py
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(app.wsgi_app)
+```
+
+Wrapping `app.wsgi_app` instead of app means that app still points at your Flask application, not at the middleware, so you can continue to use and configure app directly.
+
+### how to use flask middleware
 
 
+## flask extentions
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+https://flask.palletsprojects.com/en/1.1.x/extensions/#extensions
