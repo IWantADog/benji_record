@@ -53,6 +53,8 @@ Inside templates you also have access to the `request`, `session` and `g` object
 
 ## what is g object
 
+todo
+
 ## Access request data
 
 Imagine the context being the handling thread. A request comes in and the web server decides to spawn a new thread (or something else, the underlying object is capable of dealing with concurrency systems other than threads). When Flask starts its internal request handling it figures out that the current thread is the active context and binds the current application and the WSGI environments to that context (thread). It does that in an intelligent way so that one application can invoke another application without breaking.
@@ -138,7 +140,9 @@ $ python -c 'import os; print(os.urandom(16))'
 b'_5#y2L"F4Q8z\n\xec]/'
 ```
 
-### 多用户的情况下，session的工作如何理解？
+### flask的session如何存储
+
+todo
 
 ### 如何理解`cookies base session`
 
@@ -148,7 +152,11 @@ https://www.hackingarticles.in/beginner-guide-understand-cookies-session-managem
 
 https://stackoverflow.com/questions/6339783/what-is-the-difference-between-sessions-and-cookies-in-php
 
+https://devcentral.f5.com/s/articles/sessions-and-cookies-and-persistence-oh-my#.UdPNRGfYhOY
+
 ### flask server-side session extension
+
+todo
 
 ## Message Flash
 
@@ -182,3 +190,25 @@ Wrapping `app.wsgi_app` instead of app means that app still points at your Flask
 ## flask extentions
 
 https://flask.palletsprojects.com/en/1.1.x/extensions/#extensions
+
+## cookies & sessions
+
+cookies
+
+1. 存储在客户端，大小不超过4K。
+2. 可以设置过期时间，当浏览器关闭时cookies失效。
+3. http是无状态的，使用cookies可以用来跟踪用户的状态。
+
+session cookies: cookies存储在浏览器的内存中，当浏览器关闭，cookies消失。
+
+persistent cookies: cookies存放在客户端的电脑上。当浏览器关闭，cookies依然可用。
+
+session
+
+1. session-id一般通过`cookies`存储。一般通过在cookies中存储的`session-id`找到服务器上对应的`session`。
+
+### cookies的获取
+
+1. 客户端通过`get or post`发送请求。
+2. session—ID在客户端被创建，并存储在服务端。服务器在响应头中添加`set-cookies`，并返回给客户端。
+3. 之后客户端每次与服务端的请求都要在请求头中添加`cookies`
