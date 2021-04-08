@@ -12,6 +12,12 @@ FLASK_ENV
 2. `g`主要用来存储在一个请求过程中，可能被函数多次请求的资源。
 3. 当有资源在`g`中被分配，相应的需要将资源的释放函数通过`teardown_appcontext`注册到app。
 
+### `g`的常见用法
+
+1. `get_X()` creates resource X if it does not exist, caching it as `g.X`.
+
+2. `teardown_X()` closes or otherwise deallocates the resource if it exists. It is registered as a `teardown_appcontext()` handler.
+
 ## about blueprint
 
 create a blueprint
