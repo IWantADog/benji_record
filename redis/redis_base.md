@@ -214,7 +214,7 @@ returning only a small number of elements per call.
 
 ### Match option
 
-It is important to note that the MATCH filter is applied after elements are retrieved from the collection, just before returning data to the client. This means that if the pattern matches very little elements inside the collection, SCAN will likely return no elements in most iterations. 
+It is important to note that the MATCH filter is applied after elements are retrieved from the collection, just before returning data to the client. This means that if the pattern matches very little elements inside the collection, SCAN will likely return no elements in most iterations.
 
 ### Type option
 

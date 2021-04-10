@@ -6,16 +6,16 @@
 - [x] [Clickjacking Protection](./clickjacking_protection.md)
 - [x] [contrib packages (partal)](./contribs/readme.md)
 - [ ] Cross Site Request Forgery protection
-- [ ] Databases
-- [ ] django-admin and manage.py
-- [ ] Running management commands from your code
-- [ ] Django Exceptions
+- [x] [Databases](https://docs.djangoproject.com/en/3.1/ref/databases/#databases)
+- [x] django-admin and manage.py
+- [x] Running management commands from your code
+- [x] Django Exceptions
 - [ ] File handling
 - [ ] Forms
 - [ ] Middleware
 - [ ] Migration Operations
-- [X] Models
-- [ ] Paginato
+- [X] Model
+- [x] [Paginato](https://docs.djangoproject.com/en/3.1/ref/paginator/)
 - [ ] Request and response objects
 - [ ] SchemaEditor
 - [ ] Settings

@@ -71,3 +71,5 @@ netstat -lu
 ## rpm
 
 `rpm -qf package`
+
+## control user login shell
