@@ -60,3 +60,7 @@ git stash pop: 弹出指定的隐藏文件，并从隐藏列表中删除该记�
 git stash clear: 删除所有的隐藏文件，__注意不可恢复__
 
 git stash drop: 删除指定的隐藏对象
+
+## understand git flow
+
+[A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)

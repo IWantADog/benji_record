@@ -41,3 +41,15 @@ defaultdict:
 UserDict & UserList & UserString:
 
 - dict & list & string的包装类，便于定制开发功能
+
+types.MappingProxyType:
+
+- A Wrapper for Making Read-Only Dictionaries. MappingProxyType is a wrapper around a standard dictionary that provides a read-only view into the wrapped dictionary’s data.
+
+itertools.count():
+
+- Make an iterator that returns evenly spaced values starting with number start.
+
+heapq:
+
+- This module provides an implementation of the heap queue algorithm, also known as the priority queue algorithm.

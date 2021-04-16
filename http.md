@@ -112,6 +112,12 @@ The Server encountered an error, and the Consumer has no knowledge if the reques
 
 服务器发生内部错误，客户端无法得知结果，即便请求已经处理成功
 
+[w3c http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+
+## headers
+
+[X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
+
 ## caches
 
 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ
