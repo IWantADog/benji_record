@@ -43,16 +43,3 @@ dynamoDB支持两种二级索引：
 ### 最佳实践
 
 https://docs.aws.amazon.com/zh_cn/amazondynamodb/latest/developerguide/best-practices.html
-
-### 日常使用
-
-
-
-
-
-
-
-
-
-
-
