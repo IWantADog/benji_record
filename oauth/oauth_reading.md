@@ -22,9 +22,4 @@ Most services treat redirect URL validation as an exact match. This means a redi
 
 > 避免使用查询字段，直接使用路径更好。
 
-
-
-
-
-
-
+https://www.oauth.com/oauth2-servers/getting-ready/
