@@ -36,3 +36,10 @@ https://docs.python.org/3/library/unittest.html
 https://docs.python.org/3/library/unittest.mock.html#module-unittest.mock
 
 https://docs.python.org/3/library/unittest.mock-examples.html
+
+
+## todo
+
+1. where to path
+2. how to understand patch
+3. [mock patch get start](https://docs.python.org/3/library/unittest.mock-examples.html)
