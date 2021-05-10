@@ -29,6 +29,14 @@ __For ensuring that the mock objects in your tests have the same api as the obje
 
 Mocks are `callable` and __create attributes as new mocks when you access them__. Accessing the same attribute will always return the same mock. __Mocks record how you use them, allowing you to make assertions about what your code has done to them.__
 
+
+### where to patch
+
+__The basic principle is that you patch where an object is looked up, which is not necessarily the same place as where it is defined.__
+
+[offical document](https://docs.python.org/3/library/unittest.mock.html#where-to-patch)
+
+
 ## Reference
 
 https://docs.python.org/3/library/unittest.html
@@ -36,10 +44,3 @@ https://docs.python.org/3/library/unittest.html
 https://docs.python.org/3/library/unittest.mock.html#module-unittest.mock
 
 https://docs.python.org/3/library/unittest.mock-examples.html
-
-
-## todo
-
-1. where to path
-2. how to understand patch
-3. [mock patch get start](https://docs.python.org/3/library/unittest.mock-examples.html)
