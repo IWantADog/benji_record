@@ -74,7 +74,50 @@ Column('user_id', ForeignKey('user_account.id'), nullable=False),
 
 ### Defining Table Metadata with the ORM
 
-https://docs.sqlalchemy.org/en/14/tutorial/metadata.html
+#### setting up Registry
+
+`registry` & `MetaData` & `ORM Mapped Table`
+
+> 如何理解`registry`。
+
+
+```sh
+>>> from sqlalchemy.orm import registry
+>>> mapper_registry = registry()
+>>> Base = mapper_registry.generate_base()
+```
+
+> 通过`registry`，获取`ORM Mapped Table`基类
+
+
+- tip
+
+    The steps of creating the registry and “declarative base” classes can be combined into one step using the historically familiar `declarative_base()` function:
+
+    ```py
+    from sqlalchemy.orm import declarative_base
+    Base = declarative_base()
+    ```
+
+### Table Reflection
+
+[Reflecting DataBase Objects](https://docs.sqlalchemy.org/en/14/core/reflection.html)
+
+> 通过数据库中已经存在的表，创建`ORM Mapped Table`。
+
+## Working with Data
+
+### Inserting Rows with Core
+
+skip
+
+### Selecting Rows with Core or ORM
+
+`Connection.execute() in Core` and `Session.execute() in ORM`
+
+
+https://docs.sqlalchemy.org/en/14/tutorial/data_select.html
+
 
 
 
