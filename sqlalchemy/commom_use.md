@@ -115,8 +115,51 @@ skip
 
 `Connection.execute() in Core` and `Session.execute() in ORM`
 
+`Select.join_from()` & `Select.join()`
 
-https://docs.sqlalchemy.org/en/14/tutorial/data_select.html
+> `Select.join_from()` method, __which allows us to indicate the left and right side of the JOIN explicitly__
+
+> `Select.join()` method, __which indicates only the right side of the JOIN, the left hand-side is inferred__
+
+Both the `Select.join()` and `Select.join_from()` methods accept keyword arguments `Select.join.isouter` and `Select.join.full` which will render `LEFT OUTER JOIN` and `FULL OUTER JOIN`。
+
+
+### Aggregate functions with GROUP BY / HAVING
+
+
+```sh
+>>> from sqlalchemy import func
+```
+
+### use aliases
+
+```py
+from sqlalchemy.orm import aliased
+```
+
+## Data Manipulation with the ORM
+
+### create a session
+
+```py
+session = Session(engine)
+```
+
+### Flushing
+
+`Session.flush()` be used to manually push out pending changes to the current transaction,
+
+### Identity Map
+
+__The primary key identity of the objects are significant to the `Session`, as the objects are now linked to this identity in memory using a feature known as the identity map. The identity map is an in-memory store that links all objects currently loaded in memory to their primary key identity. We can observe this by retrieving one of the above objects using the `Session.get()` method, which will return an entry from the identity map if locally present, otherwise emitting a SELECT.__
+
+> a flush occurs automatically before we emit any `SELECT`, using a behavior known as `autoflush`. And we are still in a `transaction` and __our changes have not been pushed to the database’s permanent storage__.
+
+
+https://docs.sqlalchemy.org/en/14/tutorial/orm_data_manipulation.html#deleting-orm-objects
+
+
+
 
 
 
