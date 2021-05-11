@@ -155,36 +155,39 @@ __The primary key identity of the objects are significant to the `Session`, as t
 
 > a flush occurs automatically before we emit any `SELECT`, using a behavior known as `autoflush`. And we are still in a `transaction` and __our changes have not been pushed to the database’s permanent storage__.
 
+### closing a session
 
-https://docs.sqlalchemy.org/en/14/tutorial/orm_data_manipulation.html#deleting-orm-objects
+> Try to avoid using objects in their detached state, if possible. When the Session is closed, clean up references to all the previously attached objects as well. __For cases where detached objects are necessary, typically the immediate display of just-committed objects for a web application where the Session is closed before the view is rendered, set the `Session.expire_on_commit` flag to False.__
 
+> `session`触发`commit`后，对象属性的访问是重新从数据库中查询的。可以通过`Session.expire_on_commit`修改这个行为，如果有需要的话。
 
+## Working with Related Objects
 
+### `relationship`
 
+### Cascading Objects into the Session
 
+> 当一个对象被添加进`session`， 和它相关的对象也会被加入`session`
 
-
-
-
-
-
-
-
-
-
+### Loader Strategies
 
 
+[offical document](https://docs.sqlalchemy.org/en/14/tutorial/orm_related_objects.html#loader-strategies)
+
+- selectin load
+
+    [select in loading](https://docs.sqlalchemy.org/en/14/orm/loading_relationships.html#select-in-loading)
+
+    > 发送两次查询，第一次获取主表数据，第二次通过返回的主表id，查询子表数据。
+
+    > `selectin`对于 `复合主键` 和 `不支持IN的数据库` 无法使用。 
+
+- join load
+
+    > 类似sql中的`join`
 
 
+- Raiseload
 
-
-
-
-
-
-
-
-
-
-
+    > 对于懒查询，直接报错
 
