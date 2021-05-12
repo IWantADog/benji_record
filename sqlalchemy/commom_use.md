@@ -1,5 +1,7 @@
 # sqlalchemy common use
 
+
+
 ## Establishing Connectivity - the Engine
 
 ### create engine
@@ -53,7 +55,7 @@ __The default behavior of the Python DBAPI includes that a `transaction` is alwa
 
 Having a single `MetaData` object for an entire application is the most common case, represented as a module-level variable in a single place in an application, often in a “models” or “dbschema” type of package. There can be multiple `MetaData` collections as well, however it’s typically most helpful if a series of `Table` objects that are related to each other belong to a single `MetaData` collection.
 
-> `Metadata`似乎用来存储所有的`table`
+> `Metadata`似乎用来存储所有的`table`，通过 `Metadata` 创建表结构。
 
 ### Declaring Simple Constraints
 
@@ -126,7 +128,6 @@ Both the `Select.join()` and `Select.join_from()` methods accept keyword argumen
 
 ### Aggregate functions with GROUP BY / HAVING
 
-
 ```sh
 >>> from sqlalchemy import func
 ```
@@ -163,7 +164,7 @@ __The primary key identity of the objects are significant to the `Session`, as t
 
 ## Working with Related Objects
 
-### `relationship`
+### relationship
 
 ### Cascading Objects into the Session
 
@@ -171,8 +172,9 @@ __The primary key identity of the objects are significant to the `Session`, as t
 
 ### Loader Strategies
 
+[loader strategies](https://docs.sqlalchemy.org/en/14/tutorial/orm_related_objects.html#loader-strategies)
 
-[offical document](https://docs.sqlalchemy.org/en/14/tutorial/orm_related_objects.html#loader-strategies)
+[Relationship Loading Techniques](https://docs.sqlalchemy.org/en/14/orm/loading_relationships.html)
 
 - selectin load
 
@@ -191,3 +193,25 @@ __The primary key identity of the objects are significant to the `Session`, as t
 
     > 对于懒查询，直接报错
 
+
+## Further Reading 
+
+Core Essential Reference
+
+- [ ] Working with Engines and Connections
+
+- [ ] Schema Definition Language
+
+- [ ] SQL Statements and Expressions API
+ 
+- [ ] Column and Data Types
+
+ORM Essential Reference
+
+- [ ] Mapper Configuration
+
+- [ ] Relationship Configuration
+
+- [ ] Using the Session
+
+- [ ] Querying Data, Loading Objects
