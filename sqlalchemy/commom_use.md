@@ -192,26 +192,3 @@ __The primary key identity of the objects are significant to the `Session`, as t
 - Raiseload
 
     > 对于懒查询，直接报错
-
-
-## Further Reading 
-
-Core Essential Reference
-
-- [ ] Working with Engines and Connections
-
-- [ ] Schema Definition Language
-
-- [ ] SQL Statements and Expressions API
- 
-- [ ] Column and Data Types
-
-ORM Essential Reference
-
-- [ ] Mapper Configuration
-
-- [ ] Relationship Configuration
-
-- [ ] Using the Session
-
-- [ ] Querying Data, Loading Objects
