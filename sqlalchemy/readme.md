@@ -4,7 +4,7 @@ Core Essential Reference
 
 - [ ] Working with Engines and Connections
 
-- [ ] Schema Definition Language
+- [ ] Schema Definition Language[2]
 
 - [ ] SQL Statements and Expressions API
  
@@ -14,8 +14,9 @@ ORM Essential Reference
 
 - [ ] Mapper Configuration
 
-- [ ] Relationship Configuration
+- [ ] Relationship Configuration[3]
 
-- [ ] Using the Session
+- [f] Using the Session[1]
+    - [ ] [Contextual/Thread-local Sessions](https://docs.sqlalchemy.org/en/14/orm/contextual.html) [1]
 
-- [ ] Querying Data, Loading Objects
+- [ ] Querying Data, Loading Objects[3]
