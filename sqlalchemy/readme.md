@@ -17,6 +17,6 @@ ORM Essential Reference
 - [ ] Relationship Configuration[3]
 
 - [f] Using the Session[1]
-    - [ ] [Contextual/Thread-local Sessions](https://docs.sqlalchemy.org/en/14/orm/contextual.html) [1]
+    - [f] [Contextual/Thread-local Sessions](./contextual_thread_local_session.md) [1]
 
 - [ ] Querying Data, Loading Objects[3]
