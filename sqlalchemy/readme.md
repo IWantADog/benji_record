@@ -1,10 +1,12 @@
 # Reading Index
 
+[document url](https://docs.sqlalchemy.org/en/14/tutorial/further_reading.html)
+
 Core Essential Reference
 
 - [ ] Working with Engines and Connections
 
-- [ ] Schema Definition Language[2]
+- [s] Schema Definition Language
 
 - [ ] SQL Statements and Expressions API
  
@@ -12,7 +14,7 @@ Core Essential Reference
 
 ORM Essential Reference
 
-- [ ] Mapper Configuration
+- [ ] Mapper Configuration [2]
 
 - [ ] Relationship Configuration[3]
 
