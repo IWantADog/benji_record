@@ -14,9 +14,9 @@ Core Essential Reference
 
 ORM Essential Reference
 
-- [ ] Mapper Configuration [2]
+- [s] Mapper Configuration [2]
 
-- [ ] Relationship Configuration[3]
+- [f] [Relationship Configuration](./Relationship_Configuration.md) [3]
 
 - [f] Using the Session[1]
     - [f] [Contextual/Thread-local Sessions](./contextual_thread_local_session.md) [1]
