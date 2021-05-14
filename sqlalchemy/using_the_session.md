@@ -129,3 +129,74 @@ When an ORM mapped object is loaded into memory, there are three general ways to
 
 11. A more common approach to this situation is to maintain a single Session per concurrent thread, but to instead copy objects from one Session to another, often using the `Session.merge()` method to copy the state of an object into a new object local to a different Session.
     > 对于多线程处理相同的任务，官方推荐为每个线程分配一个 `session`。通过 `Session.merge()` 复制不同线程之间的数据。
+
+## State Management
+
+- `Transient` - an instance that’s not in a session, and is not saved to the database; i.e. it has no database identity. The only relationship such an object has to the ORM is that its class has a Mapper associated with it.
+
+- `Pending` - when you `Session.add()` a transient instance, it becomes pending. It still wasn’t actually flushed to the database yet, but it will be when the next flush occurs.
+
+- `Persistent` - An instance which is present in the session and has a record in the database. You get persistent instances by either flushing so that the pending instances become persistent, or by querying the database for existing instances (or moving persistent instances from other sessions into your local session).
+
+- `Deleted` - An instance which has been deleted within a `flush`, but the transaction has not yet completed. Objects in this state are essentially in the opposite of “pending” state; when the session’s transaction is committed, the object will move to the detached state. Alternatively, when the session’s transaction is rolled back, a deleted object moves back to the persistent state.
+
+- `Detached` - an instance which corresponds, or previously corresponded, to a record in the database, but is not currently in any session. The detached object will contain a database identity marker, however because it is not associated with a session, it is unknown whether or not this database identity actually exists in a target database. Detached objects are safe to use normally, except that they have no ability to load unloaded attributes or attributes that were previously marked as “expired”.
+
+### Getting the Current State of an Object
+
+The actual state of any mapped object can be viewed at any time using the `inspect()` system:
+
+```py
+>>> from sqlalchemy import inspect
+>>> insp = inspect(my_object)
+>>> insp.persistent
+True
+```
+
+### Session Attributes
+
+1. `session` 类似一个 `set-like` 容器，可以迭代。
+2. 可以对 `session` 使用 `in`， 检查对象是否在 `session` 中。
+3. `session.new` & `session.dirty` & `session.deleted` & `session.identity_map`
+
+### Session Referencing Behavior
+
+__Objects within the session are weakly referenced. This means that when they are dereferenced in the outside application, they fall out of scope from within the Session as well and are subject to garbage collection by the Python interpreter.__ The exceptions to this include objects which are pending, objects which are marked as deleted, or persistent objects which have pending changes on them. After a full flush, these collections are all empty, and all objects are again weakly referenced.
+
+> `session` 中的所有对象都是 `weakly referenced`。
+
+### Merging * 
+
+[detail](https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#merging)
+
+> 将 `session` 外部的对象与 `session`中的对象合并，并更新状态。
+
+
+### Expunging
+
+__Expunge removes an object from the Session, sending persistent instances to the detached state, and pending instances to the transient state:__
+
+```py
+session.expunge(obj1)
+```
+
+> 待测试
+
+### Refreshing / Expiring
+
+`Expiring` means that the database-persisted data held inside a series of object attributes is erased, __in such a way that when those attributes are next accessed, a SQL query is emitted which will refresh that data from the database.__
+
+`session.expire(user)` & `session.expire_all()` & `session.refresh(obj1)`
+
+
+### What Actually Loads
+
+[detail](https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#what-actually-loads)
+
+### When to Expire or Refresh
+
+[detail](https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#when-to-expire-or-refresh)
+
+### reference
+
+https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#expunging
