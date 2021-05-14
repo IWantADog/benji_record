@@ -2,7 +2,17 @@
 
 ## Basic Relationship Patterns
 
+```py
+from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+```
+
 ### One To Many
+
+> `relationship()` 主要用于相关联对象的反向查找。即通过 `Parent.children` 获取父母所有的孩子。
 
 ```py
 # using back_populated
@@ -78,28 +88,38 @@ association_table = Table('association', Base.metadata,
 class Parent(Base):
     __tablename__ = 'left'
     id = Column(Integer, primary_key=True)
-    children = relationship("Child",
-                    secondary=association_table,
-                    backref="parents")
+    children = relationship(
+        "Child",
+        secondary=association_table,
+        back_populates="parents")
 
 class Child(Base):
     __tablename__ = 'right'
     id = Column(Integer, primary_key=True)
+    parents = relationship(
+        "Parent",
+        secondary=association_table,
+        back_populates="children")
 ```
 
 #### Deleting Rows from the Many to Many Table
 
-A question which often arises is how the row in the “secondary” table can be deleted when the child object is handed directly to `Session.delete()`:
+A question which often arises is how the row in the `“secondary”` table can be deleted when the `child` object is handed directly to `Session.delete()`:
 
 There are several possibilities here:
 
-- If there is a `relationship()` from `Parent` to `Child`, but there is not a reverse-relationship that links a particular `Child` to each `Parent`, SQLAlchemy will not have any awareness that when deleting this particular Child object, it needs to maintain the “secondary” table that links it to the Parent. No delete of the “secondary” table will occur.
+- If there is a `relationship()` from `Parent` to `Child`, but there is not a reverse-relationship that links a particular `Child` to each `Parent`, SQLAlchemy will not have any awareness that when deleting this particular `Child` object, it needs to maintain the `“secondary”` table that links it to the `Parent`. No delete of the “secondary” table will occur.
 
-- If there is a relationship that links a particular `Child` to each `Parent`, suppose it’s called `Child.parents`, SQLAlchemy by default will load in the `Child.parents` collection to locate all `Parent` objects, and remove each row from the “secondary” table which establishes this link. Note that this relationship does not need to be bidirectional; SQLAlchemy is strictly looking at every `relationship()` associated with the `Child` object being deleted.
+> `many to many` 删除数据时，`sqlalchemy` 通过模型中定义的 `relationship` 查找相关的数据。如果模型中没有 `relationship` 则不删除中间表中的数据；
 
-- A higher performing option here is to use `ON DELETE CASCADE` directives with the foreign keys used by the database. Assuming the database supports this feature, the database itself can be made to automatically delete rows in the “secondary” table as referencing rows in `“child”` are deleted. `SQLAlchemy` can be instructed to forego actively loading in the `Child.parents` collection in this case using the relationship.passive_deletes directive on `relationship()`; see Using foreign key `ON DELETE` cascade with `ORM` relationships for more details on this.
+- If there is a relationship that links a particular `Child` to each `Parent`, suppose it’s called `Child.parents`, SQLAlchemy by default will load in the `Child.parents` collection to locate all `Parent` objects, and remove each row from the “secondary” table which establishes this link. __Note that this relationship does not need to be bidirectional__; SQLAlchemy is strictly looking at every `relationship()` associated with the `Child` object being deleted.
 
-> 对于`many to many`删除数据时，可能出现的逻辑。
+> 如果模型中有 `relationship`， `sqlalchemy` 会查找相关的数据，并将建立连接的数据从中间表中删除（不会删除关联模型的数据）。
+
+- A higher performing option here is to use `ON DELETE CASCADE` directives with the `foreign keys` used by the database. Assuming the database supports this feature, the database itself can be made to automatically delete rows in the `“secondary”` table as referencing rows in `“child”` are deleted. `SQLAlchemy` can be instructed to forego actively loading in the `Child.parents` collection in this case using the relationship.passive_deletes directive on `relationship()`; see Using foreign key `ON DELETE` cascade with `ORM` relationships for more details on this.
+
+> 定义模型与中间表的级联删除，当模型数据被删除时，数据库自动将相关的数据删除。
+
 
 ### Association Object
 
@@ -131,7 +151,7 @@ Many of the examples in the preceding sections illustrate mappings where the var
 
 __These string names are resolved into classes in the mapper resolution stage, which is an internal process that occurs typically after all mappings have been defined and is normally triggered by the first usage of the mappings themselves. The registry object is the container in which these names are stored and resolved to the mapped classes they refer towards.__
 
-In addition to the main class argument for `relationship()`, other arguments which __depend upon the columns present on an as-yet undefined class may also be specified either as Python functions, or more commonly as strings.__ For most of these arguments except that of the main argument, string inputs are evaluated as Python expressions using Python’s built-in eval() function, as they are intended to recieve complete SQL expressions.
+In addition to the main class argument for `relationship()`, other arguments which __depend upon the columns present on an as-yet undefined class may also be specified either as Python functions, or more commonly as strings.__ For most of these arguments except that of the main argument, __string inputs are evaluated as Python expressions using Python’s built-in `eval()` function, as they are intended to recieve complete SQL expressions.__
 
 > `relationship()` 中的部分参数，可以设置为 `python function` or `string` or `sql语句`
 
