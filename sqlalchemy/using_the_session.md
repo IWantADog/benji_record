@@ -132,6 +132,8 @@ When an ORM mapped object is loaded into memory, there are three general ways to
 
 ## State Management
 
+[reference](https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#expunging)
+
 - `Transient` - an instance that’s not in a session, and is not saved to the database; i.e. it has no database identity. The only relationship such an object has to the ORM is that its class has a Mapper associated with it.
 
 - `Pending` - when you `Session.add()` a transient instance, it becomes pending. It still wasn’t actually flushed to the database yet, but it will be when the next flush occurs.
@@ -163,13 +165,13 @@ True
 
 __Objects within the session are weakly referenced. This means that when they are dereferenced in the outside application, they fall out of scope from within the Session as well and are subject to garbage collection by the Python interpreter.__ The exceptions to this include objects which are pending, objects which are marked as deleted, or persistent objects which have pending changes on them. After a full flush, these collections are all empty, and all objects are again weakly referenced.
 
-> `session` 中的所有对象都是 `weakly referenced`。
+> `session` 中的所有对象都是 `weakly referenced`。当对象不被引用，最终会被垃圾回收机制回收。
 
 ### Merging * 
 
 [detail](https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#merging)
 
-> 将 `session` 外部的对象与 `session`中的对象合并，并更新状态。
+> 将 `session` 外部的对象与 `session`中的对象合并，使用外部传入对象属性赋予 `session` 中的对象。
 
 
 ### Expunging
@@ -180,13 +182,15 @@ __Expunge removes an object from the Session, sending persistent instances to th
 session.expunge(obj1)
 ```
 
-> 待测试
+> 从 `session` 中删除对象，但不同于 `session.delete()`，不会将数据从数据库中删除。
 
 ### Refreshing / Expiring
 
 `Expiring` means that the database-persisted data held inside a series of object attributes is erased, __in such a way that when those attributes are next accessed, a SQL query is emitted which will refresh that data from the database.__
 
 `session.expire(user)` & `session.expire_all()` & `session.refresh(obj1)`
+
+> 手动使一个对象过期；手动重新从数据库加载对象相关数据。
 
 
 ### What Actually Loads
@@ -197,6 +201,47 @@ session.expunge(obj1)
 
 [detail](https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#when-to-expire-or-refresh)
 
-### reference
+## Cascades
 
-https://docs.sqlalchemy.org/en/14/orm/session_state_management.html#expunging
+The default value of `relationship.cascade` is `save-update`, `merge`. The typical alternative setting for this parameter is either `all` or more commonly `all`, `delete-orphan`. The all symbol is a synonym for `save-update`, `merge`, `refresh-expire`, `expunge`, `delete`, and using it in conjunction with `delete-orphan` __indicates that the child object should follow along with its parent in all cases, and be deleted once it is no longer associated with that parent__.
+
+### save-update
+
+`save-update` cascade indicates that __when an object is placed into a `Session` via `Session.add()`, all the objects associated with it via this `relationship()` should also be added to that same `Session`.__
+
+> `save-update`: 对象被加入 `session`, 和它相关联的对象都会被加入`session`。
+
+### delete
+
+The `delete` cascade indicates that when a `“parent”` object is marked for deletion, its related `“child”` objects should also be marked for deletion.
+
+Alternatively, if our `User.addresses` relationship does not have `delete cascade`, SQLAlchemy’s `default` behavior is to instead de-associate `address1` and `address2` from `user1` by setting their `foreign key` reference to `NULL`.
+
+> `delete`: 当对象被删除，和它相关联的对象都被删除。默认情况下，`sqlalchemy` 将外键设置为 `null`。
+
+### Using delete cascade with many-to-many relationships
+
+The `cascade="all, delete"` option works equally well with a many-to-many relationship, one that uses `relationship.secondary` to indicate an association table. __When a parent object is deleted, and therefore de-associated with its related objects, the unit of work process will normally delete rows from the association table, but leave the related objects intact.__ When combined with `cascade="all, delete"`, __additional DELETE statements will take place for the child rows themselves__.
+
+> 对于多对多关系，如果设置`cascade="all, delete"`，当对象被删除时，中间表和相关的子表也会被删除。
+
+### Using foreign key ON DELETE cascade with ORM relationships
+
+```py
+class Parent(Base):
+    __tablename__ = 'parent'
+    id = Column(Integer, primary_key=True)
+    children = relationship(
+        "Child", back_populates="parent",
+        cascade="all, delete",
+        passive_deletes=True
+    )
+
+class Child(Base):
+    __tablename__ = 'child'
+    id = Column(Integer, primary_key=True)
+    parent_id = Column(Integer, ForeignKey('parent.id', ondelete="CASCADE"))
+    parent = relationship("Parent", back_populates="children")
+```
+
+> 设置数据库级别的关联查询。
