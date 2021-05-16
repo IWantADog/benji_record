@@ -186,32 +186,13 @@ __The primary key identity of the objects are significant to the `Session`, as t
 
 - join load
 
-    > 类似sql中的`join`
+    __joinedload() is not a replacement for join()__
+
+    The join created by `joinedload()` is anonymously aliased such that it does not affect the query results. An `Query.order_by()` or `Query.filter()` call cannot reference these aliased tables - so-called “user space” joins are constructed using `Query.join()`. The rationale for this is that `joinedload()` is only applied in order to affect how related objects or collections are loaded as an optimizing detail - it can be added or removed with no impact on actual results.
+
+    > `joinload()` 不是 `join()` 的替代品。 `joinload()` 是对于查询 `many to one` 关系的优化处理。
 
 
 - Raiseload
 
     > 对于懒查询，直接报错
-
-
-## Further Reading 
-
-Core Essential Reference
-
-- [ ] Working with Engines and Connections
-
-- [ ] Schema Definition Language
-
-- [ ] SQL Statements and Expressions API
- 
-- [ ] Column and Data Types
-
-ORM Essential Reference
-
-- [ ] Mapper Configuration
-
-- [ ] Relationship Configuration
-
-- [ ] Using the Session
-
-- [ ] Querying Data, Loading Objects
