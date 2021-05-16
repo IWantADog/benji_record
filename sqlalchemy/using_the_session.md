@@ -203,6 +203,8 @@ session.expunge(obj1)
 
 ## Cascades
 
+__级联删除风险很大，如果不完全清楚自己在做什么，不要使用。__
+
 The default value of `relationship.cascade` is `save-update`, `merge`. The typical alternative setting for this parameter is either `all` or more commonly `all`, `delete-orphan`. The all symbol is a synonym for `save-update`, `merge`, `refresh-expire`, `expunge`, `delete`, and using it in conjunction with `delete-orphan` __indicates that the child object should follow along with its parent in all cases, and be deleted once it is no longer associated with that parent__.
 
 ### save-update
@@ -245,3 +247,68 @@ class Child(Base):
 ```
 
 > 设置数据库级别的关联查询。
+
+### Using foreign key ON DELETE with many-to-many relationships
+
+To make use of `ON DELETE CASCADE` foreign keys in conjunction with `many to many`, `FOREIGN KEY` directives are configured on the `association` table. __These directives can handle the task of automatically deleting from the association table, but cannot accommodate the automatic deletion of the related objects themselves.__
+
+> `many to many`级联删除仅会删除中间表，不会影响关联表。
+
+## Transactions and Connection Management
+
+### Using SAVEPOINT
+
+```py
+Session = sessionmaker()
+
+with Session.begin() as session:
+    session.add(u1)
+    session.add(u2)
+
+    nested = session.begin_nested() # establish a savepoint
+    session.add(u3)
+    nested.rollback()  # rolls back u3, keeps u1 and u2
+
+# commits u1 and u2
+```
+
+## Additional Persistence Techniques
+
+### Forcing NULL on a column with a default
+
+将设置了默认值的属性，赋值为`null`
+
+```py
+# 方法一 null()
+from sqlalchemy import null
+
+obj = MyObject(id=1, data=null())
+session.add(obj)
+session.commit()  # INSERT with the 'data' column explicitly set as null();
+                  # the ORM uses this directly, bypassing all client-
+                  # and server-side defaults, and the database will
+                  # persist this as the NULL value
+```
+
+```py
+# 方法二 evaluates_none()
+class MyObject(Base):
+    __tablename__ = 'my_table'
+    id = Column(Integer, primary_key=True)
+    data = Column(
+      String(50).evaluates_none(),  # indicate that None should always be passed
+      nullable=True, server_default="default")
+
+obj = MyObject(id=1, data=None)
+session.add(obj)
+session.commit()  # INSERT with the 'data' column explicitly set to None;
+                  # the ORM uses this directly, bypassing all client-
+                  # and server-side defaults, and the database will
+                  # persist this as the NULL value
+```
+
+## Tracking queries, object and Session Changes with Events
+
+> 关于 `flush hook` & `Mapper-level Event` & `Object Lifecycle Event`
+
+[document link](https://docs.sqlalchemy.org/en/14/orm/session_events.html#tracking-queries-object-and-session-changes-with-events)
