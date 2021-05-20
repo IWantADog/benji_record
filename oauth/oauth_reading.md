@@ -60,14 +60,35 @@ There are several ways different services provide a way for an app to find out t
 
 todo
 
+## chapter 4 [Server-Side Apps]
 
-https://www.oauth.com/oauth2-servers/server-side-apps/
+### Step-by-step
+The high level overview is this:
+
+- Create a log-in link with the app’s client ID, redirect URL, and state parameters
+- The user sees the authorization prompt and approves the request
+- The user is redirected back to the app’s server with an auth code
+- The app exchanges the auth code for an access token
+
+## chapter 5 [Single-Page Apps]
+
+
+## chapter 7 [Making Authenticated Requests]
+
+__The thing to keep in mind is that access tokens are opaque to the client, and should only be used to make API requests and not interpreted themselves.__
+
+If you are trying to find out whether your access token has expired, you can either store the expiration lifetime that was returned when you first got the access token, or just try to make the request anyway, and get a new access token if the current one has expired.
+
+
+Keep in mind that at any point the user can revoke an application , so your application needs to be able to handle the case when refreshing the access token also fails. 
+
+
+## 8 The Client ID and Secret
+
+The client_secret is a secret known only to the application and the authorization server. It must be sufficiently random to not be guessable, which means you should avoid using common UUID libraries which often take into account the timestamp or MAC address of the server generating it. A great way to generate a secure secret is to use a cryptographically-secure library to generate a 256-bit value and converting it to a hexadecimal representation.
+
+> 关于`client_secret`
 
 
 
-
-
-
-
-
-
+https://www.oauth.com/oauth2-servers/authorization/
