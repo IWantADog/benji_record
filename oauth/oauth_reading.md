@@ -89,6 +89,57 @@ The client_secret is a secret known only to the application and the authorizatio
 
 > 关于`client_secret`
 
+## 9 Authorization
+
+如何实现 oauth2 认证服务
+
+### request parameter
+- response_type
+- client_id
+- redirect_uri
+- scope
+- state
+
+### 9.2 Requiring User Login
+
+Typically sites like Twitter or Facebook expect their users are signed in most of the time, so they provide a way for their authorization screens to give the user a streamlined experience by not requiring them to log in each time. However, based on the security requirements of your service as well as the third-party applications, it may be desirable to require or give developers the option to require the user to log in each time they visit the authorization screen.
+
+> 对于认证服务，需要决定是否每次通过第三方登录，都需要让用户重新登录。
+
+In any case, if the user is signed out, or doesn’t yet have an account on your service, you’ll need to provide a way for them to sign in or create an account on this screen.
+
+> 对于登出用户和没有账户的用户，还需要在授权界面提供重新登录和注册的接口
+
+In enterprise environments, a common technique is to use `SAML`, an XML-based standard for authentication, to leverage the existing authentication mechanism at the organization, while avoiding creating another username/password database.
+
+> SAML
+
+### 9.3 The Authorization Interface
+
+#### The requested or effective lifetime
+
+Most services do not automatically expire authorizations, and instead expect the user to periodically review and revoke access to apps they no longer want to use. However some services provide limited token lifetime by default, and either allow the application to request a longer duration, or force users to re-authorize the app after the authorization is expired.
+
+> 很多服务不主动使认证过期，除非用户主动删除。不过许多服务会为认证增加时间限制，允许用户请求一个更长的持续时间，或是强制用户重新授权app当授权过期。
 
 
-https://www.oauth.com/oauth2-servers/authorization/
+### 9.4 The Authorization Response
+
+Depending on the grant type, the authorization server will respond with either an `authorization code` or an `access token`.
+
+#### Generating the Authorization Code
+
+__The authorization code must expire shortly after it is issued.__ The OAuth 2.0 spec recommends a maximum lifetime of 10 minutes, but in practice, most services set the expiration much shorter, around 30-60 seconds. The authorization code itself can be of any length, but the length of the codes should be documented.
+
+Because authorization codes are meant to be short-lived and single-use, they are a great candidate to implement as self encoded. With this technique, you can avoid storing authorization codes in a database, and instead, encode all of the necessary information into the code itself. You can use either a built-in encryption library of your server-side environment, or a standard such as JSON Web Signature (JWS). Since this string only needs to be understandable to your authorization server, there is no requirement to implement this using a standard such as JWT. That said, if you don’t have an already-available encryption library easily accessible, a JWT is a great candidate since there are libraries available in many languages.
+
+
+The information that will need to be associated with the authorization code is the following.
+
+> authorization code 的构成
+
+- `client_id` – The client ID (or other client identifier) that requested this code
+- `redirect_uri` – The redirect URL that was used. This needs to be stored since the access token request must contain the same redirect URL for verification when issuing the access token.
+- `User info` – Some way to identify the user that this authorization code is for, such as a user ID.
+- `Expiration Date` – The code needs to include an expiration date so that it only lasts a short time.
+- `Unique ID` – The code needs its own unique ID of some sort in order to be able to check if the code has been used before. A database ID or a random string is sufficient.
