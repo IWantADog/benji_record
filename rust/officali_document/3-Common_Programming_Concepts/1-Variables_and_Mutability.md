@@ -2,19 +2,19 @@
 
 Mutability can be very useful. __Variables are immutable only by default__. You can make them mutable by adding `mut` in front of the variable name. In addition to allowing this value to change, mut conveys intent to future readers of the code by indicating that other parts of the code will be changing this variable’s value.
 
+> rust的变量默认是不可变的。对于修改不可变类型的操作，rust会在编译环节报错。
+
 ## Differences Between Variables and Constants
 
-- Constants aren’t just immutable by default—they’re always immutable.
-
-- Constants can be declared in any scope, including the global scope, which makes them useful for values that many parts of code need to know about.
-
-- The last difference is that constants may be set only to a constant expression, not the result of a function call or any other value that could only be computed at runtime.
+- 静态类型不能使用`mut`声明，静态类型默认是无法修改的。
+- 使用`const`声明静态类型，而不是`let`。
+- 静态类型必须是静态表达式，不能是方法或在运行是计算
 
 ## Shadowing
 
-Shadowing is different from marking a variable as `mut`, because we’ll get a compile-time error if we accidentally try to reassign to this variable without using the `let` keyword. By using `let`, we can perform a few transformations on a value but have the variable be immutable after those transformations have been completed.
+Rustaceans say that the first variable is `shadowed` by the second, which means that the second variable’s value is what appears when the variable is used.
 
-The other difference between `mut` and shadowing is that because we’re effectively creating a new variable when we use the `let` keyword again, we can change the type of the value but reuse the same name.
+> 当一个变量名被多次使用，ruster称前一个变量被后一个变量`shadowed`.
 
+> `shadowing`的本质是重新声明了一个变量。和`mut`有本质的区别。
 
-https://doc.rust-lang.org/book/ch03-00-common-programming-concepts.html
