@@ -291,4 +291,27 @@ A common method of granting tokens is to use a combination of access tokens and 
 
 #### Short-lived access tokens and no refresh tokens
 
-https://www.oauth.com/oauth2-servers/access-tokens/access-token-lifetime/
+If you want to ensure users are aware of applications that are accessing their account, the service can issue relatively short-lived access tokens without refresh tokens. The access tokens may last anywhere from the current application session to a couple weeks. When the access token expires, the application will be forced to make the user sign in again, so that you as the service know the user is continually involved in re-authorizing the application.
+
+> 对于比较敏感或是风险较高的信息。服务提供商可以提供短期的access_token并且不提供refresh token。这会导致当access_token过期时，applicaiton必须强迫用户重新登录。
+
+#### Non-expiring access tokens
+
+> 对于自编码的access token，服务商无法使其过期。对于这种情况，需要将数据存储到数据库中。
+
+### 12.7 Refreshing Access Tokens
+
+#### Request Parameters
+
+- grant_type (required)
+
+    The grant_type parameter must be set to “refresh_token”.
+
+- refresh_token (required)
+- scope (optional)
+    > scope只能与起始请求的scope相同。默认可以省略。
+
+刷新access token之后，可以返回新的refresh token。如果不返回，则默认继续使用旧的。
+
+
+https://www.oauth.com/oauth2-servers/listing-authorizations/
