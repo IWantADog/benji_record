@@ -315,3 +315,5 @@ If you want to ensure users are aware of applications that are accessing their a
 
 
 https://www.oauth.com/oauth2-servers/listing-authorizations/
+
+https://www.oauth.com/oauth2-servers/access-tokens/refreshing-access-tokens/
