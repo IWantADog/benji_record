@@ -311,9 +311,30 @@ If you want to ensure users are aware of applications that are accessing their a
 - scope (optional)
     > scope只能与起始请求的scope相同。默认可以省略。
 
-刷新access token之后，可以返回新的refresh token。如果不返回，则默认继续使用旧的。
+> 刷新access token之后，可以返回新的refresh token。如果不返回，则默认继续使用旧的。
+
+### 13 Listing Authorizations
+
+用户授权自己账户给许多的applicaiton，认证提供商需要提供一个列表包含所有用户授权的application。
+
+### 13.1 Revoking Access
+
+#### Token Database
+
+对于存在数据库中的`access token`，只需删除相关用户的数据即可。
+
+#### Self-Encoded Tokens
+
+对于自编码的`access token`，提供商没办法主动使`access token`过期。
+1. 等待`access token`过期。
+2. 使`refresh token`过期使applicaton无法获取新的`access token`。
+3. 不允许applicaiton获取新的`access token`。
+
+> 这也是将自编码`access token`的有效时间应该较短的主要原因。
+
+## 15 OAuth for Native Apps
+
+对于`native app`不同于`browser-based app`，前者获取一个`secret-id`后，需要写入application中。这也提供了通过反编译获取`secret-id`的可能。所以对于`native app`需要一种不需要`secret-id`的oauth的认证流程。
 
 
-https://www.oauth.com/oauth2-servers/listing-authorizations/
 
-https://www.oauth.com/oauth2-servers/access-tokens/refreshing-access-tokens/
