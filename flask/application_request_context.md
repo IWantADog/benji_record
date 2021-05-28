@@ -41,6 +41,25 @@ with app.test_request_context():
 
 对于`before_request`、`after_request`、`teardown_request`和`teardown_appcontext`都可以使用装饰器。
 
+### callback for app and blueprint
+
+### app callback
+
+- before_request: before all request
+- after_request: after each request
+- teardown_appcontext: call when application context end
+- teardown_request: call at end of each request
+
+### blueprint callback
+
+- after_app_request: call after each request
+- after_request: call after each only for that buleprint
+- before_app_request: call before each request
+- before_request: call before each request just for that blueprint
+- teardown_app_request: call when request end
+- teardown_request: call when request end just for that blueprint
+
+
 ## Note on Proxies
 
 flask中很多的对象都是实际对象的代理对象。
