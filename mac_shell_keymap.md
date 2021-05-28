@@ -10,6 +10,8 @@ Ctrl + u 删除光标之前到行首的字符
 
 Ctrl + k 删除光标之后到行尾的字符
 
+ctrl + w 删除输入命令的最后一个单词
+
 ## brew
 
 brew doctor
