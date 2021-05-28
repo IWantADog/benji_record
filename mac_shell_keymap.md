@@ -12,6 +12,10 @@ Ctrl + k 删除光标之后到行尾的字符
 
 ctrl + w 删除输入命令的最后一个单词
 
+option + left 插入点左移一个单词
+
+option + right 插入点右移一个单词
+
 ## brew
 
 brew doctor
