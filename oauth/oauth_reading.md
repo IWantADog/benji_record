@@ -336,10 +336,24 @@ If you want to ensure users are aware of applications that are accessing their a
 
 对于`native app`不同于`browser-based app`，前者获取一个`secret-id`后，需要写入application中。这也提供了通过反编译获取`secret-id`的可能。所以对于`native app`需要一种不需要`secret-id`的oauth的认证流程。
 
+## 16、17、18 pass
+
+## 19
+
+There are two primary endpoints developers will be using during the OAuth process. Your `authorization endpoint` is where the users will be directed to begin the authorization flow. __After the application obtains an authorization code, it will exchange that code for an access token at the token endpoint. The token endpoint is also responsible for issuing access tokens for other grant types.__
+
+## 20 Terminology Reference
+
+### Roles
+OAuth defines four roles:
+
+- Resource owner (the user)
+- Resource server (the API)
+- Authorization server (can be the same server as the API)
+- Client (the third-party app)
+
+## 21 Differences Between OAuth 1 and 2
 
 
-<<<<<<< Updated upstream
-=======
 
-
->>>>>>> Stashed changes
+https://www.oauth.com/oauth2-servers/differences-between-oauth-1-2/
