@@ -1,8 +1,23 @@
 # What is Ownership
 
-Ownership is Rust’s most unique feature, and it enables Rust to make memory safety guarantees without needing a garbage collector. Therefore, it’s important to understand how ownership works in Rust.
+`Ownership`是`rust`特有的概念。它保证了rust在没有垃圾回收机制的情况下的内存的分配安全。
 
-sRust uses a third approach: __memory is managed through a system of ownership with a set of rules that the compiler checks at compile time. None of the ownership features slow down your program while it’s running.__
+__memory is managed through a system of ownership with a set of rules that the compiler checks at compile time. None of the ownership features slow down your program while it’s running.__
+
+## heap and stack
+
+stack:
+- 栈中的数据大小都是固定的。
+- 先入后出
+
+heap:
+- 堆中的数据没有顺序。
+- 堆中的数据大小不是固定的。
+- 对于新进入堆中的数据，必须先找到一个合适大小的数据块，然后将它标记为使用中，最后返回一个指向该地址的指针。
+
+stack和heap的相比。从stack中寻找数据快于heap。因为stack的新数据都存在栈顶，而heap需要跟随指针才能找到数据块。
+
+[keep reading](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#what-is-ownership)
 
 ## Ownership Rules
 
