@@ -375,6 +375,11 @@ oauth2支持的认证类型:
 
 ### 21.3 Performance at Scale
 
+oauth1不利于扩展。
+
+## 22 OpenID Connect
+
+https://www.oauth.com/oauth2-servers/openid-connect/
 
 
 
