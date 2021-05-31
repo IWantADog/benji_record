@@ -354,6 +354,45 @@ OAuth defines four roles:
 
 ## 21 Differences Between OAuth 1 and 2
 
+oauth2 是 oauth1 的重写。oauth2 不向后兼容 oauth1。应该将oauth1与oauth2视为两个完全不同的协议。
+
+### 21.1 Authentication and Signatures
+
+pass
+
+### 21.2 User Experience and Alternative Token Issuance Options
+
+oauth1开始时有3种`flow`，后来随着发展逐渐合为一个`flow`。但是这个唯一的`flow`对`web-base applicaiton`支持的很好，对于其他的的applicaiton支持不理想。
+
+oauth2意识到问题，所以重新支持了多种`flow`，并且将其命名为`grant type`。oauth2支持多种applicaiton类型，并且支持自定义扩展。
+
+oauth2支持的认证类型:
+
+- Authorization Code: 支持`web-base applicaiton` 和 `native applicaiton`。
+- Password: oauth2协议中支持通过`username & password`认证。不过这种方式，只应该被可信任的`client`使用，比如服务提供商自己内部的`client`。不能暴露给第三方app使用，因为这有可能暴露用户的`username & password`给第三方app。
+- Client Credentials: application可以通过这种方式，用`access token`交换`client_id` & `client_secret`。
+- Device Flow: oauth2的扩展认证方式，适用于没有`web browser`的设备。
+
+### 21.3 Performance at Scale
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 https://www.oauth.com/oauth2-servers/differences-between-oauth-1-2/
