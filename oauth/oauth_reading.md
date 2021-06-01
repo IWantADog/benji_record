@@ -421,4 +421,18 @@ IndieAuth builds upon the OAuth 2.0 framework as follows:
 
 ### 23.1 Discovery
 
-https://www.oauth.com/oauth2-servers/indieauth/discovery/
+以`IndieAuth`方式认证的用户，认证时需要输入认证服务商提供给用户的url。applicaiton通过用户的url获取后续认证需要的信息。
+
+[detail about IndieAuth](https://www.w3.org/TR/indieauth/#discovery-by-clients)
+
+### 23.2 IndieAuth Sign-In Workflow
+
+[IndieAuth Sing-In Workflow](https://www.w3.org/TR/indieauth/#authorization-code-verification)
+
+## 24 Map of OAuth 2.0 Specs
+
+[Map of OAuth2.0 Specs](https://www.oauth.com/oauth2-servers/map-oauth-2-0-specs/)
+
+## 25 Tools and Libraries
+
+[Tools and Libraries](https://www.oauth.com/oauth2-servers/tools-and-libraries/)
