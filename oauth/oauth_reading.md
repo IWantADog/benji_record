@@ -379,25 +379,46 @@ oauth1不利于扩展。
 
 ## 22 OpenID Connect
 
-https://www.oauth.com/oauth2-servers/openid-connect/
+oauth2 是一个委托协议，第三方app通过`access token`获取用户的授权，但它不需要知道用户的身份。
 
+`OpenID` 在 `oauth2` 的上层增加了用户身份层，用来提供用户的信息，也允许客户端建立一个登录session。
 
+### 22.1 Authorization vs Authentication
 
+说明`access token`特性，贴切的例子：
 
+> When you check in to a hotel, you get a key card which you can use to enter your assigned room. You can think of the key card as an access token. The key card says nothing about who you are, or how you were authenticated at the front desk, but you can use the card to access your hotel room for the duration of your stay. Similarly, an OAuth 2.0 access token doesn’t indicate who a user is, it just is the thing you can use to access data, and it may expire at some point in the future.
 
+### 22.3 ID Tokens
 
+application可以向服务提供商发送`OpenID Connect Request`并带上`access token`，获取`ID token`。
 
+`ID token`不同与`access token`，`access token`applicaiton可能无法理解，`ID token`是applicaiton可以解析并理解的。
 
+`ID token`一般使用`JWT(Json Web Token)`对数据进行编码。
 
+通过`OpenID` application可以获得用户受保护的信息。
 
+## 23 IndieAuth
 
+[IndieAuth](https://indieauth.net/)
 
+`IndieAuth`是一个基于`oauth2`的去中心化的身份协议，通过`url`识别用户和applicaiton。
 
+所有的用户ID都是url，所有application通过它们的url进行区分。
 
+> This makes it work great for situations where you don’t want to require that developers sign up for an account at each authorization server, such as writing apps that authenticate users at arbitrary WordPress installations.????
 
+IndieAuth builds upon the OAuth 2.0 framework as follows:
 
+- Specifies a mechanism and format for identifying users (a resolvable URL)
+- Specifies a method of discoverinig the authorization and token endpoints given a profile URL
+- Specifies a format for the Client ID (also as resolvable URL)
+- All clients are public clients, as client secrets are not used
+- Client registration is not necessary, since all clients must use a resolvable URL as their Client ID
+- Redirect URI registration is accomplished by the application publicizing their valid redirect URLs on their website
+- Specifies a mechanism for a token endpoint and authorization endpoint to communicate, similiar to token introspection but for authorization codes
 
+### 23.1 Discovery
 
-
-
-https://www.oauth.com/oauth2-servers/differences-between-oauth-1-2/
+https://www.oauth.com/oauth2-servers/indieauth/discovery/
