@@ -6,6 +6,9 @@ https://www.oauth.com/
 
 在认证提供商上注册`application`，需要提供`name` `website` `logo` `redirect URLs`。注册完成之后会得到`client_id`和 `client_secret`。
 
+- client_id: 每个applicaiton的唯一标记。
+- client_secret: 可以理解为每个applicaiton的密码。
+
 为了安全`redirect_url`必须为https。
 
 许多服务对待`redirect url`会使用准确校验，这意味着redirect url中不应该包含查询参数，而只应该包含url路径。例如`https://example.com/auth` 不会匹配 `https://example.com/auth?destination=account`。
@@ -29,18 +32,16 @@ https://www.oauth.com/
 - 使用`access token`从认证服务商提供的接口获取用户信息
 
 
-## chapter 4 [Server-Side Apps]
+## Server-Side Apps
 
 ### Authorization Code Grant
 
 [code and access token request and response paramenter](https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/)
 
-todo
-
-https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/
-
-
 ### Step-by-step
+
+`server side app`大概的整个认证流程。
+
 The high level overview is this:
 
 - Create a log-in link with the app’s client ID, redirect URL, and state parameters
@@ -48,26 +49,19 @@ The high level overview is this:
 - The user is redirected back to the app’s server with an auth code
 - The app exchanges the auth code for an access token
 
-## chapter 5 [Single-Page Apps]
+## Single-Page Apps
+
+对于`single-page apps`，由于它的源码在浏览器中可见，所以使用`secret_id`不安全。`single-page app`获取`authorization code`的过程与`server-side app`相同，唯一不同点在`single-page app`获取`access token`时请求中不需要携带`secret id`。
+
+对于不需要发送`secret id`的应用。保证安全的方式一般是通过`state`和`redirect url`。
 
 
-## chapter 7 [Making Authenticated Requests]
+## Making Authenticated Requests
 
-__The thing to keep in mind is that access tokens are opaque to the client, and should only be used to make API requests and not interpreted themselves.__
-
-If you are trying to find out whether your access token has expired, you can either store the expiration lifetime that was returned when you first got the access token, or just try to make the request anyway, and get a new access token if the current one has expired.
+需要牢记的一点，`access token`对于`application`是不透明的，`applicatoin`不应该想着去`decode` `access token`，即使`access token`是按照`JWT`编码的。__`access token`只应该被用于请求API__。因为`access token`的格式可能会修改。
 
 
-Keep in mind that at any point the user can revoke an application , so your application needs to be able to handle the case when refreshing the access token also fails. 
-
-
-## 8 The Client ID and Secret
-
-The client_secret is a secret known only to the application and the authorization server. It must be sufficiently random to not be guessable, which means you should avoid using common UUID libraries which often take into account the timestamp or MAC address of the server generating it. A great way to generate a secure secret is to use a cryptographically-secure library to generate a 256-bit value and converting it to a hexadecimal representation.
-
-> 关于`client_secret`
-
-## 9 Authorization
+## Authorization (重新读一遍chpter 9)
 
 如何实现 oauth2 认证服务
 
