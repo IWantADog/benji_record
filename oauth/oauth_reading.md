@@ -64,7 +64,7 @@ The high level overview is this:
 需要牢记的一点，`access token`对于`application`是不透明的，`applicatoin`不应该想着去`decode` `access token`，即使`access token`是按照`JWT`编码的。__`access token`只应该被用于请求API__。因为`access token`的格式可能会修改。
 
 
-## Authorization (// todo 重新读一遍chpter 9)
+## Authorization
 
 如何实现 oauth2 认证服务
 
@@ -75,11 +75,11 @@ The high level overview is this:
 - scope
 - state
 
-### 9.2 Requiring User Login
+### Requiring User Login
 
 Typically sites like Twitter or Facebook expect their users are signed in most of the time, so they provide a way for their authorization screens to give the user a streamlined experience by not requiring them to log in each time. However, based on the security requirements of your service as well as the third-party applications, it may be desirable to require or give developers the option to require the user to log in each time they visit the authorization screen.
 
-> 对于认证服务，需要决定是否每次通过第三方登录，都需要让用户重新登录。
+> 对于认证服务，需要决定用户每次访问授权流程，是否都需要重新登录。
 
 In any case, if the user is signed out, or doesn’t yet have an account on your service, you’ll need to provide a way for them to sign in or create an account on this screen.
 
@@ -89,18 +89,16 @@ In enterprise environments, a common technique is to use `SAML`, an XML-based st
 
 > SAML
 
-### 9.3 The Authorization Interface
+### The Authorization Interface
 
-#### The requested or effective lifetime
+The requested or effective lifetime
 
 Most services do not automatically expire authorizations, and instead expect the user to periodically review and revoke access to apps they no longer want to use. However some services provide limited token lifetime by default, and either allow the application to request a longer duration, or force users to re-authorize the app after the authorization is expired.
 
 > 很多服务不主动使认证过期，除非用户主动删除。不过许多服务会为认证增加时间限制，允许用户请求一个更长的持续时间，或是强制用户重新授权app当授权过期。
 
 
-### 9.4 The Authorization Response
-
-Depending on the grant type, the authorization server will respond with either an `authorization code` or an `access token`.
+### The Authorization Response
 
 #### Generating the Authorization Code
 
@@ -108,12 +106,12 @@ __The authorization code must expire shortly after it is issued.__ The OAuth 2.0
 
 > authorization code的有效期一般较短。
 
-Because authorization codes are meant to be short-lived and single-use, they are a great candidate to implement as self encoded. With this technique, you can avoid storing authorization codes in a database, and instead, encode all of the necessary information into the code itself. You can use either a built-in encryption library of your server-side environment, or a standard such as JSON Web Signature (JWS). Since this string only needs to be understandable to your authorization server, there is no requirement to implement this using a standard such as JWT. That said, if you don’t have an already-available encryption library easily accessible, a JWT is a great candidate since there are libraries available in many languages.
+Because `authorization codes` are meant to be short-lived and single-use, they are a great candidate to implement as self encoded. With this technique, you can avoid storing authorization codes in a database, and instead, encode all of the necessary information into the code itself. You can use either a built-in encryption library of your server-side environment, or a standard such as JSON Web Signature (JWS). Since this string only needs to be understandable to your authorization server, there is no requirement to implement this using a standard such as JWT. __That said, if you don’t have an already-available encryption library easily accessible, a JWT is a great candidate since there are libraries available in many languages.__
 
-> 由于authorization code的有效期较短，所以将它存在数据库中不是一个好的选择。通过对数据进行编码更为合理。
+> 由于authorization code的有效期较短，所以将它存在数据库中不是一个好的选择。通过对数据进行编码更为合理(使用`JWT`是一个较好的选择)。
 
 
-The information that will need to be associated with the authorization code is the following.
+`authorization code`的构成。
 
 - `client_id` – The client ID (or other client identifier) that requested this code
 - `redirect_uri` – The redirect URL that was used. This needs to be stored since the access token request must contain the same redirect URL for verification when issuing the access token.
@@ -121,22 +119,16 @@ The information that will need to be associated with the authorization code is t
 - `Expiration Date` – The code needs to include an expiration date so that it only lasts a short time.
 - `Unique ID` – The code needs its own unique ID of some sort in order to be able to check if the code has been used before. A database ID or a random string is sufficient.
 
-> authorization code的构成。
+`authorization flow`的返回值:
 
-Once you’ve generated the authorization code。 The parameters to be added to the query string of the redirect URL are as follows:
+- code: `authorization code`
 
+- state: application传过来的数据
 
-- code: This parameter contains the authorization code which the client will later exchange for an access token.
+    - state在用户完成授权被重定向到`redirect url`时，applicaiton在授权流程开始时设置的state对应的数据，会被完整的返回给application。这提供了一个在可以维持数据的机会。
+    - state可以用来防止`CSRF`。
 
-- state: If the initial request contained a state parameter, the response must also include the exact value from the request. The client will be using this to associate this response with the initial request.
-
-> state的功能是什么
-
-state有两个功能
-- state在用户完成授权被重定向到`redirect url`时，applicaiton在授权流程开始时设置的state对应的数据，会被完整的返回给application。这提供了一个在可以维持数据的机会。
-- state可以用来防止`CSRF`。
-
-### 9.5 Security Considerations
+### Security Considerations
 
 Phishing Attacks
 
