@@ -13,9 +13,7 @@ https://www.oauth.com/
 
 许多服务对待`redirect url`会使用准确校验，这意味着redirect url中不应该包含查询参数，而只应该包含url路径。例如`https://example.com/auth` 不会匹配 `https://example.com/auth?destination=account`。
 
-## base
-
-[github rest api document](https://docs.github.com/en/rest)
+## Base
 
 `OAuth`是一个授权的协议，它的实质是获取用户的授权并代替用户从服务提供商获取数据。
 
@@ -23,7 +21,12 @@ https://www.oauth.com/
 
 如果`application`想要通过 oauth2.0 获取用户的信息。认证服务提供商需要额外增加一个`用户信息接口`，使应用可以通过`access token`的获取用户的信息。
 
-更高级服务提供商会使用 `OpenID`。它是`OAuth 2.0`的扩展，用来获取用户的详细信息。
+oauth服务提供商会提供两个`endpoint`:
+
+- `authorization endpoint`: 启动认证流程，用户选择是否同意授权，最终返回`authorization code`
+- `access token endpoint`: 通过`authorization code`交换`access token`
+
+更高级服务提供商会使用 `OpenID`。它是`OAuth 2.0`的扩展，用来获取用户的详细信息。[goto OpenID](#OpenID_Connect)
 
 ### 通过oauth2.0获取用户数据的方式
 
@@ -61,7 +64,7 @@ The high level overview is this:
 需要牢记的一点，`access token`对于`application`是不透明的，`applicatoin`不应该想着去`decode` `access token`，即使`access token`是按照`JWT`编码的。__`access token`只应该被用于请求API__。因为`access token`的格式可能会修改。
 
 
-## Authorization (重新读一遍chpter 9)
+## Authorization (// todo 重新读一遍chpter 9)
 
 如何实现 oauth2 认证服务
 
@@ -141,40 +144,33 @@ Clickjacking
 
 Redirect URL Manipulation
 
-## 10 Scope
+## Scope
 
-通过scope授权第三方应用获取用户部分信息。
+通过scope限制`applicaiton`获取用户信息。
 
-### 10.1 Defining Scopes
+把只读的和可修改的scope分开是一个好的实践。
 
-A good place to start with defining scopes is to define read vs write separately.
+## Redirect URIs
 
-> 把只读的和可修改的scope分开是一个好的实践。
-
-## 11 Redirect URIs
-
-重定向url很重要。oauth提供商只能从重定向用户到已注册的url。
-
-If a client wishes to include request-specific data in the redirect URL, it can instead use the “state” parameter to store data that will be included after the user is redirected. It can either encode the data in the state parameter itself, or use the state parameter as a session ID to store the state on the server.
+重定向url很重要。oauth提供商只能重定向用户到已注册的url。
 
 > 如果重定向请求中需要包含额外的信息，可以将额外的信息直接存放在`state`中或将`state`设置为一个ID，application可以通过state从数据库中获取信息。
 
-### 11.3 Redirect URL Validation
+### Redirect URL Validation
 
 - 注册application时检测redirect url是否合法
-- 获取authorization code时，验证redirect url是否存在与application中
-- 获取access_token是，验证redirect url是否存在与application中
+- 获取authorization_code时，验证redirect_url是否存在与application中
+- 获取access_token是，验证redirect_url是否存在与application中
 
-## 12 Access Token
+## 12 Access Token 
+
+// todo 重读一遍
 
 ### 12.1 Authorization Code Request
 
-#### Request Parameters
+获取access_token的请求参数组成：
 
-- grant_type
-
-    The grant_type parameter must be set to “authorization_code”.
-
+- grant_type: The grant_type parameter must be set to “authorization_code”.
 - code
 - redirect_uri
 - client_id
@@ -189,9 +185,7 @@ The server then checks if the authorization code is valid, and has not expired. 
 
 #### Security Considerations
 
-Preventing replay attacks
-
-> 所有的authorization code只能使用一次。对于重复使用的authorization code可以视为系统攻击，可以将之前的access_token取消。
+所有的authorization code只能使用一次。对于重复使用的authorization code可以视为系统攻击，可以将之前的access_token取消。
 
 ### 12.3 Client Credentials
 
@@ -289,38 +283,34 @@ If you want to ensure users are aware of applications that are accessing their a
 
 > 刷新access token之后，可以返回新的refresh token。如果不返回，则默认继续使用旧的。
 
-### 13 Listing Authorizations
+## Listing Authorizations
 
-用户授权自己账户给许多的applicaiton，认证提供商需要提供一个列表包含所有用户授权的application。
+用户授权自己账户给许多applicaiton，认证提供商需要提供一个列表包含所有用户授权的application。
 
-### 13.1 Revoking Access
+### Revoking Access
 
-#### Token Database
+删除发布的`access token`
+
+`Token Database`: 
 
 对于存在数据库中的`access token`，只需删除相关用户的数据即可。
 
-#### Self-Encoded Tokens
+`Self-Encoded Tokens`:
 
 对于自编码的`access token`，提供商没办法主动使`access token`过期。
+
 1. 等待`access token`过期。
 2. 使`refresh token`过期使applicaton无法获取新的`access token`。
 3. 不允许applicaiton获取新的`access token`。
 
 > 这也是将自编码`access token`的有效时间应该较短的主要原因。
 
-## 15 OAuth for Native Apps
+## OAuth for Native Apps
 
 对于`native app`不同于`browser-based app`，前者获取一个`secret-id`后，需要写入application中。这也提供了通过反编译获取`secret-id`的可能。所以对于`native app`需要一种不需要`secret-id`的oauth的认证流程。
 
-## 16、17、18 pass
+## Terminology Reference
 
-## 19
-
-There are two primary endpoints developers will be using during the OAuth process. Your `authorization endpoint` is where the users will be directed to begin the authorization flow. __After the application obtains an authorization code, it will exchange that code for an access token at the token endpoint. The token endpoint is also responsible for issuing access tokens for other grant types.__
-
-## 20 Terminology Reference
-
-### Roles
 OAuth defines four roles:
 
 - Resource owner (the user)
@@ -328,15 +318,11 @@ OAuth defines four roles:
 - Authorization server (can be the same server as the API)
 - Client (the third-party app)
 
-## 21 Differences Between OAuth 1 and 2
+## Differences Between OAuth 1 and 2
 
 oauth2 是 oauth1 的重写。oauth2 不向后兼容 oauth1。应该将oauth1与oauth2视为两个完全不同的协议。
 
-### 21.1 Authentication and Signatures
-
-pass
-
-### 21.2 User Experience and Alternative Token Issuance Options
+### User Experience and Alternative Token Issuance Options
 
 oauth1开始时有3种`flow`，后来随着发展逐渐合为一个`flow`。但是这个唯一的`flow`对`web-base applicaiton`支持的很好，对于其他的的applicaiton支持不理想。
 
@@ -349,23 +335,23 @@ oauth2支持的认证类型:
 - Client Credentials: application可以通过这种方式，用`access token`交换`client_id` & `client_secret`。
 - Device Flow: oauth2的扩展认证方式，适用于没有`web browser`的设备。
 
-### 21.3 Performance at Scale
+### Performance at Scale
 
 oauth1不利于扩展。
 
-## 22 OpenID Connect
+## OpenID_Connect
 
 oauth2 是一个委托协议，第三方app通过`access token`获取用户的授权，但它不需要知道用户的身份。
 
 `OpenID` 在 `oauth2` 的上层增加了用户身份层，用来提供用户的信息，也允许客户端建立一个登录session。
 
-### 22.1 Authorization vs Authentication
+### Authorization vs Authentication
 
 说明`access token`特性，贴切的例子：
 
 > When you check in to a hotel, you get a key card which you can use to enter your assigned room. You can think of the key card as an access token. The key card says nothing about who you are, or how you were authenticated at the front desk, but you can use the card to access your hotel room for the duration of your stay. Similarly, an OAuth 2.0 access token doesn’t indicate who a user is, it just is the thing you can use to access data, and it may expire at some point in the future.
 
-### 22.3 ID Tokens
+### ID Tokens
 
 application可以向服务提供商发送`OpenID Connect Request`并带上`access token`，获取`ID token`。
 
@@ -373,9 +359,9 @@ application可以向服务提供商发送`OpenID Connect Request`并带上`acces
 
 `ID token`一般使用`JWT(Json Web Token)`对数据进行编码。
 
-通过`OpenID` application可以获得用户受保护的信息。
+通过 `OpenID` application可以获得用户受保护的信息。
 
-## 23 IndieAuth
+## IndieAuth
 
 [IndieAuth](https://indieauth.net/)
 
@@ -383,7 +369,9 @@ application可以向服务提供商发送`OpenID Connect Request`并带上`acces
 
 所有的用户ID都是url，所有application通过它们的url进行区分。
 
-> This makes it work great for situations where you don’t want to require that developers sign up for an account at each authorization server, such as writing apps that authenticate users at arbitrary WordPress installations.????
+// todo read agagin
+
+> This makes it work great for situations where you don’t want to require that developers sign up for an account at each authorization server, such as writing apps that authenticate users at arbitrary WordPress installations.???? 
 
 IndieAuth builds upon the OAuth 2.0 framework as follows:
 
@@ -395,20 +383,20 @@ IndieAuth builds upon the OAuth 2.0 framework as follows:
 - Redirect URI registration is accomplished by the application publicizing their valid redirect URLs on their website
 - Specifies a mechanism for a token endpoint and authorization endpoint to communicate, similiar to token introspection but for authorization codes
 
-### 23.1 Discovery
+### Discovery
 
 以`IndieAuth`方式认证的用户，认证时需要输入认证服务商提供给用户的url。applicaiton通过用户的url获取后续认证需要的信息。
 
 [detail about IndieAuth](https://www.w3.org/TR/indieauth/#discovery-by-clients)
 
-### 23.2 IndieAuth Sign-In Workflow
+### IndieAuth Sign-In Workflow
 
 [IndieAuth Sing-In Workflow](https://www.w3.org/TR/indieauth/#authorization-code-verification)
 
-## 24 Map of OAuth 2.0 Specs
+## Map of OAuth 2.0 Specs
 
 [Map of OAuth2.0 Specs](https://www.oauth.com/oauth2-servers/map-oauth-2-0-specs/)
 
-## 25 Tools and Libraries
+## Tools and Libraries
 
 [Tools and Libraries](https://www.oauth.com/oauth2-servers/tools-and-libraries/)
