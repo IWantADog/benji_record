@@ -154,55 +154,55 @@ Redirect URL Manipulation
 - 获取authorization_code时，验证redirect_url是否存在与application中
 - 获取access_token是，验证redirect_url是否存在与application中
 
-## 12 Access Token 
+## Access Token 
 
-// todo 重读一遍
+`access token`必须是加密过的；使用`access token`必须使用https。
 
-### 12.1 Authorization Code Request
+### Authorization Code Request
 
 获取access_token的请求参数组成：
 
-- grant_type: The grant_type parameter must be set to “authorization_code”.
-- code
+- grant_type: 必须为`authorization_code`
+- code: authorization code
 - redirect_uri
 - client_id
-
-#### Verifying the authorization code grant
-
-After checking for all required parameters, and authenticating the client if the client was issued a secret, the authorization server can continue verifying the other parts of the request.
-
-The server then checks if the authorization code is valid, and has not expired. The service must then verify that the authorization code provided in the request was issued to the client identified. Lastly, the service must ensure the redirect URI parameter present matches the redirect URI that was used to request the authorization code.
-
-> 验证authorization code。
 
 #### Security Considerations
 
 所有的authorization code只能使用一次。对于重复使用的authorization code可以视为系统攻击，可以将之前的access_token取消。
 
-### 12.3 Client Credentials
+对于存储在数据库中的`code`，只需要在被使用一次之后将其标记为 __已使用__ 即可。
 
-The Client Credentials grant is used when applications request an access token to access their own resources, not on behalf of a user.
+对于自编码的`code`，可以将`code`存储在缓存中并设置过期时间。
 
-> 获取注册application的相关信息。
+### Password Grant
 
-#### Request Parameters
+请求参数:
 
-- grant_type
+- grant_type (required) – 必须为`password`.
+- username (required) – The user’s username.
+- password (required) – The user’s password.
+- scope (optional) – The scope requested by the application.
+- Client Authentication (required if the client was issued a secret)
 
-    The grant_type parameter must be set to client_credentials.
+### Client Credentials
 
+application获取`access token`以获取本身注册的相关信息。
+
+请求参数:
+
+- grant_type: 必须为`client_credentials`
 - scope
 - Client Authentication
 
-    The client needs to authenticate themselves for this request. Typically the service will allow either additional request parameters client_id and client_secret, or accept the client ID and secret in the HTTP Basic auth header.
+    > The client needs to authenticate themselves for this request. Typically the service will allow either additional request parameters client_id and client_secret, or accept the client ID and secret in the HTTP Basic auth header.
 
-### 12.4 Access Token Response
+### Access Token Response
 
-The response with an access token should contain the following properties:
+`access token`响应的参数构成:
 
 - `access_token` (required) The access token string as issued by the authorization server.
-
-- `token_type` (required) The type of token this is, typically just the string “bearer”.
+- `token_type` (required) The type of token this is, typically just the string __bearer__.
 
 - `expires_in` (recommended) If the access token expires, the server should reply with the duration of time the access token is granted for.
 
@@ -216,30 +216,23 @@ The response with an access token should contain the following properties:
 
     > 如果认证服务授权的范围和application请求的范围相同，该字段可以省略。如果不相同，该字段是必须的。
 
-When responding with an access token, the server must also include the additional Cache-Control: no-store and Pragma: no-cache HTTP headers to ensure clients do not cache this request.
+当请求返回后，认证服务提供商需要在响应的http header中增加`Cache-Control: no-store` & `Pragma: no-cache`保证客户端不会缓存请求。
 
-> 当请求返回后，认证服务提供商需要在响应的http header中增加`Cache-Control: no-store` & `Pragma: no-cache`保证客户端不会缓存请求。
-
-### 12.5 Self-Encoded Access Tokens
+### Self-Encoded Access Tokens
 
 Self-encoded tokens provide a way to avoid storing tokens in a database by encoding all of the necessary information in the token string itself. The main benefit of this is that API servers are able to verify access tokens without doing a database lookup on every API request, making the API much more easily scalable.
 
-> 自编码access_token可以避免将access_token存储在数据库中。
-
+> 自编码access_token可以避免将access_token存储在数据库中。通过`access_token`不需要使用数据库搜索，可以方便地扩展服务。
 
 json web token (JWT)
 
-Note: Anyone can read the token information by base64-decoding the middle section of the token string. For this reason, it’s important that you do not store private information or information you do not want a user or developer to see in the token. If you want to hide the token information, you can use the JSON Web Encryption spec to encrypt the data in the token.
-
-> 由于access_token可以使用`base64-decoding`编码。所以使用access_token时不应该存储敏感信息。如果想要加密信息，可以使用`JSON Web Encryption`。
+由于access_token可以使用`base64-decoding`编码。所以使用access_token时不应该存储敏感信息。如果想要加密信息，可以使用`JSON Web Encryption`。
 
 #### Invalidating
 
-Because the token can be verified without doing a database lookup, there is no way to invalidate a token until it expires. You’ll need to take additional steps to invalidate tokens that are self-encoded. See Refreshing Access Tokens for more information.
+对于自编码的access_token服务端无法主动无效，可以通过设置过期时间来处理。
 
-> 对于自编码的access_token的过期验证，需要额外的验证步骤。
-
-### 12.6 Access Token lifetime
+### Access Token lifetime
 
 #### Short-lived access tokens and long-lived refresh tokens
 
@@ -247,31 +240,27 @@ A common method of granting tokens is to use a combination of access tokens and 
 
 通常的做法是使用 access_token 和 refresh_token 的混合。
 
-传统的做法是服务提供商返回 access_token 时，同时返回 refresh_token 。 access_token有有效期，但refresh_token长期有效。当 access_token 过期时，applicaiton通过refresh_token换取新的access_token。
+传统的做法是服务提供商返回 access_token 时，同时返回 refresh_token 。 access_token有有限期限，但refresh_token永不过期。当 access_token 过期时，applicaiton通过refresh_token换取新的access_token。
 
 对于自编码的access_token由于服务商无法主动过期。所以自编码的access_token只有很短的有效期，迫使applicaiton不但地更新。这也使服务商有机会主动过期一个access_token。
 
 #### Short-lived access tokens and no refresh tokens
 
-If you want to ensure users are aware of applications that are accessing their account, the service can issue relatively short-lived access tokens without refresh tokens. The access tokens may last anywhere from the current application session to a couple weeks. When the access token expires, the application will be forced to make the user sign in again, so that you as the service know the user is continually involved in re-authorizing the application.
-
-> 对于比较敏感或是风险较高的信息。服务提供商可以提供短期的access_token并且不提供refresh token。这会导致当access_token过期时，applicaiton必须强迫用户重新登录。
+对于比较敏感或是风险较高的信息。服务提供商可以提供短期的access_token并且不提供refresh token。这会导致当access_token过期时，applicaiton必须强迫用户重新登录。
 
 #### Non-expiring access tokens
 
-> 对于自编码的access token，服务商无法使其过期。对于这种情况，需要将数据存储到数据库中。
+对于自编码的access token，服务商将无法删除token。
 
-### 12.7 Refreshing Access Tokens
+对于这种情况，只能将`access token`存储到数据库中。
 
-#### Request Parameters
+### Refreshing Access Tokens
 
-- grant_type (required)
+请求参数:
 
-    The grant_type parameter must be set to “refresh_token”.
-
+- grant_type (required): 必须为 __refresh_token__。
 - refresh_token (required)
-- scope (optional)
-    > scope只能与起始请求的scope相同。默认可以省略。
+- scope (optional): scope只能与起始请求的scope相同。默认可以省略。
 
 > 刷新access token之后，可以返回新的refresh token。如果不返回，则默认继续使用旧的。
 
