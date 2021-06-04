@@ -350,10 +350,6 @@ application可以向服务提供商发送`OpenID Connect Request`并带上`acces
 
 所有的用户ID都是url，所有application通过它们的url进行区分。
 
-// todo read agagin
-
-> This makes it work great for situations where you don’t want to require that developers sign up for an account at each authorization server, such as writing apps that authenticate users at arbitrary WordPress installations.???? 
-
 IndieAuth builds upon the OAuth 2.0 framework as follows:
 
 - Specifies a mechanism and format for identifying users (a resolvable URL)
