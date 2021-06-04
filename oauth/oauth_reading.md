@@ -69,7 +69,7 @@ The high level overview is this:
 如何实现 oauth2 认证服务
 
 ### request parameter
-- response_type
+- response_type: code
 - client_id
 - redirect_uri
 - scope
