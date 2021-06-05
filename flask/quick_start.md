@@ -41,7 +41,7 @@ with app.test_request_context('/hello', method='POST'):
 
 ## Flask.route() 支持多少种http方法？
 
-todo
+// todo
 
 ## render template
 
@@ -53,7 +53,7 @@ Inside templates you also have access to the `request`, `session` and `g` object
 
 ## what is g object
 
-todo
+// todo
 
 ## Access request data
 
@@ -142,7 +142,7 @@ b'_5#y2L"F4Q8z\n\xec]/'
 
 ### flask的session如何存储
 
-todo
+// todo
 
 ### 如何理解`cookies base session`
 
@@ -156,7 +156,7 @@ https://devcentral.f5.com/s/articles/sessions-and-cookies-and-persistence-oh-my#
 
 ### flask server-side session extension
 
-todo
+// todo
 
 ## Message Flash
 
