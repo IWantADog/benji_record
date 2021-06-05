@@ -17,7 +17,6 @@ heap:
 
 stack和heap的相比。从stack中寻找数据快于heap。因为stack的新数据都存在栈顶，而heap需要跟随指针才能找到数据块。
 
-[keep reading](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#what-is-ownership)
 
 ## Ownership Rules
 
@@ -26,6 +25,8 @@ First, let’s take a look at the ownership rules. Keep these rules in mind as w
 - Each value in Rust has a variable that’s called its owner.
 - There can only be one owner at a time.
 - When the owner goes out of scope, the value will be dropped.
+
+    > Rust calls drop automatically at the closing curly bracket.
 
 ## Variable Scope
 
@@ -38,9 +39,18 @@ First, let’s take a look at the ownership rules. Keep these rules in mind as w
 
     println!("{}, world!", s1);
 ```
+s1 & s2实质为`存储在stack中包含指向实际存储数据的结构体`，而`hello`存储在heap中。当把s1赋为s2，本质是将结构体的数据赋给为s2，heap中的数据没有被修改。
+
+如果出现这种情况，在回收内存是会同时对s1和s2都执行回收操作。但执行两次回收会出现内存问题并容易收到攻击。
+
+rust对于这种情况的对策是，当将s1赋为s2，s1便失效了，在s2被创建之后在使用s1会在编译环节报错。这样在最后触发内存回收时，只会回收内存一次。
+
+对于将s2赋为s1，并且之后s1失效，被成为`s1 be moved into s2`。
 
 
 ### Ways Variables and Data Interact: Clone
+
+想要复制不仅包含stask中的指针结构体，还包括heap中的实际数据，需要通过`clone`。
 
 ```rust
  let s1 = String::from("hello");
@@ -51,6 +61,8 @@ First, let’s take a look at the ownership rules. Keep these rules in mind as w
 
 ### Stack-Only Data: Copy
 
+对于像`int`类型在编译是有固定内存的数据，只会存储在`stack`中。所以普通的赋值就创建了新的数据。
+
 ```rust
     let x = 5;
     let y = x;
@@ -58,11 +70,7 @@ First, let’s take a look at the ownership rules. Keep these rules in mind as w
     println!("x = {}, y = {}", x, y);
 ```
 
-The reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. That means there’s no reason we would want to prevent x from being valid after we create the variable y. In other words, there’s no difference between deep and shallow copying here, so calling clone wouldn’t do anything different from the usual shallow copying and we can leave it out.
-
-Rust has a special annotation called the `Copy` trait that we can place on types like integers that are stored on the stack.
-
-Here are some of the types that are Copy:
+类似的数据还有：
 
 - All the integer types, such as u32.
 - The Boolean type, bool, with values true and false.
@@ -72,7 +80,5 @@ Here are some of the types that are Copy:
 
 ## Ownership and Functions
 
-The semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will move or copy, just as assignment does.
-
-
+The ownership of a variable follows the same pattern every time: __assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by drop unless the data has been moved to be owned by another variable.__
 
