@@ -1,6 +1,6 @@
 # Defining and Instantiating Structs
 
-To define a struct, we enter the keyword struct and name the entire struct. A struct’s name should describe the significance of the pieces of data being grouped together. Then, inside curly brackets, we define the names and types of the pieces of data, which we call fields.
+## 结构体定义以及初始化
 
 ```rust
 struct User {
@@ -21,7 +21,7 @@ let user1 = User {
 user1.email = String::from("anotheremail@example.com");
 ```
 
-## Using the Field Init Shorthand when Variables and Fields Have the Same Name
+## 初始化`struct`的简略写法。
 
 ```rust
 fn build_user(email: String, username: String) -> User {
@@ -33,19 +33,17 @@ fn build_user(email: String, username: String) -> User {
     }
 }
 
-// equal to
-
 fn build_user(email: String, username: String) -> User {
     User {
-        email,
-        username,
+        email, // 省略写法
+        username, // 省略写法
         active: true,
         sign_in_count: 1,
     }
 }
 ```
 
-## Creating Instances From Other Instances With Struct Update Syntax
+## 结构体的简略复用方式 
 
 ```rust
     let user2 = User {
@@ -55,8 +53,6 @@ fn build_user(email: String, username: String) -> User {
         sign_in_count: user1.sign_in_count,
     };
 
-// equal to
-
     let user2 = User {
         email: String::from("another@example.com"),
         username: String::from("anotherusername567"),
@@ -64,21 +60,25 @@ fn build_user(email: String, username: String) -> User {
     };
 ```
 
-## Using Tuple Structs without Named Fields to Create Different Types
+`..`对于未显式指定的项，使用旧值；显式指定的项使用新值。
 
-You can also define structs that look similar to tuples, called `tuple structs`. Tuple structs have the added meaning the struct name provides but don’t have names associated with their fields; rather, they just have the types of the fields. Tuple structs are useful when you want to give the whole tuple a name and make the tuple be a different type from other tuples, and naming each field as in a regular struct would be verbose or redundant.
-
-Tuple struct instances behave like tuples: you can destructure them into their individual pieces, you can use a . followed by the index to access an individual value, and so on.
+## 使用不指定键名的`struct`
 
 ```rust
     struct Color(i32, i32, i32);
-    struct Point(i32, i32, i32);
-
-    let black = Color(0, 0, 0);
-    let origin = Point(0, 0, 0);
 ```
 
-## Unit-Like Structs Without Any Fields
+类似上述的结构体在rust中被称为`tuple struct`。
+- 不同的结构体即使拥有相同数据类型的项，也被视为完全不同的结构体。
+- 通过`.1`的格式访问结构体的数据。
+
+```rust
+struct Point(i32, i32, i32);
+
+    let point = Point(1,2,3);
+    println!("{} {} {}", point.0, point.1, point.2);
+}
+```
 
 
 
