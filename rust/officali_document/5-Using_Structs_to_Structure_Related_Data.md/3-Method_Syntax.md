@@ -1,8 +1,12 @@
 # Method Syntax
 
-Methods are similar to functions: they’re declared with the fn keyword and their name, they can have parameters and a return value, and they contain some code that is run when they’re called from somewhere else. However, `methods` are different from `functions` in that they’re defined within the context of a struct, and their first parameter is always `self`, which represents the instance of the struct the method is being called on.
+注意区分`method`和`function`的不同。
 
-## Defining Methods
+// todo 姑且下个结论，理解透彻后在回来修改
+
+`method`一般与`struct`绑定。
+
+## 定义`method`
 
 ```rust
 // struct and method
@@ -12,6 +16,7 @@ struct Rectangle {
     height: u32,
 }
 
+// 如何定义method
 impl Rectangle {
     fn area(&self) -> u32 {
         self.width * self.height
@@ -31,22 +36,21 @@ fn main() {
 }
 ```
 
-We’ve chosen `&self` here for the same reason we used `&Rectangle` in the function version: we don’t want to take ownership, and we just want to read the data in the struct, not write to it. If we wanted to change the instance that we’ve called the method on as part of what the method does, we’d use `&mut self` as the first parameter. __Having a method that takes ownership of the instance by using just self as the first parameter is rare; this technique is usually used when the method transforms self into something else and you want to prevent the caller from using the original instance after the transformation.__
-
-> The main benefit of using _methods_ instead of _functions_, in addition to using method syntax and not having to repeat the type of self in every method’s signature, is for organization. We’ve put all the things we can do with an instance of a type in one _impl_ block rather than making future users of our code search for capabilities of _Rectangle_ in various places in the library we provide.
-
-### Where’s the -> Operator?
-
-> This automatic referencing behavior works because methods have a clear receiver—the type of self. Given the receiver and name of a method, Rust can figure out definitively whether the method is reading (&self), mutating (&mut self), or consuming (self). The fact that Rust makes borrowing implicit for method receivers is a big part of making ownership ergonomic in practice.
+定义`method`时，注意只读和可写引用的区别。对于只读取数据的`method`，传入`&self`；对于需要修改数据的`method`需要传入`&mut self`。也可仅传入`self`，使用时需要注意`ownership`。
 
 ## Associated Functions
 
-Another useful feature of `impl` blocks is that we’re allowed to define functions within `impl` blocks that don’t take self as a parameter. These are called _associated functions_ because they’re associated with the struct. They’re still functions, not methods, because they don’t have an instance of the struct to work with. You’ve already used the `String::from` associated function.
+`struct`中可以定义一种`Associated functions`，它的本质是`function`，而不是`method`。不过它普通的`function`也不相同，因为它和`struct`关联。
 
-__Associated functions are often used for constructors that will return a new instance of the struct.__
+`associated function`定义是不需要包含`self`。
 
-To call this associated function, we use the `::` syntax with the struct name; `let sq = Rectangle::square(3);` is an example.
+`associated function`通常用来创建一个结构体实例。
+
+> 感觉类似于c中的构造方法或是python中的`__init__`
+
+> String::from() 就是一个 `associated function`。
+
 
 ## Multiple impl Blocks
 
-Each struct is allowed to have multiple `impl` blocks.
+一个结构体可以有多个`impl`，这在语法上没有问题，不过在实现上并没有什么意义。
