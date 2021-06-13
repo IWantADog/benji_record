@@ -4,8 +4,8 @@ rust的枚举类型。
 
 ```rust
 enum Status {
-    RUNNING: String,
-    FAIL: String,
+    RUNNING(String),
+    FAIL(String),
 }
 ```
 
