@@ -30,9 +30,37 @@ worker nodel的构成
 
 linux control groups & linux namespaces
 
+## 关于pod
+
+pod是一组相关容器的组合体。pod中的容器运行在`同一个node`上，并且拥有相同的`linux namespace`。
+
+每一个pod像是一个独立的逻辑上的机器，拥有自己的IP、hostname、process。
+
+一个pod中的所有container运行在同一个`logic machine`，而不同pod的container，即使运行在同一个node，也表现为运行在不同的logic machine。
+
+### 当使用kubelet run后发生了什么
+输入`kubelet`后，
+1. 向`kubernetes api server`发送`rest http request`创建了`ReplicationController`。
+2. `ReplicationController`创建一个pod
+3. `Scheduler`将pod分配到一个合适的node
+4. node上的kubelet识别到被分配给自己，之后委托docker拉取指定的`image`。image下载完成之后，运行container。
+
+__pod被分配的ip地址都属于内部ip，外部无法直接访问__。为了使pod能够被外部访问，需要一个`Service`。创建一个`LoadBalancer-Type service`，之后就可通过这个`load balancer`的`public ip`访问到内部的pod。
+
+
+## k8s常规使用
+
+kubectl cluster-info
+
+kubectl get nodes
+
+kubectl get pods
+
+kubectl describe pod
+
+kubectl expose rc
 
 
 
-
-
-
+source <(kubectl completion zsh)
+zsh kubuctl 命令自动补全
