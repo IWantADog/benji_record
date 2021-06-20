@@ -1,2 +1,4 @@
 # reading process
-https://doc.rust-lang.org/book/ch07-04-bringing-paths-into-scope-with-the-use-keyword.html
+https://doc.rust-lang.org/book/ch08-00-common-collections.html
+
+https://doc.rust-lang.org/stable/rust-by-example/index.html
