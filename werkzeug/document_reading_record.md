@@ -21,3 +21,7 @@ run_simple('localhost', 8080, app, use_reloader=True)
 - `watchdag`: 使用`filesystem event`，比`stat`更快。但需要`watchdog`依赖，推荐的办法是在配置文件中增加`Werkzeug[watchdog]`。如果`watchdag`已被安装，会自动使用；如果没有被安装，则默认使用`stat`。
 
 
+## Testing WSGI Applications
+
+https://werkzeug.palletsprojects.com/en/2.0.x/test/#testing-wsgi-applications
+
