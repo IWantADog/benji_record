@@ -23,5 +23,28 @@ run_simple('localhost', 8080, app, use_reloader=True)
 
 ## Testing WSGI Applications
 
-https://werkzeug.palletsprojects.com/en/2.0.x/test/#testing-wsgi-applications
+没什么值得记录的
+
+## Request / Response Objects
+
+`request`需要包装`environment`, `response`会包装`applicaiton`的返回值，所以它们都是另一个`WSGI applicaiton`。
+
+`request`本质是对`CGI environment`的包装，便于数据的访问和获取。
+
+`request`对象的特性
+- **不可修改**。默认是不可修改的，不过可以将不可修改的对象替换为可修改的对象进行修改。（// todo 如何操作）
+- **线程不安全**。`request`被多个线程访问是需要使用`同步锁`。
+- **无法pickle**。 `request`对象无法pickle。
+
+`response`对象的特性
+- **可修改**
+- **可被pickle**。调用`freeze()`之后能被pickle和copy。
+- Since Werkzeug 0.6 it’s safe to use the same response object for multiple WSGI responses. // todo 什么意思
+- **能使用`copy.deepcopy()`**
+
+
+
+
+
+
 
