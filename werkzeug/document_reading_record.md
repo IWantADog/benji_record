@@ -42,6 +42,22 @@ run_simple('localhost', 8080, app, use_reloader=True)
 - Since Werkzeug 0.6 it’s safe to use the same response object for multiple WSGI responses. // todo 什么意思
 - **能使用`copy.deepcopy()`**
 
+request的常用属性
+- args
+- data: bytes对象
+- get_data(): 读取请求缓存的数据，并将其转换为一个`bytes`对象。__使用时需要先验证数据的大小，避免系统内存耗尽。__
+- get_json(): 将`data`数据转换为json。如果请求头中没有`application/json`，则返回`None`。
+- json: `get_json`的别名。
+- files
+- form
+- headers
+- stream: 对于没有指定类型的数据，会被存储到`stream`，是一个`BinaryIO`。只会返回数据一次。
+> 大多时候优先使用`data`。
+- values: `args` & `form`的组合体
+- 
+
+
+
 
 
 
