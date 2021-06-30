@@ -43,17 +43,19 @@ run_simple('localhost', 8080, app, use_reloader=True)
 - **能使用`copy.deepcopy()`**
 
 request的常用属性
-- args
+- args: url paramenter
 - data: bytes对象
 - get_data(): 读取请求缓存的数据，并将其转换为一个`bytes`对象。__使用时需要先验证数据的大小，避免系统内存耗尽。__
 - get_json(): 将`data`数据转换为json。如果请求头中没有`application/json`，则返回`None`。
 - json: `get_json`的别名。
-- files
-- form
+- files: 通过`multiDict`存储所有的上传文件，每个上传的文件是一个`FileStorage` object。
+	> 只有request method为`post` & `put` & `patch`，并且`<form>`中存在`enctype="multipart/form-data"`时，file才不为空。其他情况下，file都为空值。
+- form: form paramenter。
 - headers
 - stream: 对于没有指定类型的数据，会被存储到`stream`，是一个`BinaryIO`。只会返回数据一次。
-> 大多时候优先使用`data`。
+	> 大多时候优先使用`data`。
 - values: `args` & `form`的组合体
+- cookies: 类`dict`结构
 - 
 
 
