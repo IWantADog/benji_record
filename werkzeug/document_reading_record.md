@@ -27,9 +27,9 @@ run_simple('localhost', 8080, app, use_reloader=True)
 
 ## Request / Response Objects
 
-`request`需要包装`environment`, `response`会包装`applicaiton`的返回值，所以它们都是另一个`WSGI applicaiton`。
-
 `request`本质是对`CGI environment`的包装，便于数据的访问和获取。
+
+`response`其实就是一个`WSGI applicaiton`。
 
 `request`对象的特性
 - **不可修改**。默认是不可修改的，不过可以将不可修改的对象替换为可修改的对象进行修改。（// todo 如何操作）
@@ -41,6 +41,8 @@ run_simple('localhost', 8080, app, use_reloader=True)
 - **可被pickle**。调用`freeze()`之后能被pickle和copy。
 - Since Werkzeug 0.6 it’s safe to use the same response object for multiple WSGI responses. // todo 什么意思
 - **能使用`copy.deepcopy()`**
+- response是一个`WSGI application callable`。当传入`environ` & `start_response`调用`__call__()`时，会将`status`和`headers`传入`start_response`并且返回响应体。
+
 
 request的常用属性
 - args: url paramenter
@@ -51,12 +53,15 @@ request的常用属性
 - files: 通过`multiDict`存储所有的上传文件，每个上传的文件是一个`FileStorage` object。
 	> 只有request method为`post` & `put` & `patch`，并且`<form>`中存在`enctype="multipart/form-data"`时，file才不为空。其他情况下，file都为空值。
 - form: form paramenter。
-- headers
+- headers: http请求头
 - stream: 对于没有指定类型的数据，会被存储到`stream`，是一个`BinaryIO`。只会返回数据一次。
 	> 大多时候优先使用`data`。
 - values: `args` & `form`的组合体
 - cookies: 类`dict`结构
-- 
+
+`response`对象常用属性
+- set_cookies(): 修改cookies
+
 
 
 
