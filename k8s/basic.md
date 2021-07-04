@@ -87,6 +87,17 @@ k8s通过配置`Docker`使一个`pod`中的所有`container`共享一个linux na
 
 `ReplicationControllers`负责管理pod，当使用`kubelet run`时可以指定pod的数量，如果不指定pod的数量，默认只会创建一个pod。而且当pod由于意外挂起时，`rc`会自动创建一个新的pod代替旧的。
 
+### how to use
+
+// 删除pod
+kubectl delete po <pod_name>
+
+// 通过label删除pod
+kubectl delete po -l <label_key>=<label_value>
+
+// 通过删除namespace，删除pod
+kubectl delete ns <namespace_name>
+
 
 ## 关于Service的功能
 
@@ -121,7 +132,25 @@ kubectl get po -l "!<lable_name>"
 
 ## annotating pods
 
-// todo
+类似与label也是`key-value`结构，不过不能用来对资源进行筛选，但是能够存储更详细的说明信息。
+
+## namspaces
+
+k8s的namespace并不是linux中namespace。linux中的namespace用来隔离进程。__而k8s中的namespace主要应用是避免资源名称的冲突。__
+
+__需要注意的是k8s提供的namespace的隔离，不会影响不同namespace下的pod进行网络通讯。__
+
+### how to use
+
+// 获取所有的namespace
+kubectl get ns
+
+// 获取指定namespace下的资源
+kubectl get po --namespace/-n <you_namespace>
+
+// 创建一个namespace(不过我想一般还是会直接通过yaml文件创建吧)
+kubectl create namesapce my-namespace
+
 
 ## k8s常规使用
 
@@ -152,6 +181,8 @@ kubectl port-forward <pod_name> <local_port>:<pod_port>
 kubectl get po --show-labels
 kubectl get po -L <label_name_1>,<label_name_2>
 
+// 删除当前namespace下的所有资源(太危险了，不应该使用)
+kubectl delete all --all
 
 
 k run test --image=benjilee5453/test --port=5000 
