@@ -119,6 +119,33 @@ labels在k8s中用来分类管理不同的资源。一个资源可能有多个la
 
 通常也可使用label来搜索不同的资源。
 
+## liveness probes
+
+k8s支持application的health check。当applicaiton崩溃后，k8s会自动的重启pod。
+
+k8s探测容器内部状态的几种原理:
+- 通过`HTTP get`向容器中的用户事先定义的`endpoint`，如果请求失败，则将容器重启。
+- 通过`TCP Socket`向容器的特定`port`建立连接。如果连接建立成功，则表明容器时正常的；反正，容器会被重启。
+- 通过执行容器中某个`command`，判断命令的结束状态。如果命令执行失败，则容器会被重启。
+
+`probe`还支持其他的而外参数:
+- delay: 设置延迟时间。当container被启动时延迟若干时间等待container完全启动。
+    > initialDelaySeconds: 设置延期时间。
+- timeout: 超时时间。当container的相应时间超过设置的时间，则视为探测失败，容器会被重启。
+- period: 检测间隔。
+- failure: 设置失败可以接受的次数。只有失败的次数超过设置的值后才会重启`container`。
+
+### exit code
+- 137: 128 + 9(SIGKILL)
+- 143: 128 + 15(SIGTERM)
+
+### 合理使用`porbe`的建议
+- 对于生产环境必须使用`probe`
+- `probe`的`endpoint`需要十分轻量，并且不需要认证。`probe`会被频繁触发，不能包含复杂的计算逻辑。
+- 需要清楚的明白，`probe`的主要目的是检测`container`中`application`是否还在正常运行，不能引入无关的信息。
+    > 书中例举一个例子。不能因为后端数据库的连接失败，而重启application。这没有用处，即使重启application，health请求依然会失败。
+
+
 ### 新增label、修改label
 kubectl label po <pod_name> <label_name>=<lable_value>
 
@@ -173,6 +200,9 @@ kubectl logs <name>
 
 // 如果一个pod中包含多个container
 kubectl logs <pod_name> -c <container_name>
+
+// 获取上一个容器的log
+kubectl logs <pod_name> --previous
 
 // 将pod的端口绑定到本机指定端口
 kubectl port-forward <pod_name> <local_port>:<pod_port>
