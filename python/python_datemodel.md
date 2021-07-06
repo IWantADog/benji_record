@@ -10,11 +10,10 @@
 
 > the special thing about methods is that the instance object is passed as the first argument of the function. In our example, the call `x.f()` is exactly equivalent to `MyClass.f(x)`. In general, calling a method with a list of n arguments is equivalent to calling the corresponding function with an argument list that is created by inserting the method’s instance object before the first argument.
 
-## __slots__
-
-todo
-
 [进度](https://docs.python.org/3/reference/datamodel.html#customizing-attribute-access)
+
+## __slots__
+TODO: 记录一下
 
 ## Customizing class creation
 
@@ -68,7 +67,6 @@ TODO: `type instance`具体指什么？指的是class吗？
 - `bases`作为`__bases__`。如果bases为空tuple，则`object`被加入。
 - `dict`作为`__dict__`。
 - `kwds`
-
 
 ## reference
 
