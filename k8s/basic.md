@@ -83,11 +83,51 @@ k8s通过配置`Docker`使一个`pod`中的所有`container`共享一个linux na
 类似于存在一`main container`和多个`support container`的结构。support的功能可能类似于日志收集、文件下载和存储等。
 > 书中这里提到了`sidecar`
 
-## 关于`ReplicationControllers`
+## 关于`ReplicationController`
 
-`ReplicationControllers`负责管理pod，当使用`kubelet run`时可以指定pod的数量，如果不指定pod的数量，默认只会创建一个pod。而且当pod由于意外挂起时，`rc`会自动创建一个新的pod代替旧的。
+`ReplicationController`负责管理pod，当使用`kubelet run`时可以指定pod的数量，如果不指定pod的数量，默认只会创建一个pod。而且当pod由于意外挂起时，`rc`会自动创建一个新的pod代替旧的。
 
-### how to use
+`ReplicationController`会始终监视`运行中的pod`数量，保证其数量等于配置的数量。如果pod的数量过少则新增pod，如果pod的数量过多则删除pod。
+
+如果手动删除`rc`，会导致该rc所有的pod一并被删除。不过可以通过`--cascade=false`仅删除`rc`而不删除`pod`。
+
+### ReplicationController的核心概念
+- label selector: 确定`ReplicationController`所拥有的pod。
+- replica count: pod的数量。
+- pod template: pod的模版。
+
+### tips
+- 定义`ReplicationController`可以不指定`pod selector`。而在`pod template`中设置，这样可以保证定义`rc`的yaml更简洁。
+- k8s不允许修改`rc`的label selector，当有这样需求时，可以修改`pod template`中的lable selector。
+
+### common commands
+
+修改pod template的 lable selector
+
+`kubectl edit rc <rc_name>`
+
+水平扩展pod的数量
+
+`kubectl scale rc test --replicas=3`
+
+> 用户无法也不能直接指定`kubernetes`该做些什么。用户只能告诉k8s一个期望的状态，k8s自己决定如何达到指定的状态。这是k8s的基本准则。
+
+## About ReplicaSets
+
+`replicaSets`是`replicationControllers`的增强版。（`ReplicationControllers`最终将会被完全移除）
+
+相较于`ReplicationControllers`，`ReplicaSets`提供了更富有表现力的`lable selector`。`RC`只提供通过明确的`label`筛选`pod`。而`RS`可以匹配缺少`label`的`pod`，或仅通过`label key`筛选`pod`，而忽略`label value`。
+
+`RS`还提供`IN` & `NotIN` & `Exists` & `DoesNotExist`。可以使用这些写出更具体的`label selector`。
+
+## About DaemonSets
+
+DaemonSets会在每一个`node`上部署一个执行特定任务的`pod`。当一个新的node被启动时，`DaemonSets`会自动部署一个新的实例到该`node`中。
+
+`DaemonSets`也可以指明仅部署pod到特定的node上(通过`node-Selector`设置)。
+
+
+## how to use
 
 // 删除pod
 kubectl delete po <pod_name>
@@ -107,11 +147,6 @@ Service就提供了这样的功能。在Service的整个声明周期中它始终
 
 Service还能为多个pod同时提供服务，当一个请求进来时会被转接到某一个pod上。
 
-## 水平扩展replicas的数量
-
-`kubectl scale rc test --replicas=3`
-
-__用户无法也不能直接指定`kubernetes`该做些什么。用户只能告诉k8s一个期望的状态，k8s自己决定如何达到指定的状态。这是k8s的基本准则。__
 
 ## labels
 
@@ -121,7 +156,7 @@ labels在k8s中用来分类管理不同的资源。一个资源可能有多个la
 
 ## liveness probes
 
-k8s支持application的health check。当applicaiton崩溃后，k8s会自动的重启pod。
+k8s支持application的health check。当applicaiton崩溃后，k8s会自动`重启pod`。
 
 k8s探测容器内部状态的几种原理:
 - 通过`HTTP get`向容器中的用户事先定义的`endpoint`，如果请求失败，则将容器重启。
@@ -133,7 +168,7 @@ k8s探测容器内部状态的几种原理:
     > initialDelaySeconds: 设置延期时间。
 - timeout: 超时时间。当container的相应时间超过设置的时间，则视为探测失败，容器会被重启。
 - period: 检测间隔。
-- failure: 设置失败可以接受的次数。只有失败的次数超过设置的值后才会重启`container`。
+- failure: 设置失败可以接受的次数。只有失败的次数超过设置的值后才会重启`pod`。
 
 ### exit code
 - 137: 128 + 9(SIGKILL)
@@ -190,32 +225,44 @@ kubectl describe pod/nodes/svc
 kubectl expose rc
 
 // 通过yaml创建k8s资源
+
 kubectl create -f this_is_a_test.yaml
 
+// 打开并编辑资源的yaml文件
+
+kubectl edit <type> <resoure_name>
+
 // 获取pod的yaml配置信息
+
 kubectl get pod test_pod -o yaml
 
 // 获取pod的日志
+
 kubectl logs <name>
 
 // 如果一个pod中包含多个container
+
 kubectl logs <pod_name> -c <container_name>
 
 // 获取上一个容器的log
+
 kubectl logs <pod_name> --previous
 
 // 将pod的端口绑定到本机指定端口
+
 kubectl port-forward <pod_name> <local_port>:<pod_port>
 
 // 查看资源的label
+
 kubectl get po --show-labels
 kubectl get po -L <label_name_1>,<label_name_2>
 
 // 删除当前namespace下的所有资源(太危险了，不应该使用)
+
 kubectl delete all --all
 
-
 k run test --image=benjilee5453/test --port=5000 
+
 k expose pod test --type NodePort --port 8080
 > 这里的port指的是需要绑定的pod的端口。
 minikube service hello-minikube --url
